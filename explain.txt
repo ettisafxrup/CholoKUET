@@ -1,0 +1,1111 @@
+================================================================================
+                    CholoKUET - THE WHOLE CODE, EXPLAINED A TO Z
+            "Cholo Explore Kore Ashi" - a KUET campus navigator in C++17
+================================================================================
+
+Team      : Ettisaf Rup (2407109), Afia Anjum Broti (2407096)
+Course    : Data Structures and Algorithms Laboratory, CSE, KUET
+Teachers  : Subah Nawar and Lamisa Bintee Mizan Deya, Lecturers, CSE, KUET
+
+This file walks through the program from the first line that runs to the
+last, one part at a time. For each part it answers three questions:
+
+    WHAT  - what the code is and what it does
+    WHY   - why we built it this way (and not another way)
+    HOW   - how it actually works, step by step
+
+The last section is a total summary you can read on its own.
+
+
+--------------------------------------------------------------------------------
+CONTENTS
+--------------------------------------------------------------------------------
+
+   1. The big picture
+   2. Folder layout
+   3. main.cpp - where the program starts
+   4. Config.h - shared limits and file names
+   5. The Stack (dsa/stack)
+   6. The Queue (dsa/queue)
+   7. Location - one place on campus
+   8. Distance - Haversine and compass bearings
+   9. Graph - walkways, BFS and DFS
+  10. CampusTree - browsing by category
+  11. Campus - the data model and the data files
+  12. Search - linear and binary search
+  13. Sort - bubble sort and selection sort
+  14. Trip - turning a route into directions
+  15. Authentication - accounts and password hashing
+  16. Logger - the activity log
+  17. Utils - safe input, strings, console helpers
+  18. Style - terminal colours
+  19. Navigator - start-up, login and the main menu
+  20. Trips.cpp - Take me somewhere, What's near me, Explore
+  21. Places.cpp - Search, place pages, categories, sorting, you-menus
+  22. NavigatorAdmin.cpp - admin tools
+  23. The data files
+  24. Tests
+  25. Building: Makefile, CMake, one-file build, icon
+  26. tools/render-map.js - drawing the campus map
+  27. One complete trip, traced through the code
+  28. Complexity at a glance
+  29. TOTAL SUMMARY
+
+
+================================================================================
+1. THE BIG PICTURE
+================================================================================
+
+WHAT
+  CholoKUET is a menu-driven terminal program. A student logs in, says where
+  they are and where they want to go, and gets walking directions across the
+  KUET campus: which roads to take, where to turn, which buildings they pass,
+  how far it is and how long it takes. It also searches places, lists what is
+  nearby, browses places by category, keeps a trip history with a Back button,
+  and lets an admin edit the map.
+
+WHY
+  Campus navigation needs almost every structure in the DSA syllabus for a
+  real reason, not a made-up one:
+      walkways between buildings      -> a GRAPH
+      finding a route                 -> BFS, which needs a QUEUE
+      exploring everything            -> DFS, which needs a STACK
+      the Back button                 -> a STACK
+      places grouped by category      -> a TREE
+      the list of all places          -> an ARRAY
+      recent searches, favourites     -> LINKED LISTS
+      finding a place by name         -> LINEAR / BINARY SEARCH
+      listing places in order         -> BUBBLE / SELECTION SORT
+
+HOW (three layers)
+  +--------------------------------------------------------------+
+  | 1. MENUS       Navigator (Navigator.cpp, Trips.cpp,          |
+  |                Places.cpp, NavigatorAdmin.cpp)               |
+  |                Talks to the user. Never touches files.       |
+  +--------------------------------------------------------------+
+  | 2. MODEL       Campus: places (array), categories, Graph.    |
+  |                The ONLY code that reads/writes data files.   |
+  +--------------------------------------------------------------+
+  | 3. CORE        Stack, Queue, Graph (BFS/DFS), CampusTree,    |
+  |                Search, Sort, Distance, Trip.                 |
+  |                Knows nothing about menus or files.           |
+  +--------------------------------------------------------------+
+
+  Because the bottom layer does not depend on the menus, each structure can be
+  opened and explained on its own in the viva, and each is unit-tested on its
+  own.
+
+
+================================================================================
+2. FOLDER LAYOUT
+================================================================================
+
+  main.cpp               entry point (can also build the whole program alone)
+  dsa/stack/             Stack.h, Stack.cpp      - our hand-written stack
+  dsa/queue/             Queue.h, Queue.cpp      - our hand-written circular queue
+  include/               every header (.h)
+  src/                   every implementation (.cpp)
+  data/                  locations, paths, categories, users, favorites (.txt)
+  logs/                  application.log is written here
+  tests/                 8 test programs + check.h (a tiny CHECK macro)
+  tools/render-map.js    draws assets/campus-map.svg from the data files
+  assets/                logo, icon, campus map, team photos, cholokuet.rc
+  third_party/termcolor  a small header-only colour library (BSD licence)
+  docs/                  DSA mapping, campus-map notes, viva questions
+  presentation/          the report (.docx, .pdf) and the slide deck
+  Makefile, CMakeLists.txt   two ways to build
+
+
+================================================================================
+3. main.cpp - WHERE THE PROGRAM STARTS
+================================================================================
+
+WHAT
+      int main()
+      {
+          Navigator app;
+          app.initialize();
+          app.run();
+          return 0;
+      }
+
+  Three lines of real work: make the application object, set it up, run it.
+
+  Below main() there is a block:
+
+      #ifndef CHOLOKUET_SEPARATE_FILES
+      #include "dsa/stack/Stack.cpp"
+      #include "dsa/queue/Queue.cpp"
+      #include "src/Location.cpp"
+      ... every other .cpp ...
+      #endif
+
+WHY
+  Many students press an editor's "Run" button, which compiles only the open
+  file. Normally that fails with "undefined reference" errors because the other
+  .cpp files are never compiled. Including them here means
+
+      g++ -std=c++17 main.cpp -o CholoKUET
+
+  builds the whole program in one go. The Makefile and CMake compile each file
+  separately (faster rebuilds), so they define CHOLOKUET_SEPARATE_FILES to
+  switch this block off and avoid compiling everything twice.
+
+HOW
+  Utils.cpp and Style.cpp are included last because they bring in
+  <windows.h>, which defines macros (like min/max) that can clash with other
+  code if it comes first.
+
+
+================================================================================
+4. include/Config.h - SHARED LIMITS AND FILE NAMES
+================================================================================
+
+WHAT
+      MAX_LOCATIONS       = 200   (also the capacity of our Stack and Queue)
+      MAX_USERS           = 100
+      MAX_RECENT_SEARCHES = 10
+      LOG_LINES_TO_SHOW   = 30
+      LOCATIONS_FILE = "data/locations.txt", PATHS_FILE = "data/paths.txt", ...
+
+WHY
+  One place for every magic number. Most importantly, MAX_LOCATIONS ties
+  three things together: the graph refuses to grow past 200 places, and the
+  Stack and Queue hold 200 items. So BFS and DFS can never overflow them,
+  because they never hold more items than there are places.
+
+
+================================================================================
+5. THE STACK  (dsa/stack/Stack.h, Stack.cpp)
+================================================================================
+
+WHAT
+  A LIFO (last in, first out) stack of integers, built on a plain array:
+
+      int data[CAPACITY];   // CAPACITY = 200
+      int top = -1;         // index of the top item; -1 means empty
+
+  Operations: push, pop, peek, isEmpty, isFull, size, clear, at(i), print,
+  printInline.
+
+WHY
+  The lab asked for the stack to be written by hand, not taken from
+  std::stack. An array stack is the simplest correct design: every operation
+  is O(1) and there is no memory allocation.
+
+HOW
+  push(value):
+      if isFull() (top == CAPACITY-1)  -> return false   // OVERFLOW, refused
+      data[++top] = value                                // move up, then write
+      return true
+
+  pop(value):
+      if isEmpty() (top == -1)         -> return false   // UNDERFLOW, refused
+      value = data[top--]                                // read, then move down
+      return true
+
+  peek(value): like pop but top does not move.
+
+  at(i) reads position i counted from the bottom, so the Trip History screen
+  can list the stack without popping it. print() shows it top-first with a
+  "TOP (top = n)" marker; printInline() prints "[bottom] a | b | c [top]"
+  for the step-by-step DFS trace.
+
+  Functions return bool instead of crashing, so the caller decides what an
+  overflow means (e.g. "Trip history is full").
+
+  WHERE IT IS USED (4 places)
+    1. DFS (Graph::depthFirstOrder)            - replaces recursion
+    2. Trip history / Back button (Navigator)  - newest place on top
+    3. Rebuilding a BFS route (rebuildRoute)   - reverses the route
+    4. Deleting a place from the middle of the history (NavigatorAdmin)
+
+
+================================================================================
+6. THE QUEUE  (dsa/queue/Queue.h, Queue.cpp)
+================================================================================
+
+WHAT
+  A FIFO (first in, first out) CIRCULAR queue of integers:
+
+      int data[CAPACITY];
+      int front = 0;     // where the next dequeue reads
+      int rear  = -1;    // the last slot written
+      int count = 0;     // how many items are inside
+
+WHY
+  A simple array queue moves front forward on every dequeue and never reuses
+  the slots behind it, so it "walks off" the end of the array even when it is
+  nearly empty. A circular queue wraps both ends round with % CAPACITY, so
+  freed slots are reused. The separate count tells "full" from "empty"
+  (in both cases front and rear can point to the same place).
+
+HOW
+  enqueue(value):
+      if count == CAPACITY  -> return false          // overflow
+      rear = (rear + 1) % CAPACITY                   // wrap round
+      data[rear] = value
+      count++
+
+  dequeue(value):
+      if count == 0         -> return false          // underflow
+      value = data[front]
+      front = (front + 1) % CAPACITY                 // wrap round
+      count--
+
+  at(i) = data[(front + i) % CAPACITY]  -> lets print() show the queue from
+  front to rear as "FRONT -> a, b, c <- REAR" without removing anything.
+
+  Example of wraparound (tested in tests/test_queue.cpp): fill all 200 slots,
+  dequeue 2, enqueue 2 more. The new items go into slots 0 and 1 while the
+  front is at slot 2.
+
+  WHERE IT IS USED: BFS in Graph::findRoute, i.e. every route in the app.
+
+
+================================================================================
+7. LOCATION  (include/Location.h, src/Location.cpp)
+================================================================================
+
+WHAT
+      struct Location {
+          int id; std::string name, category, description;
+          double latitude, longitude;
+      };
+
+  Helpers: isValidCoordinate, parseLocation (text line -> Location),
+  formatLocation (Location -> text line), coordinateString
+  ("22.899247, 89.501796", ready to paste into any map app),
+  printLocationDetails.
+
+WHY
+  One small struct for one place keeps the rest of the code readable. Parsing
+  and formatting live next to the struct so the file format is defined in
+  exactly one place.
+
+HOW
+  parseLocation splits "ID|Name|Category|Lat|Lon|Description" on '|', checks
+  that the ID is a positive number, the name is not empty and the coordinates
+  are in range (-90..90, -180..180). An empty category becomes "Other". If
+  the description itself contains '|', the extra fields are glued back
+  together so nothing is lost. On any problem it fills `error` and returns
+  false; the caller skips the line instead of crashing.
+
+
+================================================================================
+8. DISTANCE  (include/Distance.h, src/Distance.cpp)
+================================================================================
+
+WHAT
+  distanceMeters(lat1, lon1, lat2, lon2)   - straight-line distance in meters
+  bearingDegrees(a, b)                     - compass direction 0..360
+  formatDistance(m)                        - "85 m" or "1.25 km"
+
+WHY
+  Latitude/longitude are angles on a sphere, not x/y on a flat sheet, so plain
+  Pythagoras is wrong. The Haversine formula is the standard way and is
+  accurate to well under a meter across a campus.
+
+HOW
+  Haversine (R = 6,371,000 m, angles in radians):
+      a = sin^2(dLat/2) + cos(lat1) * cos(lat2) * sin^2(dLon/2)
+      d = 2R * atan2( sqrt(a), sqrt(1 - a) )
+
+  Initial bearing:
+      y = sin(dLon) * cos(lat2)
+      x = cos(lat1)*sin(lat2) - sin(lat1)*cos(lat2)*cos(dLon)
+      bearing = atan2(y, x) in degrees, shifted into 0..360
+      (0 = north, 90 = east, 180 = south, 270 = west)
+
+
+================================================================================
+9. GRAPH - WALKWAYS, BFS AND DFS  (include/Graph.h, src/Graph.cpp)
+================================================================================
+
+WHAT
+  An UNDIRECTED, WEIGHTED graph stored as an ADJACENCY LIST:
+
+      struct Edge { int to; int meters; std::string road; };
+      std::map<int, std::vector<Edge>> adjacency;   // place ID -> its walkways
+
+  Every place is a vertex (keyed by its ID), every walkway is an edge with a
+  length in meters and a road name.
+
+WHY an adjacency list and not a matrix?
+  The campus is SPARSE: 44 vertices but only 56 edges. A 44x44 matrix would be
+  mostly zeros, and finding a place's neighbours would scan a whole row
+  (O(V)) even for a place with two walkways. With a list, BFS/DFS cost
+  O(V + E) instead of O(V^2).
+
+HOW - basic operations
+  addVertex(id)      refuses duplicates and refuses to grow past MAX_LOCATIONS
+  addEdge(a, b, m, road)
+                     refuses a==b or unknown vertices; removes any old edge
+                     between a and b first, then stores the edge in BOTH
+                     directions (a->b and b->a) because walkways go both ways
+  removeEdge(a, b)   erases both directions
+  removeVertex(id)   erases every edge that points to id, then id itself
+  findEdge(a, b)     scans a's neighbours, returns a pointer or nullptr
+  edgeCount()        sum of all list sizes / 2 (each walkway is stored twice)
+
+HOW - BFS: findRoute(start, goal)
+  Goal: the route with the FEWEST STOPS.
+
+      visited = {start}; parent[start] = -1
+      queue.enqueue(start)                       <- OUR Queue
+      while queue is not empty:
+          current = queue.dequeue()
+          if current == goal: stop
+          for each walkway (current -> next):
+              if next not visited:
+                  visited.insert(next)           <- mark when ENQUEUED
+                  parent[next] = current         <- remember how we got here
+                  queue.enqueue(next)
+      if goal was never visited: return empty list (no route)
+      return rebuildRoute(parent, start, goal)
+
+  Why mark "visited" when ENQUEUING, not when dequeuing? Otherwise the same
+  place can be put in the queue several times by different neighbours before
+  it is processed. Marking early guarantees each place enters the queue once.
+
+  Why BFS gives the fewest stops: BFS explores in "rings". Everything 1 step
+  away is dequeued before anything 2 steps away, and so on. So the first time
+  it reaches the goal, it has used the smallest number of steps.
+  Honest limit: walkways have different lengths, so fewest stops is not
+  always fewest meters (that would need Dijkstra). The app says so on screen.
+
+  With verbose = true (menu option "Show how BFS found this route") every
+  dequeue, every enqueue with its parent, and the whole queue are printed.
+
+HOW - rebuildRoute(parent, start, goal)
+  parent[] describes the route BACKWARDS (goal -> ... -> start).
+
+      for (at = goal; at != -1; at = parent[at])  stack.push(at)   <- OUR Stack
+      while stack.pop(id): route.push_back(id)                     <- linked list
+
+  The goal is pushed first and the start last, so the start ends up on top;
+  popping everything gives the route in forward order. The result is a
+  std::list<int> (a linked list): its length is not known in advance, and we
+  only ever walk it front to back.
+
+HOW - DFS: depthFirstOrder(start)
+  Goal: visit every place reachable from start, going deep first.
+  It is ITERATIVE and uses OUR Stack in place of recursion:
+
+      push(start); visited = {start}; order = [start]
+      while stack not empty:
+          current = stack.peek()                    <- top = where we are
+          find the next UNVISITED neighbour of current,
+              continuing from nextEdge[current]     <- remembers progress
+          if found:  push it, mark visited, add to order     (go deeper)
+          else:      pop current                             (backtrack)
+
+  Why this version? The textbook "pop, then push every unvisited neighbour"
+  version can push the same place many times, so on a dense graph it needs
+  far more than 200 stack slots and our fixed stack would overflow. Here each
+  place is pushed exactly ONCE, so the stack never holds more than V <= 200
+  items. A test builds a complete 200-vertex graph (19,900 edges) and checks
+  DFS still works.
+
+HOW - isConnected()
+  Runs DFS from any vertex and checks it reached all vertices. Used at
+  start-up and after an admin deletes a place or a walkway, to warn if part of
+  the campus has become unreachable.
+
+
+================================================================================
+10. CAMPUS TREE  (include/CampusTree.h, src/CampusTree.cpp)
+================================================================================
+
+WHAT
+  A GENERAL tree (any number of children per node):
+
+      struct TreeNode {
+          std::string name;
+          int locationId = -1;            // -1 for the root and categories
+          std::vector<TreeNode> children;
+      };
+
+      KUET                                  <- root
+      +-- Academic                          <- category (child of root)
+      |   +-- Central Library ...           <- place (leaf)
+      +-- Residential
+      ...
+
+  The real campus tree has 55 nodes (1 root + 10 categories + 44 places) and
+  a height of 3.
+
+WHY
+  Categories naturally form a hierarchy. A BINARY tree would be the wrong
+  shape: Academic has eleven places, Medical has one; forcing them into two
+  children per node would need artificial extra nodes. Storing children BY
+  VALUE inside the parent means deleting a node automatically deletes its
+  whole subtree with no manual memory management.
+
+HOW
+  build(categories, locations):
+      root = KUET
+      for each category (in the order of categories.txt):
+          make a category node
+          add every location whose category matches (case-insensitive)
+          add the category to the root only if it is not empty
+  find(name)      recursive preorder search, case-insensitive
+  remove(name)    finds the child and erases it (with its subtree)
+  print()         preorder walk drawn with "+--" style branches
+  countNodes()    1 + sum of children's counts (recursive)
+  height()        1 + tallest child's height (recursive)
+
+  The tree is REBUILT after every admin change, so it always matches the
+  data.
+
+
+================================================================================
+11. CAMPUS - THE DATA MODEL  (include/Campus.h, src/Campus.cpp)
+================================================================================
+
+WHAT
+      std::vector<Location>    locations;    // the ARRAY of places
+      std::vector<std::string> categories;
+      Graph                    graph;
+
+  Campus is the only class that reads or writes the data files.
+
+WHY
+  Keeping all file I/O in one class means the file formats are defined once,
+  and the menus never need to know about files. It also means every change to
+  the places goes through one set of checks (validate).
+
+HOW - finding and changing places
+  find(id)        linear scan through the array. We NEVER assume ID == index:
+                  after a delete everything shifts left, so lookups go by ID.
+  nextFreeId()    smallest unused positive ID (suggested when adding)
+  validate()      positive ID, non-empty name, no '|' in any text field
+                  (it is the file separator), coordinates in range
+  addLocation()   validate -> refuse duplicate ID -> refuse past 200 ->
+                  push_back into the array, add a graph vertex, add category
+  updateLocation()
+                  validate, overwrite, and if the place MOVED recompute the
+                  length of each of its walkways
+  removeLocation() erase from the array (O(n) shift), remove the graph vertex
+                  (which also removes its walkways)
+  pathLength(a,b) straight-line meters, at least 1; used when a walkway has
+                  no length written in the file
+
+HOW - loading
+  loadCategories  one name per line; blank lines and "#" comments skipped
+  loadLocations   parseLocation + addLocation per line; bad or duplicate lines
+                  are COUNTED as skipped, never fatal
+  loadPaths       "from|to|meters|road": meters optional (empty -> straight
+                  line), road optional; duplicates and unknown IDs skipped
+  Each returns a LoadResult {missing, loaded, skipped} so the app can warn
+  "Skipped 2 bad or repeated lines" instead of silently losing data.
+
+HOW - saving
+  saveLocations / savePaths rewrite the whole file with a comment header.
+  Each walkway is stored twice in memory (a->b and b->a), so savePaths writes
+  it only when from < to.
+  saveFavorites keeps every OTHER user's lines and replaces only the current
+  user's, so users never overwrite each other.
+
+
+================================================================================
+12. SEARCH  (include/Search.h, src/Search.cpp)
+================================================================================
+
+WHAT
+  linearSearchByName(list, query)      indexes of names CONTAINING query
+  linearSearchByCategory(list, query)  same for categories
+  linearSearchById(list, id)           index or -1
+  isSortedByName(list)
+  binarySearchByName(sorted, name)     exact match, index or -1
+  Each counts its comparisons so the app can show them.
+
+WHY both?
+  LINEAR search works on any order and allows partial, case-insensitive
+  matches ("lib" finds "Central Library"). It is O(n).
+  BINARY search is O(log n) but ONLY works on sorted data and only answers
+  "is there an exact match?". The app shows both so the difference is visible:
+  on 44 places binary search finds "Central Library" in 6 comparisons where a
+  linear scan checks all 44.
+
+HOW - binary search
+      low = 0, high = n-1
+      while low <= high:
+          mid = low + (high - low) / 2         // no integer overflow
+          compare name with sorted[mid].name (ignoring case)
+          equal   -> return mid
+          smaller -> high = mid - 1            // go left
+          bigger  -> low  = mid + 1            // go right
+      return -1
+
+
+================================================================================
+13. SORT  (include/Sort.h, src/Sort.cpp)
+================================================================================
+
+WHAT
+  bubbleSortByName(items, ascending)
+  selectionSortByName(items, ascending)
+  selectionSortByCategory(items)          category first, then name
+  bubbleSortByDistance(nearbyPlaces)
+  sortByName(items)                        A-Z, used before binary search
+  Each returns SortStats {comparisons, swaps}.
+
+WHY two algorithms?
+  To compare them live. On all 44 places by name:
+      bubble sort     880 comparisons, 367 swaps
+      selection sort  946 comparisons (exactly 44*43/2), only 39 swaps
+  Bubble sort is STABLE (equal items keep their order) and stops early on
+  sorted input (O(n) best case). Selection sort always does n(n-1)/2
+  comparisons but at most n-1 swaps, and is NOT stable.
+  std::sort is deliberately never used (make check-manual verifies this).
+
+HOW - bubble sort
+      for pass = 0 .. n-2:
+          swapped = false
+          for j = 0 .. n-2-pass:            // last `pass` items already final
+              compare items[j], items[j+1]; swap if out of order
+          if no swap in this pass: stop     // already sorted
+
+HOW - selection sort
+      for i = 0 .. n-2:
+          best = index of the smallest item in i..n-1
+          if best != i: swap items[i], items[best]
+
+  All name comparisons ignore upper/lower case. The Sort menu sorts a COPY of
+  the array so the stored order never changes.
+
+
+================================================================================
+14. TRIP - FROM A ROUTE TO DIRECTIONS  (include/Trip.h, src/Trip.cpp)
+================================================================================
+
+WHAT
+  planTrip(campus, route) turns BFS's list of place IDs into:
+      stops  - every place with the road taken, leg meters, running total
+      legs   - one step per ROAD: turn, heading, from, to, meters, places passed
+      roads  - each road once, in order
+      meters, straightLine, minutes
+
+WHY
+  "44 -> 12 -> 7 -> 3" is useless to a person. "Head south on Library Lane,
+  then turn left onto Hall Road, past the Cafeteria" is what people follow.
+
+HOW (one pass over the route, so O(k) for k stops)
+  For each consecutive pair (previous -> current):
+      edge   = the walkway between them (its meters and road name)
+      bearing = compass bearing previous -> current
+      if the road is the SAME as the last leg's road:
+          merge: the last leg's end becomes a "place you pass",
+                 extend the leg to current, add the meters
+      else:
+          start a new leg; its turn = turnBetween(lastBearing, bearing)
+  Then each leg's heading = compass name of the bearing from its start to its
+  end (reads better than the first segment's direction).
+
+  turnBetween(from, to):
+      change = (to - from + 540) mod 360 - 180      // -180..180, + = right
+      |change| < 35   -> "Continue straight"
+      |change| > 150  -> "Turn around"
+      change > 0      -> "Turn right", else "Turn left"
+
+  compassName(bearing): 8 sectors of 45 degrees centred on N, NE, E, ...
+  walkingMinutes(m) = ceil(m / 75)    // 75 m per minute, about 4.5 km/h
+
+
+================================================================================
+15. AUTHENTICATION  (include/Authentication.h, src/Authentication.cpp)
+================================================================================
+
+WHAT
+  Users are {username, passwordHash, role}. Operations: load, save,
+  addDefaultUsers (admin/admin123, student1/student123), registerUser, login,
+  logout, isAdmin.
+
+WHY
+  Two roles are needed (students use the map, admins edit it), and the file
+  should never contain plain-text passwords.
+
+HOW
+  hashPassword: 64-bit FNV-1a over "lowercase(username):password"
+      hash = 14695981039346656037
+      for each byte c: hash ^= c; hash *= 1099511628211
+      stored as 16 hex digits
+  Including the username means two users with the same password get different
+  hashes. Usernames: 3-30 chars of letters, digits, '_' or '.'. Passwords: at
+  least 4 chars, no '|'. Username lookup ignores case.
+
+  Honest limit: FNV-1a is FAST, so it is easy to brute-force. A real system
+  would use bcrypt or Argon2. The code, the file header and the Help screen
+  all say so.
+
+
+================================================================================
+16. LOGGER  (include/Logger.h, src/Logger.cpp)
+================================================================================
+
+WHAT
+  Appends lines like
+      [2026-09-29 08:20:10] LOGIN user=student1 result=success
+  to logs/application.log, and can print the last N lines.
+
+WHY
+  An audit trail for the admin (menu 15) and for debugging. Passwords are
+  never passed to it.
+
+HOW
+  log() opens the file in append mode for EACH line, so earlier entries are
+  safe even if the program is killed. printLast(n) reads the file keeping a
+  std::deque of the last n lines (push_back, pop_front when too long).
+
+
+================================================================================
+17. UTILS  (include/Utils.h, src/Utils.cpp)
+================================================================================
+
+WHAT
+  Strings: trim, toLower, compareIgnoreCase, equalsIgnoreCase,
+           containsIgnoreCase, split
+  Parsing: parseInt, parseDouble (STRICT: the whole string must be a number),
+           parseCoordinates ("22.8992, 89.5016" or "22.8992 89.5016")
+  Input:   readLine, readChoice, readDouble, readYesNo, readPassword, pause,
+           inputClosed
+  Output:  printTitle, printRule, printOption, printSuccess/Warning/Error
+  System:  copyToClipboard, fileExists, makeDirectory, currentTimestamp,
+           initConsole
+
+WHY
+  The program must NEVER crash on bad input. Typing "abc" where a number is
+  expected, a number out of range, or closing the input stream must all be
+  handled gracefully.
+
+HOW
+  - parseInt uses strtol and checks the whole string was consumed, so "12abc"
+    is rejected (std::stoi would accept "12").
+  - readChoice(highest) loops until it gets a number 0..highest; pressing
+    Enter means 0 (Back) where that makes sense.
+  - When stdin closes (end of a piped test script), a flag is set and every
+    reader returns 0 / "" / false, so every menu falls back to "Back" and the
+    program exits cleanly instead of looping forever.
+  - readPassword on Windows reads key by key with _getch() and prints '*',
+    handling Backspace and ignoring arrow keys. With piped input it falls back
+    to a normal read so automated tests still work.
+  - copyToClipboard uses the Windows clipboard API (OpenClipboard,
+    GlobalAlloc, SetClipboardData); elsewhere it just returns false and the
+    app prints the text to copy by hand.
+  - initConsole switches the console to UTF-8 so box and arrow characters
+    render, and turns on colours.
+
+
+================================================================================
+18. STYLE - TERMINAL COLOURS  (include/Style.h, src/Style.cpp)
+================================================================================
+
+WHAT
+  Stream manipulators: style::accent (KUET gold #d9b100), heading (bold
+  gold), strong (bold), muted (grey), good (green), warn (amber), bad (red),
+  reset. Used like std::endl:
+      std::cout << style::accent << "CholoKUET" << style::reset;
+
+WHY
+  Colour makes menus easier to scan. It is wrapped in our own module so the
+  rest of the code does not depend on the third-party library directly.
+
+HOW
+  Built on termcolor (third_party). On Windows, "virtual terminal processing"
+  is switched on so ANSI 24-bit colour codes work. Colour is only enabled when
+  output is a real terminal and the NO_COLOR environment variable is not set,
+  so piping output into a file or a test gives plain text.
+  <cstdint> is included before termcolor because termcolor uses uint8_t
+  without including it, which breaks on g++ 16; we fix it from outside rather
+  than editing the library.
+
+
+================================================================================
+19. NAVIGATOR - START-UP, LOGIN, MAIN MENU  (Navigator.h, Navigator.cpp)
+================================================================================
+
+WHAT
+  The application class. It owns:
+      Authentication auth;  Campus campus;  CampusTree campusTree;
+      Logger logger;
+      Stack          history;          // trip history, newest on top
+      std::list<int> recentSearches;   // linked list, newest first
+      std::list<int> favorites;        // linked list
+      int            currentLocation;  // -1 = unknown
+  Its methods are split over four .cpp files by topic.
+
+HOW - initialize()
+  1. initConsole(): UTF-8 and colours.
+  2. Find the data folder: try "", "../", "../../", "../../../" until
+     data/locations.txt exists. So the exe works when started from the project
+     folder, bin/, or a CMake build folder.
+  3. Create data/ and logs/ if missing; open the log; log STARTUP.
+  4. loadData():
+       categories -> places (array + graph vertices) -> walkways (graph edges)
+       build the category tree
+       load users; if none, create admin/admin123 and student1/student123
+       DFS connectivity check; warn if some place is unreachable
+
+HOW - run()
+      while loginScreen() returns true (someone logged in):
+          while logged in:
+              show mainMenu()
+              read a choice (0..11 for students, 0..15 for admins)
+              0 -> logout(), else handleChoice(choice)
+      log SHUTDOWN, say goodbye
+
+  login(): read username, hidden password; on success clear history, recent
+  searches and current location, and load this user's favourites from file.
+  registerAccount(): asks twice for the password, validates, saves users.txt.
+  logout(): save favourites, clear session state.
+  handleChoice(): a switch that calls the right feature for 1..15.
+
+HOW - shared helpers
+  resolvePlace(input) turns whatever the user typed into a place ID:
+      coordinates -> NEAREST place (Haversine to every place, keep the min);
+                     warns if over 2 km away (probably off campus)
+      a number    -> that place ID
+      text        -> linear search on names; if none, on categories;
+                     one match -> use it; several -> numbered list to pick
+  askForPlace(question, enterMeansCurrent) keeps asking until resolvePlace
+  succeeds; Enter alone means "where I am now" (or Back).
+  askForPoint() is the same but keeps typed coordinates EXACTLY (used by
+  What's near me, so the result is from your real position).
+  moveTo(id) pushes a place on the history stack (skipping an immediate
+  repeat) and sets currentLocation.
+  rememberSearch(id): remove it if present, push_front, pop_back beyond 10.
+  These are all O(1)/O(n) operations that suit a linked list.
+
+
+================================================================================
+20. Trips.cpp - GETTING AROUND  (menus 1, 2, 3)
+================================================================================
+
+MENU 1 - TAKE ME SOMEWHERE
+  1. start = askForPlace("Where are you now?"), goal = askForPlace(...)
+  2. same place? -> "You're already at ..."
+  3. route = campus.graph.findRoute(start, goal)       // BFS + Queue + Stack
+  4. empty? -> "There's no walkway connecting ..."
+  5. trip = planTrip(campus, route)                    // roads, turns, times
+  6. printTrip(): summary line, DIRECTIONS (one step per road, with places
+     passed), STOPS table (leg and running distance), ROADS in order, and the
+     straight-line distance with a note that BFS minimises stops, not meters.
+  7. Options:
+       1 "I'm going"  -> moveTo(start), moveTo(goal): both go on the history
+                        stack, so Back can undo the trip
+       2 "Show how BFS found this route" -> run BFS again with verbose = true
+       0 Back
+  Every request is logged as NAVIGATION with result=found / no_route.
+
+MENU 2 - WHAT'S NEAR ME
+  1. askForPoint(): a place, or exact coordinates, or Enter for "here"
+  2. For every place in the array compute Haversine distance -> vector of
+     {id, meters}
+  3. bubbleSortByDistance()
+  4. Show the nearest 10: distance, compass direction (bearing from you to
+     it), walking time; "you're here" if under 10 m
+  5. Show the comparison and swap counts; pick a number to open that place.
+
+MENU 3 - EXPLORE THE CAMPUS
+  1 DFS from a chosen place (optionally printing the stack at every step),
+    then the visit order and "Reached X of Y places".
+  2 Connectivity: DFS from the first vertex, list any place not reached.
+  3 All roads: group every walkway by road name (std::map, so roads come out
+    alphabetically), show each road's total length and its walkways.
+
+
+================================================================================
+21. Places.cpp - FINDING PLACES AND "YOU" MENUS  (menus 4-11)
+================================================================================
+
+MENU 4 - SEARCH
+  - A number -> linearSearchById.
+  - Text -> sort a COPY by name, binary search for an EXACT name (shown first),
+    then linear search by name and by category, merged without duplicates.
+  - Shows how many comparisons each search made.
+  - Opening a result adds it to recent searches (linked list).
+
+A PLACE'S PAGE (openPlace)
+  Name (star if favourite), category, number, description, coordinates,
+  distance from you, and every walkway (neighbour, meters, road). Options:
+      1 Take me here     -> showTrip(current location, this place)
+      2 I'm here         -> moveTo(this place)
+      3 Add/Remove favourite (saved to favorites.txt at once)
+      4 Copy coordinates -> Windows clipboard
+
+MENU 5 - BROWSE BY CATEGORY (tree)
+  Level 1: children of the root (categories) with place counts.
+  Level 2: children of a category (places) -> open one.
+  Extra option: print the whole tree with node count and height.
+
+MENU 6 - SORT PLACES
+  1 Name A-Z  (bubble)     2 Name Z-A  (selection)
+  3 Category  (selection)  4 Distance from me (bubble, needs a location)
+  Prints the sorted list plus comparisons and swaps.
+
+MENU 7 - WHERE AM I?
+  Pick a place, or type coordinates (snapped to the nearest place after a
+  yes/no), or copy your current coordinates.
+
+MENU 8 - TRIP HISTORY (stack)
+  Shows the stack top-first using at(i); the top is marked "you're here".
+      Back  -> pop(); currentLocation = new top (or unknown if empty)
+      Clear -> clear()
+
+MENU 9 - RECENT SEARCHES (linked list): newest first, last 10.
+MENU 10 - FAVORITES (linked list): open any starred place.
+MENU 11 - HELP: how to type places, and how the app works inside.
+
+
+================================================================================
+22. NavigatorAdmin.cpp - ADMIN TOOLS  (menus 12-15, admins only)
+================================================================================
+
+MENU 12 - MANAGE PLACES
+  List      the array in stored order: [index] ID name category
+  Add       suggested ID = nextFreeId(); name, category, lat, lon,
+            description -> campus.addLocation -> rebuild tree -> save file
+            (then warns: no walkways yet, add some in menu 13)
+  Edit      Enter keeps each old value; bad numbers keep the old value;
+            updateLocation recomputes walkway lengths if the place moved;
+            rebuild tree; save places AND walkways
+  Delete    confirm (y/N), then keep EVERY structure consistent:
+              array + graph         campus.removeLocation(id)
+              favourites list       favorites.remove(id)
+              recent searches       recentSearches.remove(id)
+              history STACK         a stack only exposes its top, so:
+                                      pop everything into a second stack,
+                                      skipping id; then pop that stack back.
+                                    Reversing twice restores the original
+                                    order.
+              current location      moves to the new top if it was deleted
+              tree                  rebuilt
+              files                 places, walkways, favourites saved
+            then a DFS connectivity warning if part of the campus is now cut
+            off.
+
+MENU 13 - MANAGE WALKWAYS
+  List (each walkway once), Add (refuses a self-loop or a duplicate; length
+  defaults to the straight line; shows existing road names; road cannot
+  contain '|'), Remove (then connectivity check). Each change saves
+  paths.txt.
+
+MENU 14 - USERS: usernames and roles, never passwords.
+MENU 15 - ACTIVITY LOG: the last 30 lines of logs/application.log.
+
+
+================================================================================
+23. THE DATA FILES  (data/)
+================================================================================
+
+  locations.txt   ID|Name|Category|Latitude|Longitude|Description
+                  3|Central Library|Facility|22.899247|89.501796|Central library of KUET
+                  44 places. 38 positions are surveyed OpenStreetMap
+                  coordinates; 6 buildings OSM does not have were measured
+                  off the KUET master plan, aligned to OSM with a
+                  least-squares affine fit on 18 shared buildings (average
+                  error about 27 m).
+  paths.txt       From|To|Meters|Road   (meters may be empty = straight line)
+                  56 walkways on 15 roads
+  categories.txt  one category per line, in tree order (10)
+  users.txt       username|hash|role
+  favorites.txt   username|placeId
+
+  Lines starting with '#' are comments. Plain text was chosen so the data can
+  be read, checked and edited by hand, and diffed in Git.
+
+
+================================================================================
+24. TESTS  (tests/)
+================================================================================
+
+WHAT
+  Eight small programs, one per module, using a tiny CHECK(expr) macro from
+  check.h that counts passes and prints the line of any failure. `make test`
+  runs them all and stops on the first failing suite.
+
+      Suite         Checks   What it covers
+      Stack           213    empty, LIFO order, peek, overflow at 200,
+                             underflow
+      Queue           419    empty, FIFO order, overflow, wraparound
+      Graph/BFS/DFS    26    reachable, same start/end, unreachable, fewest
+                             stops over a longer path, disconnected and
+                             connected DFS, deleting a place, a complete
+                             200-vertex graph (no overflow)
+      Tree             15    build, empty categories, case-insensitive find,
+                             subtree removal
+      Search           22    found/not found, partial and case-insensitive,
+                             binary search on sorted data
+      Sort             13    empty, one item, sorted, reversed, duplicates
+                             (stability), by category, by distance
+      Trip             34    legs merge on one road, left/right turns,
+                             compass names, walking time, reversed trip
+      Campus data     165    the REAL data files load with no bad lines,
+                             every walkway has a road, the campus is
+                             connected, all places are on campus
+      TOTAL           907    all passing
+
+WHY
+  Each structure is tested on its own, including the edge cases that usually
+  break student code (overflow, underflow, wraparound, empty input,
+  unreachable goal).
+
+
+================================================================================
+25. BUILDING  (Makefile, CMakeLists.txt, assets/cholokuet.rc)
+================================================================================
+
+  make              build bin/CholoKUET(.exe)
+  make run          build and start
+  make test         build and run all 8 test programs
+  make check-manual search include/, src/ and dsa/ to prove std::stack,
+                    std::queue and std::sort are never used
+  make clean        delete obj/ and bin/
+
+  - Each .cpp is compiled once into obj/ (flags: -std=c++17 -Wall -Wextra
+    -pedantic -O2). Changing one file only recompiles that file.
+  - -MMD writes a small .d file per object listing the headers it includes,
+    so changing a header rebuilds exactly the files that use it.
+  - On Windows it links STATICALLY (-static). Without it, the exe once
+    crashed on a PC because it loaded an incompatible libstdc++ DLL from
+    another program on the PATH. Static linking also lets the exe run on a PC
+    without MinGW installed.
+  - windres compiles assets/cholokuet.rc, which puts the CholoKUET icon and
+    version details (shown in File Explorer > Properties) into the exe.
+  - It works from Git Bash and from PowerShell/cmd. Only two commands differ
+    between those shells (searching files and deleting folders), so only
+    check-manual and clean have two versions.
+  - CMakeLists.txt builds the same thing: a static library cholokuet_core
+    from dsa/ and src/, the CholoKUET executable, and one ctest per test file.
+
+
+================================================================================
+26. tools/render-map.js - DRAWING THE CAMPUS MAP
+================================================================================
+
+  A Node.js script that reads data/locations.txt and data/paths.txt and draws
+  assets/campus-map.svg: the campus outline (from OSM), every walkway as a
+  line, and every place as a marker with its ID. So the number you see on the
+  map is exactly the number you type in the app. Run it again after changing
+  the data:   node tools/render-map.js
+
+
+================================================================================
+27. ONE COMPLETE TRIP, TRACED THROUGH THE CODE
+================================================================================
+
+  The user is logged in as student1 and chooses 1, types "lib", then "gate".
+
+  Navigator::run -> handleChoice(1) -> takeMeSomewhere()           Trips.cpp
+    askForPlace("Where are you now?") -> resolvePlace("lib")      Navigator.cpp
+      parseCoordinates fails, parseInt fails
+      linearSearchByName(locations, "lib") -> 1 match              Search.cpp
+      -> Central Library (ID 3)
+    askForPlace("Where do you want to go?") -> "gate" -> KUET Main Gate
+    showTrip(3, gate)
+      campus.graph.findRoute(3, gate)                              Graph.cpp
+        Queue: enqueue 3 ... dequeue / enqueue neighbours ring by ring,
+        filling parent[] ... until the gate is dequeued
+        rebuildRoute: push gate, parent[gate], ... , 3 onto our Stack;
+        pop all -> std::list: 3 -> ... -> gate
+      logAction("NAVIGATION", "... result=found")                  Logger.cpp
+      planTrip(campus, route)                                      Trip.cpp
+        walk the list once: Library Lane (89 m), then Hall Road (258 m,
+        merged over 5 stops), then KUET Road (360 m, merged over 3 stops);
+        turns from bearings; 707 m total -> ceil(707/75) = 10 min
+      printTrip(): the directions, the stops table, the roads
+      user picks 1 "I'm going":
+        moveTo(3); moveTo(gate)  -> both pushed on the history Stack
+        currentLocation = gate
+  Later, menu 8 -> Back -> history.pop() -> currentLocation = Central Library
+
+
+================================================================================
+28. COMPLEXITY AT A GLANCE
+================================================================================
+
+      Operation                                Time
+      ---------------------------------------  --------------------------
+      Array access by index                    O(1)
+      Find a place by ID / delete a place      O(n)
+      Linked list insert front / remove back   O(1)
+      Stack push / pop / peek                  O(1)
+      Queue enqueue / dequeue                  O(1)
+      Tree traversal / search                  O(n)
+      BFS, DFS                                 O(V + E)  (matrix: O(V^2))
+      Route -> directions (planTrip)           O(k), k = stops on route
+      Linear search                            O(n)
+      Binary search                            O(log n), sorted data only
+      Bubble sort                              O(n^2), O(n) if already sorted
+      Selection sort                           O(n^2), at most n-1 swaps
+      What's near me                           O(n) distances + O(n^2) sort
+
+      Memory: O(V + E) for the graph, O(n) for everything else. Stack and
+      Queue are fixed at 200 integers each and can never overflow, because
+      the graph is capped at 200 places.
+
+
+================================================================================
+29. TOTAL SUMMARY
+================================================================================
+
+  CholoKUET is a C++17 terminal program that navigates the KUET campus
+  offline. Its 44 places are real campus buildings with real coordinates,
+  joined by 56 walkways on 15 named roads, all stored in plain text files.
+
+  WHAT IT DOES
+    It logs a user in (student or admin), then lets them get walking
+    directions between any two places, see what is nearby, explore the whole
+    campus, search, browse by category, sort places, set their location, go
+    Back through a trip history, and keep recent searches and favourites. An
+    admin can add, edit and delete places and walkways, view users and read
+    the activity log. Every change is saved to disk immediately and logged.
+
+  HOW IT IS BUILT
+    Three layers: menus (Navigator) on top, the campus model (Campus) in the
+    middle as the only code that touches files, and the data structures and
+    algorithms at the bottom, which know nothing about menus or files.
+
+  THE DATA STRUCTURES, AND WHY EACH ONE
+    Array        all places; O(1) access, read constantly, rarely changed
+    Linked list  recent searches (front insert, back removal), favourites,
+                 and BFS routes (length unknown in advance)
+    Stack        OURS, array-based: DFS, the Back button, reversing the BFS
+                 route, removing a place from the middle of the history
+    Queue        OURS, circular array: BFS, so every route in the app
+    Tree         general tree KUET -> category -> place for browsing
+    Graph        adjacency list, because the campus is sparse (56 edges)
+
+  THE ALGORITHMS
+    BFS          fewest-stop route; visited marked on enqueue; route rebuilt
+                 from parent[] using the stack
+    DFS          iterative on our stack, each place pushed once, so a fixed
+                 200-slot stack can never overflow
+    Search       linear (partial, any order, O(n)) and binary (exact, sorted,
+                 O(log n))
+    Sort         bubble (stable, early exit) and selection (few swaps), both
+                 counting comparisons and swaps
+    Haversine    real distances on the Earth's surface; bearings for turns
+                 and directions
+    planTrip     one pass that merges walkways on the same road, works out
+                 left/right/straight turns and walking time at 75 m/min
+
+  HOW WE KNOW IT WORKS
+    907 unit checks in 8 test programs, all passing, plus scripted runs of the
+    whole program as a student and as an admin with deliberately bad input.
+    The program never crashes on bad input, and no password is ever logged.
+
+  HONEST LIMITS
+    BFS gives the fewest stops, not the fewest meters (Dijkstra would fix
+    this). Six building positions are estimates (about 30 m). Most road names
+    are our own labels. The password hash is for a lab demo, not real
+    security. It is terminal-only, with no live GPS.
+
+  IN ONE SENTENCE
+    CholoKUET turns the DSA syllabus into a working campus map: a graph of
+    real walkways, searched with BFS on our own queue and DFS on our own
+    stack, and supported by arrays, linked lists, a tree, searching and
+    sorting, each doing a real job.
+
+================================================================================

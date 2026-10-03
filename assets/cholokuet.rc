@@ -1,0 +1,30 @@
+// Windows resources for CholoKUET.exe: the app icon and version details
+// (shown in File Explorer under Properties > Details).
+
+1 ICON "cholokuet.ico"
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+FILEOS          0x40004
+FILETYPE        0x1
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "KUET CSE"
+            VALUE "FileDescription",  "CholoKUET - Cholo Explore Kore Ashi"
+            VALUE "FileVersion",      "1.0.0"
+            VALUE "InternalName",     "CholoKUET"
+            VALUE "LegalCopyright",   "(c) 2026 Ettisaf Rup and Afia Anjum Broti"
+            VALUE "OriginalFilename", "CholoKUET.exe"
+            VALUE "ProductName",      "CholoKUET"
+            VALUE "ProductVersion",   "1.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2cf2a"/>
+      <stop offset="1" stop-color="#d9b100"/>
+    </linearGradient>
+    <clipPath id="pinHole">
+      <circle cx="256" cy="214" r="112"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="#101114"/>
+
+  <!-- map pin -->
+  <path d="M256 60c-86 0-156 68-156 153 0 108 128 222 147 238a14 14 0 0 0 18 0c19-16 147-130 147-238 0-85-70-153-156-153z"
+        fill="url(#gold)"/>
+  <circle cx="256" cy="214" r="112" fill="#101114"/>
+
+  <!-- a little campus graph inside the pin: the gold path is the BFS route -->
+  <g clip-path="url(#pinHole)" stroke-linecap="round">
+    <g stroke="#ffffff" stroke-opacity="0.28" stroke-width="7">
+      <line x1="196" y1="166" x2="256" y2="138"/>
+      <line x1="256" y1="138" x2="318" y2="176"/>
+      <line x1="196" y1="166" x2="214" y2="248"/>
+      <line x1="318" y1="176" x2="300" y2="262"/>
+    </g>
+    <polyline points="196,166 256,214 300,262" fill="none" stroke="#d9b100" stroke-width="10" stroke-linejoin="round"/>
+    <line x1="214" y1="248" x2="256" y2="214" stroke="#ffffff" stroke-opacity="0.28" stroke-width="7"/>
+    <circle cx="256" cy="138" r="13" fill="#ffffff"/>
+    <circle cx="318" cy="176" r="13" fill="#ffffff"/>
+    <circle cx="214" cy="248" r="13" fill="#ffffff"/>
+    <circle cx="256" cy="214" r="15" fill="#d9b100"/>
+    <circle cx="196" cy="166" r="18" fill="#d9b100" stroke="#101114" stroke-width="5"/>
+    <circle cx="300" cy="262" r="18" fill="#ffffff" stroke="#d9b100" stroke-width="7"/>
+  </g>
+</svg>

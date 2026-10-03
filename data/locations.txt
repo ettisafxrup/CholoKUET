@@ -1,0 +1,52 @@
+# ID|Name|Category|Latitude|Longitude|Description
+#
+# Where these positions come from:
+#  - Most buildings: OpenStreetMap (c) OpenStreetMap contributors, ODbL.
+#  - Places marked "(plan)" aren't mapped in OSM yet. They were measured off
+#    the KUET master plan, which we lined up with OSM using 18 buildings that
+#    appear in both (average difference about 27 m).
+# See docs/campus-map.md for the details.
+1|KUET Main Gate|Transportation|22.897760|89.506700|Main entrance where Teligati Road meets the Khulna-Jessore highway
+2|Administrative Building|Administrative|22.900702|89.502305|Main administrative offices of the university
+3|Central Library|Facility|22.899247|89.501796|Central library of KUET
+4|Department of CSE|Academic|22.899244|89.501567|Computer Science and Engineering, in the academic building
+5|Department of ECE|Academic|22.899264|89.501315|Electronics and Communication Engineering, in the academic building
+6|Department of IEM|Academic|22.899249|89.501056|Industrial Engineering and Management, in the academic building
+7|Architecture and URP Building|Academic|22.899705|89.501189|Departments of Architecture and Urban and Regional Planning
+8|Science Building|Academic|22.899832|89.501842|Physics, Chemistry and Mathematics (marked S.C. on the master plan)
+9|EEE Building|Academic|22.899806|89.502960|Electrical and Electronic Engineering
+10|Civil Engineering Building|Academic|22.900339|89.502920|Civil Engineering
+11|Mechanical Engineering Building|Academic|22.900371|89.501754|Mechanical Engineering
+12|Leather Engineering Building|Academic|22.900211|89.501163|Leather Engineering
+13|Mechatronics Engineering Building|Academic|22.900326|89.500539|Mechatronics Engineering
+14|IT Building|Academic|22.900474|89.498664|IT building in the west part of campus (IT park on the master plan)
+15|IT Incubation Centre|Facility|22.900235|89.499297|Startup and IT incubation centre
+16|Mechanical Workshop|Facility|22.900749|89.501438|Central engineering workshop
+17|Central Computer Centre|Facility|22.899478|89.502353|Central computer centre
+18|KUET Auditorium|Facility|22.899147|89.502972|Main auditorium for seminars and programmes
+19|Janata Bank, KUET Branch|Facility|22.899151|89.502747|Bank branch with ATM booths nearby
+20|Departmental Store|Facility|22.899064|89.502703|Campus shop for daily needs
+21|KUET Post Office|Facility|22.897679|89.503624|Campus post office near Teligati Road
+22|Water Treatment Plant|Facility|22.900625|89.500637|Water treatment plant and reservoir
+23|Cafeteria|Food|22.898319|89.503079|Main cafeteria
+24|Canteen|Food|22.898715|89.501341|Canteen between the halls and the academic area (plan)
+25|Medical Centre|Medical|22.900000|89.500739|Two-storey campus medical centre
+26|Central Mosque|Religious|22.899276|89.500395|Central mosque, beside the mosque pond (plan)
+27|Durbar Bangla|Landmark|22.899154|89.502353|Liberation War sculpture
+28|Central Shaheed Minar|Landmark|22.899306|89.505175|Language Movement memorial
+29|KUET Lake|Landmark|22.900220|89.504559|Lake in the east of the campus
+30|KUET Dighi|Landmark|22.898222|89.504106|Large pond in the south-east of the campus
+31|Central Playground|Sports|22.899505|89.504289|Main field for football, cricket and athletics
+32|Tennis Court|Sports|22.900948|89.502069|Tennis court behind the administrative building
+33|Amar Ekushey Hall|Residential|22.897857|89.501036|Student hall of residence
+34|Shaheed Smrity Hall|Residential|22.897858|89.502127|Student hall of residence (formerly Bangabandhu Hall, renamed 2024)
+35|Dr. M. A. Rashid Hall|Residential|22.898316|89.502408|Student hall of residence
+36|Fazlul Haque Hall|Residential|22.898453|89.501695|Student hall of residence (plan)
+37|Lalan Shah Hall|Residential|22.898170|89.500424|Student hall of residence
+38|Khan Jahan Ali Hall|Residential|22.898415|89.505072|Student hall of residence
+39|Rokeya Hall|Residential|22.900655|89.503256|Hall of residence for female students
+40|Dormitory|Residential|22.901683|89.501010|Staff dormitory (plan)
+41|Teachers and Staff Quarters|Residential|22.902740|89.501267|Residential area for teachers and staff
+42|Residential Area Playground|Sports|22.902763|89.500829|Playground in the residential area
+43|Garage|Transportation|22.900427|89.501038|University vehicle garage (plan)
+44|Kodom Tola|Facility|22.897973|89.503409|Teacher-Student Centre (plan)

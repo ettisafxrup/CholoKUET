@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CholoKUET Report</title>
+<meta name="description" content="The CholoKUET project report, Data Structures and Algorithms Laboratory, CSE, KUET." />
+<link rel="icon" href="../assets/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap" />
+<style>
+  /* Layout: a single A4-width reading column; chapters start on new printed pages. */
+  :root {
+    --paper: #ffffff;
+    --ink: #16171b;
+    --soft: #55575e;
+    --line: #e4e1d6;
+    --gold: #b89600;
+    --gold-fill: #d9b100;
+    --tint: #faf6e3;
+    --night: #101114;
+    --display: "Sora", "Segoe UI", Helvetica, Arial, sans-serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #15161a;
+      --ink: #ecebe6;
+      --soft: #a6a7ad;
+      --line: #2e2f35;
+      --gold: #e6c21a;
+      --tint: #1f1d14;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15161a;
+    --ink: #ecebe6;
+    --soft: #a6a7ad;
+    --line: #2e2f35;
+    --gold: #e6c21a;
+    --tint: #1f1d14;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.65 var(--body);
+  }
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 40px 80px;
+  }
+
+  h1,
+  h2,
+  h3,
+  .eyebrow,
+  th,
+  figcaption,
+  .cover * {
+    font-family: var(--display);
+  }
+  h2 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin: 3.2rem 0 1rem;
+    text-wrap: balance;
+    display: flex;
+    gap: 0.7rem;
+    align-items: baseline;
+  }
+  h2 .num {
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+  h3 {
+    font-size: 1.12rem;
+    margin: 2rem 0 0.5rem;
+  }
+  p,
+  li {
+    max-width: 68ch;
+  }
+  a {
+    color: var(--gold);
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--tint);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  pre {
+    font: 400 0.8rem/1.5 var(--mono);
+    background: var(--night);
+    color: #e9e7df;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  pre .hi {
+    color: #d9b100;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.4rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.92rem;
+    font-variant-numeric: tabular-nums;
+  }
+  th {
+    text-align: left;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--soft);
+    border-bottom: 2px solid var(--gold-fill);
+    padding: 0.5rem 0.6rem;
+  }
+  td {
+    border-bottom: 1px solid var(--line);
+    padding: 0.5rem 0.6rem;
+    vertical-align: top;
+  }
+  td code {
+    white-space: nowrap;
+  }
+
+  figure {
+    margin: 1.6rem 0;
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  figcaption {
+    font-size: 0.8rem;
+    color: var(--soft);
+    margin-top: 0.5rem;
+  }
+
+  .note {
+    border-left: 3px solid var(--gold-fill);
+    background: var(--tint);
+    padding: 0.8rem 1rem;
+    margin: 1.2rem 0;
+  }
+  .note p {
+    margin: 0;
+  }
+
+  /* Cover */
+  .cover {
+    min-height: 60rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .cover .brand {
+    background: var(--night);
+    border-radius: 10px;
+    padding: 28px;
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .cover .brand svg {
+    width: 96px;
+    height: 96px;
+    flex: none;
+  }
+  .cover .brand .word {
+    color: #fff;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cover .brand .word span {
+    color: #d9b100;
+  }
+  .cover .brand .tag {
+    color: #ffffffb8;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    margin-top: 0.5rem;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .cover h1 {
+    font-size: clamp(2.6rem, 8vw, 4.4rem);
+    line-height: 1;
+    margin: 0.3rem 0 0;
+    letter-spacing: -0.03em;
+  }
+  .cover .sub {
+    font-size: 1.15rem;
+    color: var(--soft);
+    margin-top: 0.8rem;
+    font-family: var(--body);
+  }
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem 2rem;
+    font-size: 0.9rem;
+  }
+  .meta div {
+    min-width: 0;
+  }
+  .meta dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+  .meta dd {
+    margin: 0.2rem 0 0;
+    font-family: var(--body);
+  }
+  .team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.4rem;
+  }
+  .member {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    min-width: 0;
+  }
+  .photo {
+    width: 104px;
+    height: 128px;
+    flex: none;
+    border: 2px dashed var(--gold-fill);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--soft);
+    background: var(--tint);
+  }
+  .member b {
+    display: block;
+    font-size: 1.05rem;
+  }
+  .member span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--soft);
+    font-family: var(--body);
+  }
+
+  .toc ol {
+    columns: 2 260px;
+    padding-left: 1.2rem;
+    font-family: var(--display);
+    font-size: 0.92rem;
+  }
+  .toc li {
+    margin: 0.2rem 0;
+  }
+
+  @media print {
+    body {
+      font-size: 11.5pt;
+    }
+    .page {
+      max-width: none;
+      padding: 0;
+    }
+    h2 {
+      break-before: page;
+      margin-top: 0;
+    }
+    .cover {
+      min-height: auto;
+      border: 0;
+    }
+    pre,
+    figure,
+    table,
+    .note {
+      break-inside: avoid;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+  @page {
+    size: A4;
+    margin: 20mm 18mm;
+  }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; gap: 1rem;
+    padding: 0.7rem 20px; background: var(--paper); border-bottom: 1px solid var(--line);
+    font: 600 0.85rem var(--display); flex-wrap: wrap;
+  }
+  .topbar a { text-decoration: none; }
+  .cover .brand img { width: 96px; height: 96px; flex: none; }
+  img.photo { object-fit: cover; object-position: center 20%; border: 2px solid var(--gold-fill); padding: 0; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--gold); }
+  h2, h3 { scroll-margin-top: 4rem; }
+  @media print { .topbar { display: none; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">← CholoKUET home</a>
+  <span><a href="https://github.com/ettisafxrup/CholoKUET/raw/main/presentation/CholoKUET%20Report.pdf">Download PDF</a> · <a href="#" onclick="window.print(); return false">Print</a></span>
+</div>
+
+<div class="page">
+  <section class="cover">
+    <div class="brand">
+      <img src="../assets/logo-mark.png" alt="" width="96" height="96" />
+      <div>
+        <div class="word">Cholo<span>KUET</span></div>
+        <div class="tag">CHOLO EXPLORE KORE ASHI</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="eyebrow">
+        Project Report · Data Structures and Algorithms Laboratory
+      </div>
+      <h1>CholoKUET</h1>
+      <p class="sub">
+        A KUET campus navigator built on stacks, queues, trees and graphs
+      </p>
+    </div>
+
+    <dl class="meta">
+      <div>
+        <dt>Department</dt>
+        <dd>Computer Science and Engineering</dd>
+      </div>
+      <div>
+        <dt>Institution</dt>
+        <dd>Khulna University of Engineering &amp; Technology (KUET)</dd>
+      </div>
+      <div>
+        <dt>Course</dt>
+        <dd>Data Structures and Algorithms Laboratory</dd>
+      </div>
+      <div>
+        <dt>Submitted to</dt>
+        <dd>
+          <b>Subah Nawar</b>, Lecturer, Department of CSE, KUET<br />
+          <b>Lamisa Bintee Mizan Deya</b>, Lecturer, Department of CSE, KUET<br />
+          <i>Course teachers, Data Structures and Algorithms Laboratory</i>
+        </dd>
+      </div>
+      <div>
+        <dt>Date of submission</dt>
+        <dd>5 October 2025</dd>
+      </div>
+      <div>
+        <dt>Source code</dt>
+        <dd><a href="https://github.com/ettisafxrup/CholoKUET">github.com/ettisafxrup/CholoKUET</a></dd>
+      </div>
+    </dl>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom: 0.9rem">Submitted by</div>
+      <div class="team">
+        <div class="member">
+          <img class="photo" src="../assets/team/ettisaf-rup.jpg" alt="Ettisaf Rup" />
+          <div>
+            <b>Ettisaf Rup</b><span>Undergraduate, CSE, KUET</span><span>Roll: 2407109</span>
+          </div>
+        </div>
+        <div class="member">
+          <img class="photo" src="../assets/team/afia-anjum-broti.jpg" alt="Afia Anjum Broti" />
+          <div>
+            <b>Afia Anjum Broti</b><span>Undergraduate, CSE, KUET</span><span>Roll: 2407096</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="toc">
+      <div class="eyebrow">Contents</div>
+      <ol>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#marking">How the Marking Scheme Is Covered</a></li>
+        <li><a href="#where">Where We Used What</a></li>
+        <li><a href="#how">How the Application Works</a></li>
+        <li><a href="#design">System Design</a></li>
+        <li><a href="#structures">Data Structures</a></li>
+        <li><a href="#algorithms">Algorithms</a></li>
+        <li><a href="#complexity">Complexity Analysis</a></li>
+        <li><a href="#testing">Testing</a></li>
+        <li><a href="#screens">Screens from the App</a></li>
+        <li><a href="#limitations">Limitations</a></li>
+        <li><a href="#improve">How We Can Improve It</a></li>
+        <li style="list-style: none"><a href="#references">References</a></li>
+        <li style="list-style: none"><a href="#appendix-a">Appendix A. Data Structure Walkthroughs</a></li>
+        <li style="list-style: none"><a href="#appendix-b">Appendix B. Building and Running</a></li>
+      </ol>
+    </nav>
+  </section>
+
+  <!-- ===================================================== 1 -->
+  <h2 id="introduction"><span class="num">01</span>Introduction</h2>
+
+  <h3>1.1 The problem</h3>
+  <p>
+    Every year a new batch arrives at KUET and spends its first few weeks lost.
+    The campus covers about 117 acres and has more than forty buildings, many
+    known only by short forms such as "ACA building", "ME building" or "Kodom
+    Tola". Nothing on the ground tells you that CSE, ECE and IEM share one
+    building, or that the quickest walk from the main gate to the library goes
+    past the halls. Visitors have it even harder, and many students who have
+    been here for years still could not say how far the medical centre is from
+    Lalan Shah Hall.
+  </p>
+  <p>
+    We wanted to see how far a small program could go towards answering those
+    everyday questions, using only the data structures we were studying in this
+    course.
+  </p>
+
+  <h3>1.2 Motivation</h3>
+  <p>
+    Most lab work practises each data structure on its own: push three numbers,
+    pop two, print the stack. That works, but it does not show why the stack
+    exists. Campus navigation needs almost everything in the syllabus,
+    naturally. Walkways between buildings form a graph. Finding a route is BFS.
+    The Back button is a stack. Building categories form a tree. Finding a place
+    by name is searching, and listing places by distance is sorting. Every
+    structure in this project does a real job.
+  </p>
+
+  <h3>1.3 Objectives</h3>
+  <ul>
+    <li>Build a working navigator for the KUET campus that runs offline on any Windows PC.</li>
+    <li>Write the stack and the queue ourselves and use them where they matter: BFS, DFS, navigation history and route reversal.</li>
+    <li>Use real campus coordinates that we can defend, not invented positions.</li>
+    <li>Turn a route into directions a person can follow: which roads to take, where to turn, what you pass on the way, and how long it takes.</li>
+    <li>Let the program show its own working (the BFS queue, the DFS stack), so each structure can be seen during the viva.</li>
+  </ul>
+
+  <h3>1.4 Scope</h3>
+  <p>
+    CholoKUET covers 44 places on the main campus (departments, halls, the
+    library, the auditorium, the medical centre, landmarks such as Durbar Bangla
+    and the Central Shaheed Minar) connected by 56 walkways on 15 named roads.
+    It works at the level of buildings, not rooms, and it does not read live
+    GPS: the user types a place or a pair of coordinates. The name
+    CholoKUET comes from <i>Cholo Explore Kore Ashi</i> ("come on, let's go
+    explore"), because the project began with a simple question: could we build
+    our own map of our own campus?
+  </p>
+
+  <!-- ===================================================== 2 -->
+  <h2 id="marking"><span class="num">02</span>How the Marking Scheme Is Covered</h2>
+  <p>
+    This chapter maps each part of the tentative marks distribution to the exact
+    feature and source file that covers it, so any part can be shown quickly
+    during the evaluation.
+  </p>
+  <div class="note">
+    <p>
+      The lab asked for the stack and queue to be written by hand; the other
+      containers may come from the STL. Every algorithm that runs on them (BFS,
+      DFS, linear and binary search, bubble and selection sort) is our own code.
+      Running <code>make check-manual</code> confirms that
+      <code>std::stack</code>, <code>std::queue</code> and <code>std::sort</code>
+      appear nowhere in the program.
+    </p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Marking area</th><th>Marks</th><th>Where it is covered in the app</th><th>Where it is in the code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Array</td><td rowspan="4">5 (with LL, Stack, Queue)</td><td>The list of all 44 places, used by every search, sort and "nearest place" lookup</td><td><code>Campus::locations</code> (<code>std::vector&lt;Location&gt;</code>) in <code>include/Campus.h</code>, <code>src/Campus.cpp</code></td></tr>
+        <tr><td>Linked list</td><td>Recent searches (newest first, last 10), favorites, and every BFS route</td><td><code>std::list&lt;int&gt;</code> in <code>include/Navigator.h</code>; <code>Graph::findRoute()</code> returns <code>std::list&lt;int&gt;</code></td></tr>
+        <tr><td>Stack (hand-written)</td><td>DFS, the Back button in Trip history, turning the BFS route the right way round, removing a deleted place from history</td><td><code>dsa/stack/Stack.h</code>, <code>Stack.cpp</code>; used in <code>src/Graph.cpp</code>, <code>src/Places.cpp</code>, <code>src/NavigatorAdmin.cpp</code></td></tr>
+        <tr><td>Queue (hand-written, circular)</td><td>BFS for every route in "Take me somewhere" and "Take me here"</td><td><code>dsa/queue/Queue.h</code>, <code>Queue.cpp</code>; used in <code>Graph::findRoute()</code></td></tr>
+        <tr><td>Tree</td><td>5</td><td>Browse by category (menu 5): KUET → category → place; rebuilt after every admin change</td><td><code>include/CampusTree.h</code>, <code>src/CampusTree.cpp</code>: build, addChild, find, remove, print, countNodes, height</td></tr>
+        <tr><td>BFS</td><td rowspan="3">3 (with DFS, Searching)</td><td>Take me somewhere (menu 1), "Take me here" on a place page, and the step-by-step "Show how BFS found this route"</td><td><code>Graph::findRoute()</code> and <code>Graph::rebuildRoute()</code> in <code>src/Graph.cpp</code></td></tr>
+        <tr><td>DFS</td><td>Explore the campus (menu 3), the connectivity check, the warning after an admin deletes a place or walkway</td><td><code>Graph::depthFirstOrder()</code>, <code>Graph::isConnected()</code> in <code>src/Graph.cpp</code></td></tr>
+        <tr><td>Searching</td><td>Search (menu 4), and every "which place?" prompt; binary search for exact names</td><td><code>src/Search.cpp</code>: linearSearchByName, linearSearchByCategory, linearSearchById, binarySearchByName</td></tr>
+        <tr><td>Sorting</td><td>2</td><td>Sort places (menu 6); What's near me (menu 2); sorting a copy before binary search</td><td><code>src/Sort.cpp</code>: bubbleSortByName, selectionSortByName, selectionSortByCategory, bubbleSortByDistance</td></tr>
+        <tr><td>Presentation</td><td>5</td><td>Slide deck with a live demo plan, logo, generated campus map</td><td><code>presentation/CholoKUET Presentation.pptx</code>, <code>assets/</code></td></tr>
+        <tr><td>Q&amp;A and Report</td><td>5</td><td>This report, 55 viva questions with answers, the DSA mapping, 907 unit checks</td><td><code>presentation/</code>, <code>docs/viva-questions.md</code>, <code>docs/dsa-mapping.md</code>, <code>tests/</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===================================================== 3 -->
+  <h2 id="where"><span class="num">03</span>Where We Used What</h2>
+
+  <h3>3.1 Tools and technologies</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>What</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td>C++17</td><td>The whole application</td></tr>
+        <tr><td>Standard library</td><td><code>vector</code> (array), <code>list</code> (linked list), <code>map</code> and <code>set</code> (graph storage, visited sets), <code>deque</code> (last log lines), <code>string</code>, <code>function</code></td></tr>
+        <tr><td>termcolor (third_party, BSD licence)</td><td>Coloured terminal output in KUET gold, wrapped in our own Style module</td></tr>
+        <tr><td>g++ 16 (MSYS2 UCRT64), GNU Make, CMake</td><td>Building the program and the tests; static linking so the .exe runs on any PC</td></tr>
+        <tr><td>windres</td><td>Putting the CholoKUET logo and version details into <code>CholoKUET.exe</code></td></tr>
+        <tr><td>OpenStreetMap</td><td>Surveyed coordinates for 38 of the 44 places and the campus outline</td></tr>
+        <tr><td>KUET master plan</td><td>The road layout, and the position of six buildings OSM does not have</td></tr>
+        <tr><td>Node.js</td><td><code>tools/render-map.js</code>, which draws the campus map from our data files</td></tr>
+        <tr><td>Git and GitHub</td><td>Version control; the code is at github.com/ettisafxrup/CholoKUET</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>3.2 Every source file and what it holds</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>File</th><th>What it does</th><th>Structures / algorithms inside</th></tr></thead>
+      <tbody>
+        <tr><td><code>main.cpp</code></td><td>Starts the app; can also build the whole program on its own</td><td>-</td></tr>
+        <tr><td><code>dsa/stack/Stack.cpp</code></td><td>Our array stack</td><td>Stack</td></tr>
+        <tr><td><code>dsa/queue/Queue.cpp</code></td><td>Our circular queue</td><td>Queue</td></tr>
+        <tr><td><code>src/Graph.cpp</code></td><td>Walkway graph, BFS, route rebuild, DFS, connectivity</td><td>Graph, BFS + Queue, DFS + Stack, linked list</td></tr>
+        <tr><td><code>src/Trip.cpp</code></td><td>Turns a BFS route into roads, turns, stops and time</td><td>Linear pass over the route list</td></tr>
+        <tr><td><code>src/CampusTree.cpp</code></td><td>The category tree</td><td>General tree, preorder traversal</td></tr>
+        <tr><td><code>src/Campus.cpp</code></td><td>Loads, checks and saves every data file</td><td>Array of places, graph</td></tr>
+        <tr><td><code>src/Search.cpp</code></td><td>Linear and binary search</td><td>Searching</td></tr>
+        <tr><td><code>src/Sort.cpp</code></td><td>Bubble and selection sort with counts</td><td>Sorting</td></tr>
+        <tr><td><code>src/Distance.cpp</code></td><td>Haversine distance and compass bearing</td><td>-</td></tr>
+        <tr><td><code>src/Navigator.cpp</code></td><td>Startup, login, main menu, "which place?" prompts</td><td>Linear search, history Stack, recent-search list</td></tr>
+        <tr><td><code>src/Trips.cpp</code></td><td>Take me somewhere, What's near me, Explore</td><td>BFS, DFS, bubble sort</td></tr>
+        <tr><td><code>src/Places.cpp</code></td><td>Search, place pages, categories, sorting, history, favorites</td><td>Search, sort, tree, stack, lists</td></tr>
+        <tr><td><code>src/NavigatorAdmin.cpp</code></td><td>Adding, editing and deleting places and walkways</td><td>Array, graph, tree rebuild, stack rebuild</td></tr>
+        <tr><td><code>src/Authentication.cpp</code>, <code>Logger.cpp</code>, <code>Style.cpp</code>, <code>Utils.cpp</code></td><td>Accounts, activity log, colours, safe input</td><td>-</td></tr>
+        <tr><td><code>tests/*.cpp</code></td><td>Eight unit-test programs</td><td>Checks for every structure</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===================================================== 4 -->
+  <h2 id="how"><span class="num">04</span>How the Application Works</h2>
+  <p>
+    This chapter follows the program from the moment it starts until it closes,
+    then walks through the main feature step by step.
+  </p>
+
+  <h3>4.1 Starting up</h3>
+  <ol>
+    <li><code>main()</code> creates the <code>Navigator</code> object and calls <code>initialize()</code>.</li>
+    <li>The program looks for <code>data/locations.txt</code> in the current folder and up to three folders above it, so it works whether it is started from the project folder, from <code>bin/</code>, or from a CMake build folder.</li>
+    <li>It turns on UTF-8 output and colours, creates <code>data/</code> and <code>logs/</code> if they are missing, and opens the activity log.</li>
+    <li><code>Campus</code> loads the categories, then the places into the array (each becomes a graph vertex), then the walkways into the graph. Broken or repeated lines are skipped and reported, never fatal.</li>
+    <li>The category tree is built from the loaded places.</li>
+    <li><code>Authentication</code> loads the accounts. If there are none, it creates <i>admin / admin123</i> and <i>student1 / student123</i>.</li>
+    <li>A quick DFS checks that every place can be reached, and warns if not.</li>
+  </ol>
+
+  <h3>4.2 Logging in</h3>
+  <p>
+    The login screen offers Log in, Create an account and Exit. Passwords are
+    hidden with <code>*</code> while typing. Usernames are checked (3–30
+    letters, digits, <code>_</code> or <code>.</code>), and passwords are stored
+    as a 64-bit FNV-1a hash of "username:password". After a successful login the
+    session starts fresh: an empty history stack, an empty recent-search list,
+    no current location, and the user's saved favorites list loaded from
+    <code>data/favorites.txt</code>.
+  </p>
+
+  <h3>4.3 The main menu</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Menu item</th><th>What happens</th><th>Structure used</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Take me somewhere</td><td>Asks where you are and where you want to go, then gives directions</td><td>Graph, BFS + Queue, Stack, linked list</td></tr>
+        <tr><td>2</td><td>What's near me</td><td>The 10 closest places with distance, direction and walking time</td><td>Array, Haversine, bubble sort</td></tr>
+        <tr><td>3</td><td>Explore the campus</td><td>DFS order from a place, connectivity check, all roads</td><td>DFS + Stack</td></tr>
+        <tr><td>4</td><td>Search</td><td>One box for names, categories and numbers</td><td>Linear + binary search, linked list</td></tr>
+        <tr><td>5</td><td>Browse by category</td><td>KUET → category → place</td><td>Tree</td></tr>
+        <tr><td>6</td><td>Sort places</td><td>A–Z, Z–A, category, distance, with counts</td><td>Bubble + selection sort</td></tr>
+        <tr><td>7</td><td>Where am I?</td><td>Set your location by place or coordinates; copy it</td><td>Linear scan, Haversine</td></tr>
+        <tr><td>8</td><td>Trip history</td><td>Every place you have been; Back returns to the last</td><td>Stack</td></tr>
+        <tr><td>9</td><td>Recent searches</td><td>The last 10 places you searched for</td><td>Linked list</td></tr>
+        <tr><td>10</td><td>Favorites</td><td>Starred places, saved per user</td><td>Linked list</td></tr>
+        <tr><td>11</td><td>Help</td><td>How to use the app and how it works</td><td>-</td></tr>
+        <tr><td>12–15</td><td>Admin only</td><td>Manage places, manage walkways, users, activity log</td><td>Array, graph, tree</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Everywhere in the app, pressing Enter on its own goes back, and a place can
+    be typed as part of its name (<code>lib</code>), its number from the campus
+    map (<code>3</code>), or coordinates (<code>22.8992, 89.5016</code>).
+  </p>
+
+  <h3>4.4 "Take me somewhere", step by step</h3>
+  <figure>
+    <img src="trip-flow.png" alt="Flow of a Take me somewhere request: resolvePlace, BFS, rebuildRoute, planTrip, printTrip" />
+    <figcaption>Figure 1. How a trip request travels through the code.</figcaption>
+  </figure>
+  <ol>
+    <li><b>Where are you?</b> The answer goes to <code>resolvePlace()</code>. Coordinates are matched to the closest place by computing the Haversine distance to all 44 places. A number is looked up by ID. Text is matched by linear search on names, then on categories. If several places match, the user picks one from a numbered list. Pressing Enter uses the current location.</li>
+    <li><b>Where do you want to go?</b> The same process gives the destination.</li>
+    <li><b>BFS</b> (<code>Graph::findRoute</code>) starts at the start place, puts it in our queue and marks it visited. It repeatedly dequeues a place and enqueues every unvisited neighbour, recording <code>parent[neighbour] = current</code>. It stops when the destination is dequeued.</li>
+    <li><b>Rebuilding the route</b> (<code>rebuildRoute</code>): following <code>parent</code> from the destination gives the route backwards. Each place is pushed on our stack, and popping them all gives the route in forward order, stored in a linked list.</li>
+    <li><b>Planning the trip</b> (<code>planTrip</code>): walking along the route once, walkways on the same road are merged into one step, and the places in between become "places you pass". Where the road changes, the compass bearings of the two walkways decide turn left, turn right or continue straight. Each step gets a direction, a length and a walking time at 75 m a minute.</li>
+    <li><b>Showing it</b> (<code>printTrip</code>): a summary line, directions by road, a table of every stop with leg and running distances, and the roads in order.</li>
+    <li>Afterwards the user can choose <i>I'm going</i>, which pushes the start and destination onto the history stack so Back can undo it, or <i>Show how BFS found this route</i>, which runs BFS again and prints the queue and <code>parent</code> at every step.</li>
+  </ol>
+
+  <h3>4.5 The other features</h3>
+  <ul>
+    <li><b>What's near me</b> works out the distance from a point to every place in the array, sorts them with bubble sort, and shows the nearest ten with a compass direction and walking time.</li>
+    <li><b>Explore the campus</b> runs DFS from a chosen place (optionally showing the stack at every step), checks whether every place can be reached, and lists every road with its walkways.</li>
+    <li><b>Search</b> runs binary search on a sorted copy to find an exact name first, then linear search for partial name and category matches. Opening a result adds it to the recent-search list.</li>
+    <li><b>Browse by category</b> walks the tree: pick a category (a child of the root), then a place (a leaf).</li>
+    <li><b>Trip history</b> shows the stack from top to bottom. Back pops the top and moves you to the new top.</li>
+    <li><b>Admin edits</b> keep every structure consistent. Adding a place adds it to the array and the graph. Deleting one removes it from the array, the graph (with its walkways), the favorites and recent lists, and the history stack (by popping everything onto a second stack and pushing the rest back). Every change rebuilds the tree and is saved to the data files straight away.</li>
+  </ul>
+
+  <h3>4.6 Saving and closing</h3>
+  <p>
+    Every change is written to disk as it happens: places to
+    <code>locations.txt</code>, walkways to <code>paths.txt</code>, accounts to
+    <code>users.txt</code>, favorites to <code>favorites.txt</code>. Every login,
+    search, route, DFS and admin action is logged to
+    <code>logs/application.log</code> with a timestamp, and passwords are never
+    logged. On Log out the session state is cleared; on Exit the program says
+    goodbye and closes.
+  </p>
+
+  <!-- ===================================================== 5 -->
+  <h2 id="design"><span class="num">05</span>System Design</h2>
+
+  <h3>5.1 Architecture</h3>
+  <p>
+    The program has three layers. The top layer is the menus
+    (<code>Navigator</code>, split across four files), which only talk to the
+    user. The middle layer is the campus model (<code>Campus</code>), which owns
+    the places, the categories and the graph, and is the only code that reads or
+    writes the data files. The bottom layer holds the data structures and
+    algorithms, which know nothing about menus or files. That is why the stack
+    can be opened and explained on its own, and why the same core could later
+    sit under a graphical app.
+  </p>
+  <pre>
+                 Terminal menus (<span class="hi">Navigator</span>)
+                 |           |            |
+        Authentication    <span class="hi">Campus</span>        Logger, Style
+                            |
+         +------------------+-------------------+
+         |                  |                   |
+    places (array)     Graph (walkways)     CampusTree
+                        |           |
+               BFS + our <span class="hi">Queue</span>   DFS + our <span class="hi">Stack</span>
+                            |
+                     data/*.txt files</pre>
+
+  <h3>5.2 Data files</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>File</th><th>One line looks like</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>data/locations.txt</code></td><td><code>3|Central Library|Facility|22.899247|89.501796|Central library of KUET</code></td><td>ID, name, category, latitude, longitude, description</td></tr>
+        <tr><td><code>data/paths.txt</code></td><td><code>4|3||Academic Walk</code></td><td>From, to, meters (empty = straight line), road name</td></tr>
+        <tr><td><code>data/categories.txt</code></td><td><code>Academic</code></td><td>Order of categories in the tree</td></tr>
+        <tr><td><code>data/users.txt</code></td><td><code>student1|445aff2fe080879e|student</code></td><td>Username, password hash, role</td></tr>
+        <tr><td><code>data/favorites.txt</code></td><td><code>student1|3</code></td><td>Username and place ID</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>5.3 Where the map came from</h3>
+  <p>
+    We started from the <i>Proposed Revised Master Plan of KUET Khulna
+    Campus</i>, but a drawing has no coordinates. OpenStreetMap had the campus
+    outline and about forty named buildings, all surveyed on the ground, so we
+    used those coordinates for 38 of our places. For the six buildings OSM does
+    not have yet (Fazlul Haque Hall, the Central Mosque, the Canteen, the
+    Garage, the Dormitory and Kodom Tola), we measured 18 buildings that appear
+    in both the plan and OSM and fitted a least-squares affine transform from
+    plan pixels to latitude and longitude. The fit differs from OSM by 27 m on
+    average, about the width of one building, which also shows the plan's
+    layout is accurate. The 56 walkways follow the roads on the plan. KUET Road
+    and Khanjahan Ali Hall Road are OSM names; the other road names are our own
+    descriptive labels.
+  </p>
+  <figure>
+    <img src="campus-map.png" alt="KUET campus map with 44 numbered places and the walkways between them" />
+    <figcaption>
+      Figure 2. The campus as CholoKUET sees it, drawn from its own data files.
+      The numbers are place IDs. Map data © OpenStreetMap contributors.
+    </figcaption>
+  </figure>
+
+  <!-- ===================================================== 6 -->
+  <h2 id="structures"><span class="num">06</span>Data Structures</h2>
+
+  <h3>6.1 Array: the place list</h3>
+  <p>
+    All 44 places live in a <code>std::vector&lt;Location&gt;</code>. Reading by
+    index is O(1), which suits a list that is read constantly and changed only
+    by an admin. We never assume a place's ID equals its index: after a delete
+    everything shifts left, so every lookup goes by ID.
+  </p>
+
+  <h3>6.2 Linked list: searches, favorites and routes</h3>
+  <p>
+    Recent searches are a <code>std::list&lt;int&gt;</code>. A new search goes
+    to the front; if the place is already there it is moved rather than
+    duplicated; after ten, the oldest drops off the back. All of these are cheap
+    on a linked list. The route that BFS returns is also a list, because its
+    length is not known until the search ends and we only ever walk it front to
+    back.
+  </p>
+
+  <h3>6.3 Stack (hand-written)</h3>
+  <p>
+    An array of 200 integers and one index, <code>top</code>. An empty stack has
+    <code>top = -1</code>. <code>push</code> moves <code>top</code> up and
+    writes; <code>pop</code> reads and moves it down. Both refuse instead of
+    writing outside the array (overflow and underflow).
+  </p>
+  <pre>
+bool Stack::push(int value)
+{
+    if (isFull())
+        return false;   // overflow
+
+    data[++top] = value;
+    return true;
+}</pre>
+  <p>
+    Used for DFS, the Back button, reversing the BFS route, and removing a
+    deleted place from the middle of the history.
+  </p>
+
+  <h3>6.4 Queue (hand-written, circular)</h3>
+  <p>
+    A plain array queue wastes every slot it has dequeued. Ours wraps round with
+    <code>% CAPACITY</code>, so the rear moves back to slot 0 once the front has
+    moved on. A separate <code>count</code> tells a full queue from an empty
+    one.
+  </p>
+  <pre>
+bool Queue::enqueue(int value)
+{
+    if (isFull())
+        return false;   // overflow
+
+    rear = (rear + 1) % CAPACITY;
+    data[rear] = value;
+    count++;
+    return true;
+}</pre>
+  <p>Used for BFS in every route.</p>
+
+  <h3>6.5 Tree: browsing by category</h3>
+  <p>
+    KUET is the root, each category is a child, and each place is a leaf. Each
+    node keeps its children in a vector, so a category can hold any number of
+    places (Academic has eleven, Medical has one); a binary tree would force
+    artificial splits. Children are stored inside their parent, so removing a
+    node removes its whole subtree. The campus tree has 55 nodes and a height of
+    3.
+  </p>
+  <pre>
+struct TreeNode
+{
+    std::string name;
+    int locationId = -1;             // -1 for the root and category nodes
+    std::vector&lt;TreeNode&gt; children;
+};</pre>
+
+  <h3>6.6 Graph: walkways</h3>
+  <p>
+    Every place is a vertex and every walkway an undirected edge with a length
+    in meters and a road name. We use an adjacency list, because the campus is
+    sparse: 44 vertices and only 56 edges. A matrix would be mostly empty, and
+    scanning a row would cost O(V) even for a place with two neighbours.
+  </p>
+  <pre>
+struct Edge
+{
+    int to;
+    int meters;
+    std::string road;
+};
+
+std::map&lt;int, std::vector&lt;Edge&gt;&gt; adjacency;   // place ID -&gt; its walkways</pre>
+
+  <!-- ===================================================== 7 -->
+  <h2 id="algorithms"><span class="num">07</span>Algorithms</h2>
+
+  <h3>7.1 Breadth-first search</h3>
+  <p>
+    BFS explores outwards one ring of neighbours at a time using our queue. A
+    neighbour is marked visited when it is enqueued, not when it is dequeued,
+    which stops the same place from being queued twice. In an unweighted graph
+    BFS gives the route with the fewest stops. Our walkways have different
+    lengths, so that is not always the shortest walk in meters, and the app
+    shows both the walking length and the straight-line distance.
+  </p>
+  <pre>
+while (!queue.isEmpty())
+{
+    int current;
+    queue.dequeue(current);
+    if (current == goal)
+        break;
+
+    for (const Edge&amp; edge : neighbors(current))
+    {
+        if (visited.count(edge.to))
+            continue;
+        visited.insert(edge.to);
+        parent[edge.to] = current;
+        queue.enqueue(edge.to);
+    }
+}</pre>
+
+  <h3>7.2 Rebuilding the route</h3>
+  <p>
+    The <code>parent</code> map describes the route backwards. We follow it from
+    the destination and push each place on our stack; popping gives the forward
+    order. For the gate-to-library route, the library is pushed first and the
+    gate last, so the gate ends up on top (see <a href="#a6">Appendix A.6</a>).
+  </p>
+
+  <h3>7.3 From a route to directions</h3>
+  <p><code>planTrip()</code> walks the route once, so it costs O(k) for a route of k stops:</p>
+  <ul>
+    <li>Consecutive walkways on the same road merge into one step; the places in between become "places you pass".</li>
+    <li>Where the road changes, the bearing of the new walkway is compared with the old one: under 35° is continue straight, over 150° is turn around, anything else is turn left or turn right.</li>
+    <li>Each step gets an overall compass direction, a length, and a walking time at 75 m a minute (about 4.5 km/h).</li>
+  </ul>
+
+  <h3>7.4 Depth-first search</h3>
+  <p>
+    Our DFS is iterative. The top of our stack is the place being explored, and
+    for each place we remember how far we have scanned through its neighbours,
+    so after backtracking we carry on from where we stopped. Each place is
+    pushed only once, so the stack never holds more than the number of places
+    and the fixed 200-slot stack cannot overflow, even on a fully connected
+    graph; one of our tests checks exactly that.
+  </p>
+
+  <h3>7.5 Linear and binary search</h3>
+  <p>
+    Linear search lowercases both strings and checks whether one contains the
+    other, so <code>lib</code> finds <i>Central Library</i>. Binary search only
+    works on sorted data, so it runs on a copy sorted by name and answers "is
+    there an exact match?". On our 44 places it finds the library in 6
+    comparisons, where a linear scan checks all 44.
+  </p>
+  <pre>
+while (low &lt;= high)
+{
+    int mid = low + (high - low) / 2;
+    int result = compareIgnoreCase(name, sorted[mid].name);
+    comparisons++;
+    if (result == 0) return mid;
+    if (result &lt; 0) high = mid - 1;
+    else            low = mid + 1;
+}</pre>
+
+  <h3>7.6 Bubble sort and selection sort</h3>
+  <p>
+    Bubble sort swaps neighbours that are out of order and stops early when a
+    pass makes no swaps. Selection sort finds the smallest remaining item on
+    each pass and swaps it into place. Sorting all 44 places by name, bubble
+    sort made 880 comparisons and 367 swaps; selection sort made 946
+    comparisons (exactly 44 × 43 / 2) but only 39 swaps. Bubble sort is stable
+    and selection sort is not. "What's near me" sorts 44 distances with bubble
+    sort (931 comparisons, 474 swaps from the main gate).
+  </p>
+
+  <h3>7.7 Distance and direction</h3>
+  <p>
+    Distances use the Haversine formula with an Earth radius of 6,371 km,
+    accurate to well under a meter over campus distances. Directions use the
+    initial compass bearing between two points (0° north, 90° east), named as
+    one of eight compass points.
+  </p>
+  <pre>
+a = sin²(Δφ/2) + cos φ1 · cos φ2 · sin²(Δλ/2)
+d = 2R · atan2(√a, √(1 − a))
+
+bearing = atan2(sin Δλ · cos φ2,  cos φ1 · sin φ2 − sin φ1 · cos φ2 · cos Δλ)</pre>
+
+  <!-- ===================================================== 8 -->
+  <h2 id="complexity"><span class="num">08</span>Complexity Analysis</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Operation</th><th>Time</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>Array access by index</td><td>O(1)</td><td></td></tr>
+        <tr><td>Find a place by ID</td><td>O(n)</td><td>Linear scan</td></tr>
+        <tr><td>Delete a place</td><td>O(n)</td><td>Later items shift left</td></tr>
+        <tr><td>Linked list: insert at front, remove from back</td><td>O(1)</td><td>Recent searches</td></tr>
+        <tr><td>Stack push / pop / peek</td><td>O(1)</td><td></td></tr>
+        <tr><td>Queue enqueue / dequeue</td><td>O(1)</td><td>Circular indexes</td></tr>
+        <tr><td>Tree traversal and search</td><td>O(n)</td><td>n = number of nodes</td></tr>
+        <tr><td>BFS, DFS</td><td>O(V + E)</td><td>Adjacency list; a matrix would make it O(V²)</td></tr>
+        <tr><td>Turning a route into directions</td><td>O(k)</td><td>k = stops on the route</td></tr>
+        <tr><td>Linear search</td><td>O(n)</td><td></td></tr>
+        <tr><td>Binary search</td><td>O(log n)</td><td>Sorted data only</td></tr>
+        <tr><td>Bubble sort</td><td>O(n²)</td><td>O(n) when already sorted</td></tr>
+        <tr><td>Selection sort</td><td>O(n²)</td><td>At most n − 1 swaps</td></tr>
+        <tr><td>What's near me</td><td>O(n²)</td><td>n distances, then bubble sort</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Memory is O(V + E) for the graph and O(n) for everything else. The stack
+    and queue are fixed at 200 integers each, and the program never lets the
+    campus grow past 200 places, so neither can overflow during BFS or DFS.
+  </p>
+
+  <!-- ===================================================== 9 -->
+  <h2 id="testing"><span class="num">09</span>Testing</h2>
+  <p>
+    We wrote eight small test programs, one per module, with a tiny
+    <code>CHECK</code> macro of our own. <code>make test</code> builds and runs
+    them all, and any failure stops the run.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Suite</th><th>What it checks</th><th>Checks</th></tr></thead>
+      <tbody>
+        <tr><td>Stack</td><td>Empty stack, LIFO order, peek, overflow at 200, underflow</td><td>213</td></tr>
+        <tr><td>Queue</td><td>Empty queue, FIFO order, overflow, wraparound past the end of the array</td><td>419</td></tr>
+        <tr><td>Graph, BFS, DFS</td><td>Reachable, same start and end, unreachable, fewest stops over a longer path, disconnected and connected DFS, deleting a place, a full 200-vertex graph</td><td>26</td></tr>
+        <tr><td>Tree</td><td>Building from data, empty categories, case-insensitive find, removing a subtree</td><td>15</td></tr>
+        <tr><td>Search</td><td>Found, not found, partial and case-insensitive matches, binary search on sorted data</td><td>22</td></tr>
+        <tr><td>Sort</td><td>Empty, one item, already sorted, reverse sorted, duplicates (stability), by category and distance</td><td>13</td></tr>
+        <tr><td>Trip</td><td>Legs merge along one road, left and right turns, compass names, walking time, the trip reversed</td><td>34</td></tr>
+        <tr><td>Campus data</td><td>The real data files load with no bad lines, every walkway has a road name, all places are connected and on campus</td><td>165</td></tr>
+        <tr><td><b>Total</b></td><td></td><td><b>907</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    We also drove the whole program with scripted input as both a student and an
+    admin, through every menu: wrong passwords, letters where numbers were
+    expected, out-of-range choices, mismatched passwords, and adding, editing
+    and deleting places and walkways. The program never crashed, the log
+    recorded every action, and no password appeared in it.
+  </p>
+
+  <h3>Problems we found and fixed</h3>
+  <ul>
+    <li><b>DFS could overflow the stack.</b> The textbook "pop, then push every unvisited neighbour" version can push the same place many times, which on a dense graph needs more than 200 slots. We switched to the version that pushes each place once. A test on a complete 200-vertex graph guards against the old behaviour.</li>
+    <li><b>The program crashed at startup on one PC.</b> It was loading an incompatible <code>libstdc++</code> DLL from another program on the PATH. Linking statically fixed it and made the <code>.exe</code> portable.</li>
+    <li><b>termcolor did not compile with g++ 16</b>, because it uses <code>uint8_t</code> without including <code>&lt;cstdint&gt;</code>. We include it before the library instead of editing the library.</li>
+  </ul>
+
+  <!-- ===================================================== 10 -->
+  <h2 id="screens"><span class="num">10</span>Screens from the App</h2>
+  <p>
+    These screens are copied from the program's own output. In the terminal,
+    titles and menu numbers appear in KUET gold and hints in grey.
+  </p>
+  <h3>Main menu</h3>
+  <pre>   ╔═══════════════════════════════════════╗
+   ║               CholoKUET               ║
+   ╚═══════════════════════════════════════╝
+       Cholo Explore Kore Ashi · KUET campus
+
+  Hi, student1  ·  you're at Central Library
+
+  <span class="hi">GET AROUND</span>
+    1  Take me somewhere       from where you are to where you want to go
+    2  What's near me          closest places, nearest first
+    3  Explore the campus      walk the whole campus with DFS
+
+  <span class="hi">FIND</span>
+    4  Search                  by name, category or ID
+    5  Browse by category      the campus as a tree
+    6  Sort places             A-Z, Z-A, category, distance
+
+  <span class="hi">YOU</span>
+    7  Where am I?             set or share your location
+    8  Trip history            go back to where you were
+    9  Recent searches
+   10  Favorites               3 saved
+   11  Help
+
+    0  Log out</pre>
+  <h3>Take me somewhere: Central Library to the main gate</h3>
+  <pre>  Central Library  →  KUET Main Gate
+  707 m walk · about 10 min · 9 places · 3 roads
+
+  DIRECTIONS
+   ●  Start at Central Library
+   1  Head south on <span class="hi">Library Lane</span>  ·  89 m, about 2 min
+   │  until you reach Fazlul Haque Hall
+   2  Turn left, heading east on <span class="hi">Hall Road</span>  ·  258 m, about 4 min
+   │  past Shaheed Smrity Hall, Dr. M. A. Rashid Hall and Cafeteria
+   │  until you reach Kodom Tola
+   3  Turn left, heading east on <span class="hi">KUET Road</span>  ·  360 m, about 5 min
+   │  past KUET Dighi and Khan Jahan Ali Hall
+   ●  Arrive at KUET Main Gate
+
+  STOPS
+   #   Place                  Road            Leg    Total
+   1   Central Library        -                 -      0 m
+   2   Fazlul Haque Hall      Library Lane   89 m     89 m
+   3   Shaheed Smrity Hall    Hall Road      80 m    169 m
+   4   Dr. M. A. Rashid Hall  Hall Road      58 m    227 m
+   5   Cafeteria              Hall Road      69 m    296 m
+   6   Kodom Tola             Hall Road      51 m    347 m
+   7   KUET Dighi             KUET Road      77 m    424 m
+   8   Khan Jahan Ali Hall    KUET Road     101 m    525 m
+   9   KUET Main Gate         KUET Road     182 m    707 m
+
+  ROADS  Library Lane  →  Hall Road  →  KUET Road</pre>
+  <h3>What's near me, from the main gate</h3>
+  <pre>   1  KUET Main Gate              0 m  you're here
+   2  Khan Jahan Ali Hall       182 m  north-west about 3 min
+   3  Central Shaheed Minar     232 m  north-west about 4 min
+   4  KUET Dighi                271 m  west       about 4 min
+   5  Central Playground        314 m  north-west about 5 min
+
+  Sorted with bubble sort: 931 comparisons, 474 swaps.</pre>
+
+  <!-- ===================================================== 11 -->
+  <h2 id="limitations"><span class="num">11</span>Limitations</h2>
+  <ul>
+    <li><b>Fewest stops, not fewest meters.</b> BFS ignores walkway length, so the suggested route can be a little longer in meters than the best one.</li>
+    <li><b>Six positions are estimates.</b> Fazlul Haque Hall, the Central Mosque, the Canteen, the Garage, the Dormitory and Kodom Tola come from the master plan and are accurate to about 30 m.</li>
+    <li><b>Most road names are ours.</b> Only KUET Road and Khanjahan Ali Hall Road are official names from OSM.</li>
+    <li><b>Buildings only.</b> There are no floors, rooms or labs yet.</li>
+    <li><b>Walkways are simplified.</b> They follow the plan's roads; short cuts and newer paths are missing.</li>
+    <li><b>No live location.</b> The user types a place or coordinates instead of reading GPS.</li>
+    <li><b>Demo-level login.</b> FNV-1a is fast to brute-force; a real system would use bcrypt or Argon2.</li>
+    <li><b>Terminal only.</b> The map picture is generated separately, not shown inside the program.</li>
+  </ul>
+
+  <!-- ===================================================== 12 -->
+  <h2 id="improve"><span class="num">12</span>How We Can Improve It</h2>
+  <p>
+    The current design makes each of these a contained change, because the
+    data structures do not depend on the menus.
+  </p>
+  <h3>12.1 Better routes</h3>
+  <ul>
+    <li><b>Dijkstra's algorithm</b> for the shortest walk in meters. Every walkway already stores its length, so only a priority queue and a new <code>shortestRoute()</code> are needed. The app could show both routes side by side.</li>
+    <li><b>A* search</b> using the straight-line (Haversine) distance as the heuristic, to find the same shortest route while exploring fewer places.</li>
+    <li><b>Accessible routes</b> by giving walkways extra properties (stairs, ramp, unpaved) and skipping the ones a user wants to avoid.</li>
+    <li><b>Time-aware routes</b>, for example avoiding gates that close at night.</li>
+  </ul>
+  <h3>12.2 Better data</h3>
+  <ul>
+    <li>Survey the six estimated buildings with a phone GPS and <b>add them to OpenStreetMap</b>, so the map improves for everyone.</li>
+    <li>Add the <b>real names of internal roads</b> once confirmed by the university.</li>
+    <li>Go one level deeper in the tree: <b>floors, rooms and labs</b> inside each building ("CSE Lab 3").</li>
+    <li>Store data in <b>SQLite</b> instead of text files once many admins edit it at once.</li>
+  </ul>
+  <h3>12.3 Better experience</h3>
+  <ul>
+    <li>A <b>graphical, clickable map</b> (Qt, SFML or a web front end) on top of the same C++ core.</li>
+    <li>A <b>phone app</b> that reads live GPS and snaps it to the nearest building.</li>
+    <li>A <b>Bangla interface</b>, and spoken turn-by-turn directions.</li>
+    <li>Search that <b>tolerates typos</b> ("libary" → Library) using edit distance.</li>
+  </ul>
+  <h3>12.4 Better engineering</h3>
+  <ul>
+    <li>Replace the demo password hash with <b>bcrypt or Argon2</b>.</li>
+    <li>Automatic builds and tests on every push with <b>GitHub Actions</b>.</li>
+    <li>A packaged <b>Windows installer</b> with a Start-menu shortcut.</li>
+  </ul>
+
+  <!-- ===================================================== refs -->
+  <h2 id="references"><span class="num">·</span>References</h2>
+  <ol>
+    <li>T. H. Cormen, C. E. Leiserson, R. L. Rivest, C. Stein, <i>Introduction to Algorithms</i>, 3rd ed., MIT Press, 2009. Chapters on elementary data structures, BFS, DFS and sorting.</li>
+    <li>OpenStreetMap contributors, KUET campus data, © OpenStreetMap contributors, Open Database Licence (ODbL).</li>
+    <li><i>Proposed Revised Master Plan of KUET Khulna Campus.</i></li>
+    <li>R. W. Sinnott, "Virtues of the Haversine", <i>Sky and Telescope</i>, 68(2), 1984.</li>
+    <li>I. Kalnytskyi, <i>termcolor</i>: a header-only C++ library for printing coloured messages, BSD 3-Clause licence.</li>
+  </ol>
+
+<h2 id="appendix-a"><span class="num">A</span>Appendix A. Data Structure Walkthroughs</h2>
+  <p>
+    These walkthroughs were recorded from the program, running our own Stack,
+    Queue, Tree, BFS, search and sort code on the real campus data. They show
+    each structure's state after every operation.
+  </p>
+
+  <h3>A.1 Array</h3>
+  <pre>
+  Insert four places at the end:
+  [0] CSE
+  [1] Library
+  [2] EEE
+  [3] Main Gate
+  Size = 4
+
+  Access array[1] directly: Library
+
+  Remove index 0 (everything after it shifts left):
+  [0] Library
+  [1] EEE
+  [2] Main Gate
+
+  The real location list is an array too: 44 of 200 slots used.
+
+  Complexity: access O(1), append O(1), delete/search O(n)
+</pre
+  >
+  <h3>A.2 Linked list</h3>
+  <pre>
+  insertBack(CSE), insertBack(Library), insertBack(EEE)
+  HEAD → CSE → Library → EEE → NULL
+
+  insertFront(Main Gate)
+  HEAD → Main Gate → CSE → Library → EEE → NULL
+
+  remove(Library)
+  HEAD → Main Gate → CSE → EEE → NULL
+
+  contains(EEE)? yes
+
+  A real BFS route is stored the same way:
+  HEAD → KUET Main Gate → Khan Jahan Ali Hall → Central Shaheed Minar → Central Playground → KUET Auditorium → Janata Bank, KUET Branch → Departmental Store → Durbar Bangla → Central Library → NULL
+
+  Complexity: insert at head/tail O(1), search/remove O(n)
+</pre
+  >
+  <h3>A.3 Stack (hand-written, dsa/stack)</h3>
+  <pre>
+  PUSH 10
+  PUSH 20
+  PUSH 30
+
+  TOP  (top = 2)
+   ↓
+  30
+  20
+  10
+
+  POP → 30
+
+  TOP  (top = 1)
+   ↓
+  20
+  10
+
+  PEEK → 20 (not removed)
+
+  Popping an empty stack: underflow, refused
+
+  With campus places, like the navigation history:
+  TOP  (top = 3)
+   ↓
+  Central Library
+  Mechanical Engineering Building
+  Administrative Building
+  KUET Main Gate
+
+  Complexity: push O(1), pop O(1), peek O(1)
+</pre
+  >
+  <h3>A.4 Queue (hand-written circular queue, dsa/queue)</h3>
+  <pre>
+  ENQUEUE 10
+  ENQUEUE 20
+  ENQUEUE 30
+
+  FRONT → 10 20 30 ← REAR
+
+  DEQUEUE → 10
+
+  FRONT → 20 30 ← REAR
+  front index = 1, rear index = 2
+
+  Wraparound: fill the queue, dequeue 2, enqueue 2 more.
+  front index = 2, rear index = 1  → the rear wrapped back to the start of the array
+  Enqueue on a full queue: overflow, refused
+
+  With campus places, the way BFS uses it:
+  FRONT → KUET Main Gate, Khan Jahan Ali Hall, KUET Auditorium ← REAR
+
+  Complexity: enqueue O(1), dequeue O(1)
+</pre
+  >
+  <p>
+    After filling all 200 slots and dequeuing two, the next two values go into
+    slots 0 and 1: the rear wraps round to the start of the array while the
+    front is still at slot 2.
+  </p>
+  <h3>A.5 Tree</h3>
+  <pre>
+  A small general tree (any number of children per node):
+
+  KUET
+  ├── Academic
+  │   ├── CSE
+  │   └── EEE
+  ├── Facilities
+  │   ├── Library
+  │   └── Auditorium
+  └── Residential
+
+  Preorder traversal (node first, then its children):
+  1. KUET
+  2.   Academic
+  3.     CSE
+  4.     EEE
+  5.   Facilities
+  6.     Library
+  7.     Auditorium
+  8.   Residential
+
+  Parent of CSE is Academic; CSE and EEE are siblings.
+  Nodes: 8, height: 3
+
+  The real campus tree has 55 nodes, 10 categories, height 3 (see menu 5).
+
+  Complexity: traversal O(n), search O(n)
+</pre
+  >
+  <h3 id="a6">A.6 BFS from the main gate to the Central Library</h3>
+  <p>
+    Each step dequeues one place and enqueues its unvisited neighbours,
+    recording <code>parent[]</code>. Once the library is dequeued, the parent
+    chain is pushed onto our stack and popped off in forward order.
+  </p>
+  <pre>
+  Start at KUET Main Gate
+  FRONT → KUET Main Gate ← REAR
+
+  Step 1: dequeue KUET Main Gate
+     enqueue Khan Jahan Ali Hall  (parent: KUET Main Gate)
+  FRONT → Khan Jahan Ali Hall ← REAR
+
+  Step 2: dequeue Khan Jahan Ali Hall
+     enqueue Central Shaheed Minar  (parent: Khan Jahan Ali Hall)
+     enqueue KUET Dighi  (parent: Khan Jahan Ali Hall)
+  FRONT → Central Shaheed Minar, KUET Dighi ← REAR
+
+  Step 3: dequeue Central Shaheed Minar
+     enqueue Central Playground  (parent: Central Shaheed Minar)
+  FRONT → KUET Dighi, Central Playground ← REAR
+
+  Step 4: dequeue KUET Dighi
+     enqueue Kodom Tola  (parent: KUET Dighi)
+  FRONT → Central Playground, Kodom Tola ← REAR
+
+  Step 5: dequeue Central Playground
+     enqueue KUET Auditorium  (parent: Central Playground)
+     enqueue KUET Lake  (parent: Central Playground)
+  FRONT → Kodom Tola, KUET Auditorium, KUET Lake ← REAR
+
+  Step 6: dequeue Kodom Tola
+     enqueue KUET Post Office  (parent: Kodom Tola)
+     enqueue Cafeteria  (parent: Kodom Tola)
+  FRONT → KUET Auditorium, KUET Lake, KUET Post Office, Cafeteria ← REAR
+
+  Step 7: dequeue KUET Auditorium
+     enqueue Janata Bank, KUET Branch  (parent: KUET Auditorium)
+     enqueue EEE Building  (parent: KUET Auditorium)
+  FRONT → KUET Lake, KUET Post Office, Cafeteria, Janata Bank, KUET Branch, EEE Building ← REAR
+
+  Step 8: dequeue KUET Lake
+     enqueue Civil Engineering Building  (parent: KUET Lake)
+  FRONT → KUET Post Office, Cafeteria, Janata Bank, KUET Branch, EEE Building, Civil Engineering Building ← REAR
+
+  Step 9: dequeue KUET Post Office
+  FRONT → Cafeteria, Janata Bank, KUET Branch, EEE Building, Civil Engineering Building ← REAR
+
+  Step 10: dequeue Cafeteria
+     enqueue Dr. M. A. Rashid Hall  (parent: Cafeteria)
+  FRONT → Janata Bank, KUET Branch, EEE Building, Civil Engineering Building, Dr. M. A. Rashid Hall ← REAR
+
+  Step 11: dequeue Janata Bank, KUET Branch
+     enqueue Departmental Store  (parent: Janata Bank, KUET Branch)
+  FRONT → EEE Building, Civil Engineering Building, Dr. M. A. Rashid Hall, Departmental Store ← REAR
+
+  Step 12: dequeue EEE Building
+     enqueue Central Computer Centre  (parent: EEE Building)
+  FRONT → Civil Engineering Building, Dr. M. A. Rashid Hall, Departmental Store, Central Computer Centre ← REAR
+
+  Step 13: dequeue Civil Engineering Building
+     enqueue Rokeya Hall  (parent: Civil Engineering Building)
+  FRONT → Dr. M. A. Rashid Hall, Departmental Store, Central Computer Centre, Rokeya Hall ← REAR
+
+  Step 14: dequeue Dr. M. A. Rashid Hall
+     enqueue Shaheed Smrity Hall  (parent: Dr. M. A. Rashid Hall)
+  FRONT → Departmental Store, Central Computer Centre, Rokeya Hall, Shaheed Smrity Hall ← REAR
+
+  Step 15: dequeue Departmental Store
+     enqueue Durbar Bangla  (parent: Departmental Store)
+  FRONT → Central Computer Centre, Rokeya Hall, Shaheed Smrity Hall, Durbar Bangla ← REAR
+
+  Step 16: dequeue Central Computer Centre
+     enqueue Science Building  (parent: Central Computer Centre)
+  FRONT → Rokeya Hall, Shaheed Smrity Hall, Durbar Bangla, Science Building ← REAR
+
+  Step 17: dequeue Rokeya Hall
+     enqueue Administrative Building  (parent: Rokeya Hall)
+  FRONT → Shaheed Smrity Hall, Durbar Bangla, Science Building, Administrative Building ← REAR
+
+  Step 18: dequeue Shaheed Smrity Hall
+     enqueue Fazlul Haque Hall  (parent: Shaheed Smrity Hall)
+     enqueue Amar Ekushey Hall  (parent: Shaheed Smrity Hall)
+  FRONT → Durbar Bangla, Science Building, Administrative Building, Fazlul Haque Hall, Amar Ekushey Hall ← REAR
+
+  Step 19: dequeue Durbar Bangla
+     enqueue Central Library  (parent: Durbar Bangla)
+  FRONT → Science Building, Administrative Building, Fazlul Haque Hall, Amar Ekushey Hall, Central Library ← REAR
+
+  Step 20: dequeue Science Building
+     enqueue Mechanical Engineering Building  (parent: Science Building)
+  FRONT → Administrative Building, Fazlul Haque Hall, Amar Ekushey Hall, Central Library, Mechanical Engineering Building ← REAR
+
+  Step 21: dequeue Administrative Building
+     enqueue Mechanical Workshop  (parent: Administrative Building)
+     enqueue Tennis Court  (parent: Administrative Building)
+  FRONT → Fazlul Haque Hall, Amar Ekushey Hall, Central Library, Mechanical Engineering Building, Mechanical Workshop, Tennis Court ← REAR
+
+  Step 22: dequeue Fazlul Haque Hall
+     enqueue Canteen  (parent: Fazlul Haque Hall)
+  FRONT → Amar Ekushey Hall, Central Library, Mechanical Engineering Building, Mechanical Workshop, Tennis Court, Canteen ← REAR
+
+  Step 23: dequeue Amar Ekushey Hall
+     enqueue Lalan Shah Hall  (parent: Amar Ekushey Hall)
+  FRONT → Central Library, Mechanical Engineering Building, Mechanical Workshop, Tennis Court, Canteen, Lalan Shah Hall ← REAR
+
+  Step 24: dequeue Central Library
+
+  Walking back through parent[] from Central Library to KUET Main Gate and pushing each stop:
+  TOP  (top = 8)
+   ↓
+  KUET Main Gate
+  Khan Jahan Ali Hall
+  Central Shaheed Minar
+  Central Playground
+  KUET Auditorium
+  Janata Bank, KUET Branch
+  Departmental Store
+  Durbar Bangla
+  Central Library
+  Popping the stack gives the route from the start.
+
+  Route: KUET Main Gate → Khan Jahan Ali Hall → Central Shaheed Minar → Central Playground → KUET Auditorium → Janata Bank, KUET Branch → Departmental Store → Durbar Bangla → Central Library
+
+  Complexity: O(V + E); gives the fewest stops in an unweighted graph
+</pre
+  >
+  <h3>A.7 Linear and binary search</h3>
+  <pre>
+  Linear search for "Central Library" in the unsorted list:
+  Result: Central Library   (checked all 44 items)
+  Linear search for ID 30 stopped after 30 comparisons (found)
+
+  Binary search needs sorted data, so sort a copy by name first.
+
+  low=0 mid=21 high=43  "IT Building"  → go left
+  low=0 mid=10 high=20  "Civil Engineering Building"  → go left
+  low=0 mid=4 high=9  "Canteen"  → go right
+  low=5 mid=7 high=9  "Central Mosque"  → go left
+  low=5 mid=5 high=6  "Central Computer Centre"  → go right
+  low=6 mid=6 high=6  "Central Library"  → found
+
+  Result: Central Library   (6 comparisons)
+
+  Complexity: linear O(n), binary O(log n) but only on sorted data
+</pre
+  >
+  <h3>A.8 Bubble sort and selection sort, pass by pass</h3>
+  <pre>
+  Before:  KUET Main Gate;  Department of ECE;  EEE Building;  Mechatronics Engineering Building;  Central Computer Centre;  KUET Post Office
+
+  Bubble sort A-Z:
+  Pass 1: [Department of ECE, EEE Building, KUET Main Gate, Central Computer Centre, KUET Post Office, Mechatronics Engineering Building]
+  Pass 2: [Department of ECE, EEE Building, Central Computer Centre, KUET Main Gate, KUET Post Office, Mechatronics Engineering Building]
+  Pass 3: [Department of ECE, Central Computer Centre, EEE Building, KUET Main Gate, KUET Post Office, Mechatronics Engineering Building]
+  Pass 4: [Central Computer Centre, Department of ECE, EEE Building, KUET Main Gate, KUET Post Office, Mechatronics Engineering Building]
+  Pass 5: [Central Computer Centre, Department of ECE, EEE Building, KUET Main Gate, KUET Post Office, Mechatronics Engineering Building]
+  Comparisons: 15, swaps: 7
+
+  Selection sort A-Z:
+  Pass 1: [Central Computer Centre, Department of ECE, EEE Building, Mechatronics Engineering Building, KUET Main Gate, KUET Post Office]
+  Pass 2: [Central Computer Centre, Department of ECE, EEE Building, Mechatronics Engineering Building, KUET Main Gate, KUET Post Office]
+  Pass 3: [Central Computer Centre, Department of ECE, EEE Building, Mechatronics Engineering Building, KUET Main Gate, KUET Post Office]
+  Pass 4: [Central Computer Centre, Department of ECE, EEE Building, KUET Main Gate, Mechatronics Engineering Building, KUET Post Office]
+  Pass 5: [Central Computer Centre, Department of ECE, EEE Building, KUET Main Gate, KUET Post Office, Mechatronics Engineering Building]
+  Comparisons: 15, swaps: 3
+
+  Bubble swaps neighbours many times; selection makes at most n-1 swaps.
+  Bubble sort is stable, selection sort is not.
+
+  Complexity: both O(n^2); bubble sort is O(n) when already sorted
+</pre
+  >
+
+  <h2 id="appendix-b"><span class="num">B</span>Appendix B. Building and Running</h2>
+  <ol>
+    <li>Install <b>g++</b> through MSYS2 (<code>pacman -S mingw-w64-ucrt-x86_64-gcc</code>) and add <code>C:\msys64\ucrt64\bin</code> to PATH.</li>
+    <li>Open a terminal in the project folder and run <code>make run</code>. It builds <code>bin/CholoKUET.exe</code> with the logo icon and starts it. <code>make test</code> builds and runs all eight test programs.</li>
+    <li>Without make, <code>g++ -std=c++17 main.cpp -o CholoKUET</code> builds the whole program in one command, because <code>main.cpp</code> pulls in every other source file.</li>
+    <li>Log in as <i>student1 / student123</i>, or as <i>admin / admin123</i> for the admin menus.</li>
+  </ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Build output
+build/
+obj/
+bin/
+*.o
+*.d
+*.exe
+*.obj
+
+# Runtime log (the folder is kept via logs/.gitkeep)
+logs/*.log
+
+# Editor
+.vscode/
+.idea/
+

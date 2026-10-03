@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2058" height="1333" viewBox="0 0 2058 1333" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="0" y="0" width="2058" height="110" fill="#101114"/>
+<text x="40" y="58" font-size="36" font-weight="700" fill="#d9b100">KUET Campus Map</text>
+<text x="40" y="88" font-size="17" fill="#ffffff" opacity="0.85">CholoKUET · Cholo Explore Kore Ashi · 44 places, 56 walkable paths</text>
+<rect x="0" y="110" width="2058" height="4" fill="#d9b100"/>
+<polygon points="120.5,813.2 280.7,821.6 303.3,982.7 439.1,978.2 653.8,928.1 653.8,1196.3 733.5,1194.6 1357.9,1166.1 1516.6,1159.9 1495.6,1137.0 1450.7,1108.8 1357.8,922.1 960.5,209.3 582.3,425.5 426.1,502.3 428.0,548.7 205.0,556.3 163.0,544.7 120.9,737.5" fill="#fbf6dc" stroke="#d9b100" stroke-width="3" stroke-linejoin="round"/>
+<g stroke-linecap="round">
+<line x1="1514.2" y1="1157.4" x2="1305.5" y2="1066.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1305.5" y1="1066.3" x2="1318.7" y2="942.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1305.5" y1="1066.3" x2="1181.6" y2="1093.2" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1181.6" y1="1093.2" x2="1092.3" y2="1127.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1092.3" y1="1127.8" x2="1119.9" y2="1168.7" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1092.3" y1="1127.8" x2="1050.0" y2="1079.7" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1050.0" y1="1079.7" x2="964.0" y2="1080.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="964.0" y1="1080.1" x2="928.0" y2="1143.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="928.0" y1="1143.8" x2="872.6" y2="1061.0" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="928.0" y1="1143.8" x2="788.1" y2="1143.9" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="872.6" y1="1061.0" x2="827.2" y2="1024.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="788.1" y1="1143.9" x2="827.2" y2="1024.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="788.1" y1="1143.9" x2="709.7" y2="1100.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="709.7" y1="1100.4" x2="705.9" y2="946.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="705.9" y1="946.5" x2="790.7" y2="950.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="827.2" y1="1024.6" x2="790.7" y2="950.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="790.7" y1="950.3" x2="823.9" y2="948.2" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="823.9" y1="948.2" x2="856.2" y2="950.9" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="856.2" y1="950.9" x2="885.5" y2="950.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="885.5" y1="950.5" x2="872.6" y2="1061.0" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="885.5" y1="950.5" x2="956.9" y2="963.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="956.9" y1="963.5" x2="956.9" y2="918.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="956.9" y1="963.5" x2="1001.8" y2="976.0" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1001.8" y1="976.0" x2="1007.4" y2="963.9" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1007.4" y1="963.9" x2="1036.3" y2="964.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1036.3" y1="964.4" x2="1050.0" y2="1079.7" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1036.3" y1="964.4" x2="1205.1" y2="914.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1205.1" y1="914.6" x2="1318.7" y2="942.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1205.1" y1="914.6" x2="1239.7" y2="815.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="790.7" y1="950.3" x2="807.7" y2="886.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="807.7" y1="886.8" x2="804.4" y2="816.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="885.5" y1="950.5" x2="891.4" y2="869.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="891.4" y1="869.1" x2="956.9" y2="918.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="956.9" y1="918.4" x2="1034.7" y2="872.7" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1034.7" y1="872.7" x2="1036.3" y2="964.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1034.7" y1="872.7" x2="1029.6" y2="798.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1029.6" y1="798.6" x2="1239.7" y2="815.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="1029.6" y1="798.6" x2="1072.7" y2="754.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="891.4" y1="869.1" x2="880.1" y2="794.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="880.1" y1="794.1" x2="804.4" y2="816.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="804.4" y1="816.4" x2="788.4" y2="786.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="788.4" y1="786.3" x2="750.0" y2="845.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="750.0" y1="845.8" x2="724.4" y2="800.4" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="750.0" y1="845.8" x2="705.9" y2="946.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="724.4" y1="800.4" x2="565.2" y2="813.0" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="565.2" y1="813.0" x2="484.0" y2="779.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="724.4" y1="800.4" x2="737.0" y2="758.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="737.0" y1="758.8" x2="839.6" y2="741.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="839.6" y1="741.5" x2="880.1" y2="794.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="839.6" y1="741.5" x2="950.8" y2="748.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="950.8" y1="748.1" x2="880.1" y2="794.1" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="950.8" y1="748.1" x2="920.5" y2="713.8" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="950.8" y1="748.1" x2="1072.7" y2="754.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="839.6" y1="741.5" x2="784.8" y2="611.6" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="784.8" y1="611.6" x2="817.7" y2="464.5" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+<line x1="817.7" y1="464.5" x2="761.6" y2="461.3" stroke="#101114" stroke-opacity="0.28" stroke-width="4"/>
+</g>
+<text x="783" y="1224" font-size="14" letter-spacing="6" fill="#6b6d73">TELIGATI ROAD</text>
+<text transform="translate(1433,679) rotate(-58)" font-size="14" letter-spacing="4" fill="#6b6d73">KHULNA–JESSORE HIGHWAY SIDE</text>
+<circle cx="1514.2" cy="1157.4" r="10" fill="#101114" stroke="#d9b100" stroke-width="2"/>
+<text x="1514.2" y="1161.4" font-size="11" font-weight="700" text-anchor="middle" fill="#ffffff">1</text>
+<circle cx="950.8" cy="748.1" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="950.8" y="752.1" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">2</text>
+<circle cx="885.5" cy="950.5" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="885.5" y="954.5" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">3</text>
+<circle cx="856.2" cy="950.9" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="856.2" y="954.9" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">4</text>
+<circle cx="823.9" cy="948.2" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="823.9" y="952.2" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">5</text>
+<circle cx="790.7" cy="950.3" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="790.7" y="954.3" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">6</text>
+<circle cx="807.7" cy="886.8" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="807.7" y="890.8" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">7</text>
+<circle cx="891.4" cy="869.1" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="891.4" y="873.1" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">8</text>
+<circle cx="1034.7" cy="872.7" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="1034.7" y="876.7" font-size="11" font-weight="700" text-anchor="middle" fill="#101114">9</text>
+<circle cx="1029.6" cy="798.6" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="1029.6" y="802.6" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">10</text>
+<circle cx="880.1" cy="794.1" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="880.1" y="798.1" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">11</text>
+<circle cx="804.4" cy="816.4" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="804.4" y="820.4" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">12</text>
+<circle cx="724.4" cy="800.4" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="724.4" y="804.4" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">13</text>
+<circle cx="484.0" cy="779.8" r="10" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="484.0" y="783.8" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">14</text>
+<circle cx="565.2" cy="813.0" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="565.2" y="817.0" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">15</text>
+<circle cx="839.6" cy="741.5" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="839.6" y="745.5" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">16</text>
+<circle cx="956.9" cy="918.4" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="956.9" y="922.4" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">17</text>
+<circle cx="1036.3" cy="964.4" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1036.3" y="968.4" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">18</text>
+<line x1="1007.4" y1="963.9" x2="1009.5" y2="959.5" stroke="#101114" stroke-width="1"/>
+<circle cx="1007.4" cy="963.9" r="2" fill="#101114"/>
+<circle cx="1009.5" cy="959.5" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1009.5" y="963.5" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">19</text>
+<line x1="1001.8" y1="976.0" x2="999.8" y2="980.4" stroke="#101114" stroke-width="1"/>
+<circle cx="1001.8" cy="976.0" r="2" fill="#101114"/>
+<circle cx="999.8" cy="980.4" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="999.8" y="984.4" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">20</text>
+<circle cx="1119.9" cy="1168.7" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1119.9" y="1172.7" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">21</text>
+<circle cx="737.0" cy="758.8" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="737.0" y="762.8" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">22</text>
+<circle cx="1050.0" cy="1079.7" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1050.0" y="1083.7" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">23</text>
+<circle cx="827.2" cy="1024.6" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="827.2" y="1028.6" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">24</text>
+<circle cx="750.0" cy="845.8" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="750.0" y="849.8" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">25</text>
+<circle cx="705.9" cy="946.5" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="705.9" y="950.5" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">26</text>
+<circle cx="956.9" cy="963.5" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="956.9" y="967.5" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">27</text>
+<circle cx="1318.7" cy="942.3" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1318.7" y="946.3" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">28</text>
+<circle cx="1239.7" cy="815.1" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1239.7" y="819.1" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">29</text>
+<circle cx="1181.6" cy="1093.2" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1181.6" y="1097.2" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">30</text>
+<circle cx="1205.1" cy="914.6" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1205.1" y="918.6" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">31</text>
+<circle cx="920.5" cy="713.8" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="920.5" y="717.8" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">32</text>
+<circle cx="788.1" cy="1143.9" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="788.1" y="1147.9" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">33</text>
+<circle cx="928.0" cy="1143.8" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="928.0" y="1147.8" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">34</text>
+<circle cx="964.0" cy="1080.1" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="964.0" y="1084.1" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">35</text>
+<circle cx="872.6" cy="1061.0" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="872.6" y="1065.0" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">36</text>
+<circle cx="709.7" cy="1100.4" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="709.7" y="1104.4" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">37</text>
+<circle cx="1305.5" cy="1066.3" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="1305.5" y="1070.3" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">38</text>
+<circle cx="1072.7" cy="754.6" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="1072.7" y="758.6" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">39</text>
+<circle cx="784.8" cy="611.6" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="784.8" y="615.6" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">40</text>
+<circle cx="817.7" cy="464.5" r="10" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="817.7" y="468.5" font-size="10" font-weight="700" text-anchor="middle" fill="#d9b100">41</text>
+<circle cx="761.6" cy="461.3" r="10" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="761.6" y="465.3" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">42</text>
+<circle cx="788.4" cy="786.3" r="10" fill="#101114" stroke="#d9b100" stroke-width="2"/>
+<text x="788.4" y="790.3" font-size="10" font-weight="700" text-anchor="middle" fill="#ffffff">43</text>
+<circle cx="1092.3" cy="1127.8" r="10" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1092.3" y="1131.8" font-size="10" font-weight="700" text-anchor="middle" fill="#101114">44</text>
+<g transform="translate(80,180)"><polygon points="0,-22 9,10 0,4 -9,10" fill="#101114"/><polygon points="0,-22 0,4 -9,10" fill="#d9b100"/><text x="0" y="30" font-size="14" font-weight="700" text-anchor="middle" fill="#101114">N</text></g>
+<rect x="60" y="1293.2000000003718" width="62.5" height="8" fill="#101114"/><rect x="122.5" y="1293.2000000003718" width="62.5" height="8" fill="#d9b100"/>
+<text x="60" y="1287.2000000003718" font-size="12" fill="#101114">0</text><text x="185" y="1287.2000000003718" font-size="12" text-anchor="middle" fill="#101114">100 m</text>
+<text x="1578.2500000000584" y="1301.2000000003718" font-size="12" text-anchor="end" fill="#6b6d73">Map data © OpenStreetMap contributors (ODbL) · layout checked against the KUET master plan</text>
+<text x="1618.2500000000584" y="154" font-size="20" font-weight="700" fill="#101114">Places</text>
+<circle cx="1625.2500000000584" cy="185" r="7" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="1640.2500000000584" y="190" font-size="14" font-weight="700" fill="#101114">ACADEMIC</text>
+<text x="1640.2500000000584" y="207" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">4</tspan>  Department of CSE</text>
+<text x="1640.2500000000584" y="224" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">5</tspan>  Department of ECE</text>
+<text x="1640.2500000000584" y="241" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">6</tspan>  Department of IEM</text>
+<text x="1640.2500000000584" y="258" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">7</tspan>  Architecture and URP Building</text>
+<text x="1640.2500000000584" y="275" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">8</tspan>  Science Building</text>
+<text x="1640.2500000000584" y="292" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">9</tspan>  EEE Building</text>
+<text x="1640.2500000000584" y="309" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">10</tspan>  Civil Engineering Building</text>
+<text x="1640.2500000000584" y="326" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">11</tspan>  Mechanical Engineering Building</text>
+<text x="1640.2500000000584" y="343" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">12</tspan>  Leather Engineering Building</text>
+<text x="1640.2500000000584" y="360" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">13</tspan>  Mechatronics Engineering Building</text>
+<text x="1640.2500000000584" y="377" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">14</tspan>  IT Building</text>
+<circle cx="1625.2500000000584" cy="394" r="7" fill="#d9b100" stroke="#d9b100" stroke-width="2"/>
+<text x="1640.2500000000584" y="399" font-size="14" font-weight="700" fill="#101114">ADMINISTRATIVE</text>
+<text x="1640.2500000000584" y="416" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">2</tspan>  Administrative Building</text>
+<circle cx="1625.2500000000584" cy="433" r="7" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1640.2500000000584" y="438" font-size="14" font-weight="700" fill="#101114">FACILITY</text>
+<text x="1640.2500000000584" y="455" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">3</tspan>  Central Library</text>
+<text x="1640.2500000000584" y="472" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">15</tspan>  IT Incubation Centre</text>
+<text x="1640.2500000000584" y="489" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">16</tspan>  Mechanical Workshop</text>
+<text x="1640.2500000000584" y="506" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">17</tspan>  Central Computer Centre</text>
+<text x="1640.2500000000584" y="523" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">18</tspan>  KUET Auditorium</text>
+<text x="1640.2500000000584" y="540" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">19</tspan>  Janata Bank, KUET Branch</text>
+<text x="1640.2500000000584" y="557" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">20</tspan>  Departmental Store</text>
+<text x="1640.2500000000584" y="574" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">21</tspan>  KUET Post Office</text>
+<text x="1640.2500000000584" y="591" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">22</tspan>  Water Treatment Plant</text>
+<text x="1640.2500000000584" y="608" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">44</tspan>  Kodom Tola</text>
+<circle cx="1625.2500000000584" cy="625" r="7" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1640.2500000000584" y="630" font-size="14" font-weight="700" fill="#101114">FOOD</text>
+<text x="1640.2500000000584" y="647" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">23</tspan>  Cafeteria</text>
+<text x="1640.2500000000584" y="664" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">24</tspan>  Canteen</text>
+<circle cx="1625.2500000000584" cy="681" r="7" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1640.2500000000584" y="686" font-size="14" font-weight="700" fill="#101114">MEDICAL</text>
+<text x="1640.2500000000584" y="703" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">25</tspan>  Medical Centre</text>
+<circle cx="1625.2500000000584" cy="720" r="7" fill="#101114" stroke="#101114" stroke-width="2"/>
+<text x="1640.2500000000584" y="725" font-size="14" font-weight="700" fill="#101114">RESIDENTIAL</text>
+<text x="1640.2500000000584" y="742" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">33</tspan>  Amar Ekushey Hall</text>
+<text x="1640.2500000000584" y="759" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">34</tspan>  Shaheed Smrity Hall</text>
+<text x="1640.2500000000584" y="776" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">35</tspan>  Dr. M. A. Rashid Hall</text>
+<text x="1640.2500000000584" y="793" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">36</tspan>  Fazlul Haque Hall</text>
+<text x="1640.2500000000584" y="810" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">37</tspan>  Lalan Shah Hall</text>
+<text x="1640.2500000000584" y="827" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">38</tspan>  Khan Jahan Ali Hall</text>
+<text x="1640.2500000000584" y="844" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">39</tspan>  Rokeya Hall</text>
+<text x="1640.2500000000584" y="861" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">40</tspan>  Dormitory</text>
+<text x="1640.2500000000584" y="878" font-size="13" fill="#101114"><tspan font-weight="700" fill="#101114">41</tspan>  Teachers and Staff Quarters</text>
+<circle cx="1625.2500000000584" cy="895" r="7" fill="#ffffff" stroke="#101114" stroke-width="2"/>
+<text x="1640.2500000000584" y="900" font-size="14" font-weight="700" fill="#101114">RELIGIOUS</text>
+<text x="1640.2500000000584" y="917" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">26</tspan>  Central Mosque</text>
+<circle cx="1625.2500000000584" cy="934" r="7" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1640.2500000000584" y="939" font-size="14" font-weight="700" fill="#101114">SPORTS</text>
+<text x="1640.2500000000584" y="956" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">31</tspan>  Central Playground</text>
+<text x="1640.2500000000584" y="973" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">32</tspan>  Tennis Court</text>
+<text x="1640.2500000000584" y="990" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">42</tspan>  Residential Area Playground</text>
+<circle cx="1625.2500000000584" cy="1007" r="7" fill="#101114" stroke="#d9b100" stroke-width="2"/>
+<text x="1640.2500000000584" y="1012" font-size="14" font-weight="700" fill="#101114">TRANSPORTATION</text>
+<text x="1640.2500000000584" y="1029" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">1</tspan>  KUET Main Gate</text>
+<text x="1640.2500000000584" y="1046" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">43</tspan>  Garage</text>
+<circle cx="1625.2500000000584" cy="1063" r="7" fill="#ffffff" stroke="#d9b100" stroke-width="2"/>
+<text x="1640.2500000000584" y="1068" font-size="14" font-weight="700" fill="#101114">LANDMARK</text>
+<text x="1640.2500000000584" y="1085" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">27</tspan>  Durbar Bangla</text>
+<text x="1640.2500000000584" y="1102" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">28</tspan>  Central Shaheed Minar</text>
+<text x="1640.2500000000584" y="1119" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">29</tspan>  KUET Lake</text>
+<text x="1640.2500000000584" y="1136" font-size="13" fill="#101114"><tspan font-weight="700" fill="#8a7000">30</tspan>  KUET Dighi</text>
+</svg>

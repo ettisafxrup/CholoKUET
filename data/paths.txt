@@ -1,0 +1,77 @@
+# FromID|ToID|Meters|Road   (every walkway works both ways)
+# Leave Meters empty to use the straight-line distance between the two places.
+# Walkways follow the roads on the KUET master plan. Road names are our own
+# descriptive labels, except KUET Road and Khanjahan Ali Hall Road, which are
+# the names used in OpenStreetMap.
+
+# From the main gate along the south of the campus
+1|38||KUET Road
+38|30||KUET Road
+30|44||KUET Road
+44|21||KUET Road
+38|28||Khanjahan Ali Hall Road
+
+# Between the halls
+44|23||Hall Road
+23|35||Hall Road
+35|34||Hall Road
+34|36||Hall Road
+34|33||Hall Road
+33|37||Hall Road
+33|24||Hall Road
+36|24||Canteen Lane
+24|6||Canteen Lane
+3|36||Library Lane
+
+# West side: mosque and medical centre
+37|26||Mosque Road
+26|6||Mosque Road
+25|26||Mosque Road
+
+# Academic building row
+6|5||Academic Walk
+5|4||Academic Walk
+4|3||Academic Walk
+3|27||Academic Walk
+27|20||Academic Walk
+20|19||Academic Walk
+19|18||Academic Walk
+18|23||Auditorium Road
+9|18||Auditorium Road
+
+# East side: playground and lake
+18|31||Playground Road
+31|28||Playground Road
+31|29||Playground Road
+29|10||Playground Road
+
+# Middle blocks
+6|7||Science Walk
+7|12||Science Walk
+3|8||Science Walk
+8|17||Science Walk
+27|17||Science Walk
+17|9||Science Walk
+8|11||Science Walk
+11|12||Science Walk
+9|10||Engineering Road
+10|39||Engineering Road
+
+# North-west: workshop, medical centre, IT park
+12|43||Workshop Road
+43|25||Workshop Road
+25|13||Workshop Road
+13|22||Workshop Road
+22|16||Workshop Road
+16|11||Workshop Road
+13|15||IT Park Road
+15|14||IT Park Road
+
+# North: administration and the residential area
+16|2||Admin Road
+2|11||Admin Road
+2|32||Admin Road
+2|39||Admin Road
+16|40||Residential Area Road
+40|41||Residential Area Road
+41|42||Residential Area Road

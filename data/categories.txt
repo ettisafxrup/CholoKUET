@@ -1,0 +1,11 @@
+# Categories in the order they appear in the campus tree.
+Academic
+Administrative
+Facility
+Food
+Medical
+Residential
+Religious
+Sports
+Transportation
+Landmark
