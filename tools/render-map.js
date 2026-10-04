@@ -1,21 +1,10 @@
-// Draws assets/campus-map.svg from data/locations.txt and data/paths.txt.
-//
-//   node tools/render-map.js
-//
-// Markers show the same IDs the app uses, so "type 3 for the library"
-// matches what people see on the map.
-
 const fs = require("fs")
 const path = require("path")
-
 const root = path.join(__dirname, "..")
 const GOLD = "#d9b100"
 const INK = "#101114"
 const PAPER = "#ffffff"
 const MUTED = "#6b6d73"
-
-// KUET campus outline from OpenStreetMap (lon, lat). OSM leaves a notch on the
-// west side where the master plan shows the IT park, so that notch is closed here.
 const boundary = [
   [89.4958282, 22.9002338],
   [89.4970777, 22.9001738],
@@ -55,23 +44,20 @@ const paths = readLines("data/paths.txt")
   .map((l) => l.split("|").map(Number))
   .filter(([a, b]) => byId.has(a) && byId.has(b))
 
-// Simple local projection: 1 m = SCALE px.
 const SCALE = 1.25
 const lon0 = 89.4952,
   lat0 = 22.905
 const mX = 102550,
-  mY = 111320 // meters per degree at 22.9°N
+  mY = 111320
 const MAP_X = 40,
   MAP_Y = 150
 const px = (lon) => MAP_X + (lon - lon0) * mX * SCALE
 const py = (lat) => MAP_Y + (lat0 - lat) * mY * SCALE
-
 const mapWidth = (89.5072 - lon0) * mX * SCALE
 const mapHeight = (lat0 - 22.897) * mY * SCALE
 const LEGEND_X = MAP_X + mapWidth + 40
 const WIDTH = LEGEND_X + 440
 const HEIGHT = MAP_Y + mapHeight + 70
-
 const styles = {
   Academic: { fill: GOLD, stroke: GOLD, text: INK },
   Administrative: { fill: GOLD, stroke: GOLD, text: INK },
@@ -85,8 +71,6 @@ const styles = {
   Transportation: { fill: INK, stroke: GOLD, text: PAPER },
 }
 const styleOf = (c) => styles[c] || { fill: PAPER, stroke: MUTED, text: INK }
-
-// Nudge markers that would overlap, keeping a leader line to the real spot.
 const R = 10
 const markers = places.map((p) => ({
   ...p,
@@ -130,8 +114,6 @@ out.push(
   `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH.toFixed(0)}" height="${HEIGHT.toFixed(0)}" viewBox="0 0 ${WIDTH.toFixed(0)} ${HEIGHT.toFixed(0)}" font-family="Segoe UI, Helvetica, Arial, sans-serif">`,
 )
 out.push(`<rect width="100%" height="100%" fill="${PAPER}"/>`)
-
-// Header
 out.push(
   `<rect x="0" y="0" width="${WIDTH.toFixed(0)}" height="110" fill="${INK}"/>`,
 )
@@ -145,15 +127,12 @@ out.push(
   `<rect x="0" y="110" width="${WIDTH.toFixed(0)}" height="4" fill="${GOLD}"/>`,
 )
 
-// Campus outline
 const outline = boundary
   .map(([lon, lat]) => `${px(lon).toFixed(1)},${py(lat).toFixed(1)}`)
   .join(" ")
 out.push(
   `<polygon points="${outline}" fill="#fbf6dc" stroke="${GOLD}" stroke-width="3" stroke-linejoin="round"/>`,
 )
-
-// Paths
 out.push(`<g stroke-linecap="round">`)
 for (const [a, b] of paths) {
   const p = byId.get(a),
@@ -163,8 +142,6 @@ for (const [a, b] of paths) {
   )
 }
 out.push(`</g>`)
-
-// Roads just outside campus, for orientation
 out.push(
   `<text x="${px(89.501).toFixed(0)}" y="${(py(22.8975) + 30).toFixed(0)}" font-size="14" letter-spacing="6" fill="${MUTED}">TELIGATI ROAD</text>`,
 )
@@ -172,7 +149,6 @@ out.push(
   `<text transform="translate(${(px(89.5058) + 34).toFixed(0)},${py(22.9012).toFixed(0)}) rotate(-58)" font-size="14" letter-spacing="4" fill="${MUTED}">KHULNA–JESSORE HIGHWAY SIDE</text>`,
 )
 
-// Markers
 for (const m of markers) {
   const s = styleOf(m.category)
   if (Math.hypot(m.x - m.tx, m.y - m.ty) > 3) {
@@ -190,8 +166,6 @@ for (const m of markers) {
     `<text x="${m.x.toFixed(1)}" y="${(m.y + 4).toFixed(1)}" font-size="${m.id > 9 ? 10 : 11}" font-weight="700" text-anchor="middle" fill="${s.text}">${m.id}</text>`,
   )
 }
-
-// North arrow and scale bar
 const nx = MAP_X + 40,
   ny = MAP_Y + 30
 out.push(
@@ -209,8 +183,6 @@ out.push(
 out.push(
   `<text x="${MAP_X + mapWidth}" y="${sy + 8}" font-size="12" text-anchor="end" fill="${MUTED}">Map data © OpenStreetMap contributors (ODbL) · layout checked against the KUET master plan</text>`,
 )
-
-// Legend, grouped by category in the order of categories.txt
 const order = readLines("data/categories.txt")
 let ly = MAP_Y + 4
 out.push(
