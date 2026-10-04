@@ -162,7 +162,7 @@ CholoKUET/
   </tr>
 </table>
 
-**Course teachers:** Subah Nawar and Lamisa Bintee Mizan Deya, Lecturers, Department of CSE, KUET.
+**CSE 2106: Data Structures and Algorithm** supervised by **Subah Nawar Ma'am** and **Lamisa Bintee Mizan Deya Ma'am**, Department of CSE, KUET.
 
 ## Credits and license
 
