@@ -3,13 +3,13 @@
 
 #include <utility>
 
-static bool outOfOrder(const Location& a, const Location& b, bool ascending)
+static bool outOfOrder(const Location &a, const Location &b, bool ascending)
 {
     int result = compareIgnoreCase(a.name, b.name);
     return ascending ? result > 0 : result < 0;
 }
 
-SortStats bubbleSortByName(std::vector<Location>& items, bool ascending)
+SortStats bubbleSortByName(std::vector<Location> &items, bool ascending)
 {
     SortStats stats;
     int n = static_cast<int>(items.size());
@@ -18,7 +18,6 @@ SortStats bubbleSortByName(std::vector<Location>& items, bool ascending)
     {
         bool swapped = false;
 
-        // After each pass the last `pass + 1` items are in their final place.
         for (int j = 0; j < n - 1 - pass; j++)
         {
             stats.comparisons++;
@@ -31,19 +30,18 @@ SortStats bubbleSortByName(std::vector<Location>& items, bool ascending)
         }
 
         if (!swapped)
-            break;   // nothing moved, so it's already sorted
+            break;
     }
     return stats;
 }
 
-SortStats selectionSortByName(std::vector<Location>& items, bool ascending)
+SortStats selectionSortByName(std::vector<Location> &items, bool ascending)
 {
     SortStats stats;
     int n = static_cast<int>(items.size());
 
     for (int i = 0; i < n - 1; i++)
     {
-        // Find the item that belongs at position i.
         int best = i;
         for (int j = i + 1; j < n; j++)
         {
@@ -61,7 +59,7 @@ SortStats selectionSortByName(std::vector<Location>& items, bool ascending)
     return stats;
 }
 
-SortStats selectionSortByCategory(std::vector<Location>& items)
+SortStats selectionSortByCategory(std::vector<Location> &items)
 {
     SortStats stats;
     int n = static_cast<int>(items.size());
@@ -86,7 +84,7 @@ SortStats selectionSortByCategory(std::vector<Location>& items)
     return stats;
 }
 
-SortStats bubbleSortByDistance(std::vector<NearbyPlace>& items)
+SortStats bubbleSortByDistance(std::vector<NearbyPlace> &items)
 {
     SortStats stats;
     int n = static_cast<int>(items.size());
@@ -110,7 +108,7 @@ SortStats bubbleSortByDistance(std::vector<NearbyPlace>& items)
     return stats;
 }
 
-void sortByName(std::vector<Location>& items)
+void sortByName(std::vector<Location> &items)
 {
     bubbleSortByName(items);
 }

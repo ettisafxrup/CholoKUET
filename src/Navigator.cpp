@@ -14,7 +14,7 @@
 // Setup and saving
 // ---------------------------------------------------------------------------
 
-std::string Navigator::dataPath(const std::string& relative) const
+std::string Navigator::dataPath(const std::string &relative) const
 {
     return baseDir + relative;
 }
@@ -25,7 +25,7 @@ void Navigator::initialize()
 
     // The exe may be started from the project folder, from build/ (CMake)
     // or from build/Debug (Visual Studio), so look upwards for the data.
-    for (const char* candidate : {"", "../", "../../", "../../../"})
+    for (const char *candidate : {"", "../", "../../", "../../../"})
     {
         if (fileExists(std::string(candidate) + LOCATIONS_FILE))
         {
@@ -42,7 +42,7 @@ void Navigator::initialize()
     loadData();
 }
 
-void Navigator::reportLoad(const std::string& what, const LoadResult& result)
+void Navigator::reportLoad(const std::string &what, const LoadResult &result)
 {
     if (result.missing)
     {
@@ -121,14 +121,15 @@ namespace
 {
     void banner()
     {
-        std::cout << "\n" << style::heading
+        std::cout << "\n"
+                  << style::heading
                   << "   ╔═══════════════════════════════════════╗\n"
                   << "   ║               CholoKUET               ║\n"
                   << "   ╚═══════════════════════════════════════╝" << style::reset << "\n"
                   << style::muted << "       Cholo Explore Kore Ashi · KUET campus" << style::reset << "\n";
     }
 
-    void menuItem(int number, const std::string& label, const std::string& hint = "")
+    void menuItem(int number, const std::string &label, const std::string &hint = "")
     {
         std::cout << "   " << style::accent << std::setw(2) << number << style::reset << "  "
                   << std::left << std::setw(24) << label << std::right;
@@ -137,7 +138,7 @@ namespace
         std::cout << "\n";
     }
 
-    void menuGroup(const std::string& name)
+    void menuGroup(const std::string &name)
     {
         std::cout << "\n  " << style::muted << name << style::reset << "\n";
     }
@@ -179,7 +180,7 @@ bool Navigator::login()
         return false;
     }
 
-    const User& user = auth.currentUser();
+    const User &user = auth.currentUser();
     logger.log("LOGIN", "user=" + user.username + " result=success");
 
     history.clear();
@@ -229,17 +230,13 @@ void Navigator::logout()
     logger.log("LOGOUT", "user=" + username);
 }
 
-// ---------------------------------------------------------------------------
-// Main menu
-// ---------------------------------------------------------------------------
-
 void Navigator::mainMenu()
 {
     style::clearScreen();
     banner();
 
     std::cout << "\n  Hi, " << style::strong << auth.currentUser().username << style::reset;
-    if (const Location* here = campus.find(currentLocation))
+    if (const Location *here = campus.find(currentLocation))
         std::cout << "  ·  you're at " << style::accent << here->name << style::reset;
     else
         std::cout << style::muted << "  ·  tell us where you are with 7" << style::reset;
@@ -279,32 +276,58 @@ void Navigator::handleChoice(int choice)
 {
     switch (choice)
     {
-        case 1:  takeMeSomewhere(); break;
-        case 2:  nearMe(); break;
-        case 3:  explore(); break;
-        case 4:  search(); break;
-        case 5:  browseCategories(); break;
-        case 6:  sortPlaces(); break;
-        case 7:  whereAmI(); break;
-        case 8:  tripHistory(); break;
-        case 9:  showRecentSearches(); break;
-        case 10: showFavorites(); break;
-        case 11: help(); break;
-        case 12: managePlaces(); break;
-        case 13: manageWalkways(); break;
-        case 14: viewUsers(); break;
-        case 15: viewLog(); break;
+    case 1:
+        takeMeSomewhere();
+        break;
+    case 2:
+        nearMe();
+        break;
+    case 3:
+        explore();
+        break;
+    case 4:
+        search();
+        break;
+    case 5:
+        browseCategories();
+        break;
+    case 6:
+        sortPlaces();
+        break;
+    case 7:
+        whereAmI();
+        break;
+    case 8:
+        tripHistory();
+        break;
+    case 9:
+        showRecentSearches();
+        break;
+    case 10:
+        showFavorites();
+        break;
+    case 11:
+        help();
+        break;
+    case 12:
+        managePlaces();
+        break;
+    case 13:
+        manageWalkways();
+        break;
+    case 14:
+        viewUsers();
+        break;
+    case 15:
+        viewLog();
+        break;
     }
 }
 
-// ---------------------------------------------------------------------------
-// Shared helpers
-// ---------------------------------------------------------------------------
-
-int Navigator::nearestPlace(double latitude, double longitude, double& meters) const
+int Navigator::nearestPlace(double latitude, double longitude, double &meters) const
 {
     int best = -1;
-    for (const Location& place : campus.locations)
+    for (const Location &place : campus.locations)
     {
         double d = distanceMeters(latitude, longitude, place.latitude, place.longitude);
         if (best == -1 || d < meters)
@@ -316,9 +339,8 @@ int Navigator::nearestPlace(double latitude, double longitude, double& meters) c
     return best;
 }
 
-int Navigator::resolvePlace(const std::string& input)
+int Navigator::resolvePlace(const std::string &input)
 {
-    // Coordinates are snapped to the closest known place.
     double latitude;
     double longitude;
     if (parseCoordinates(input, latitude, longitude))
@@ -378,9 +400,9 @@ int Navigator::resolvePlace(const std::string& input)
     return pick > 0 ? campus.locations[matches[pick - 1]].id : -1;
 }
 
-int Navigator::askForPlace(const std::string& question, bool enterMeansCurrent)
+int Navigator::askForPlace(const std::string &question, bool enterMeansCurrent)
 {
-    const Location* here = campus.find(currentLocation);
+    const Location *here = campus.find(currentLocation);
     bool useHere = enterMeansCurrent && here;
 
     while (!inputClosed())
@@ -400,11 +422,9 @@ int Navigator::askForPlace(const std::string& question, bool enterMeansCurrent)
     return -1;
 }
 
-bool Navigator::askForPoint(const std::string& question, double& latitude, double& longitude)
+bool Navigator::askForPoint(const std::string &question, double &latitude, double &longitude)
 {
-    // Like askForPlace, but typed coordinates are used exactly as given
-    // instead of being snapped to the nearest place.
-    const Location* here = campus.find(currentLocation);
+    const Location *here = campus.find(currentLocation);
 
     std::cout << "\n  " << style::strong << question << style::reset;
     if (here)
@@ -428,7 +448,7 @@ bool Navigator::askForPoint(const std::string& question, double& latitude, doubl
         return false;
     }
 
-    const Location* place = campus.find(resolvePlace(input));
+    const Location *place = campus.find(resolvePlace(input));
     if (!place)
         return false;
     latitude = place->latitude;
@@ -454,7 +474,6 @@ void Navigator::moveTo(int id)
 
 void Navigator::rememberSearch(int id)
 {
-    // Newest first, no repeats, and only the last few are kept.
     recentSearches.remove(id);
     recentSearches.push_front(id);
     if (recentSearches.size() > static_cast<size_t>(MAX_RECENT_SEARCHES))
@@ -471,7 +490,7 @@ bool Navigator::isFavorite(int id) const
     return false;
 }
 
-void Navigator::logAction(const std::string& action, const std::string& details)
+void Navigator::logAction(const std::string &action, const std::string &details)
 {
     logger.log(action, "user=" + auth.currentUser().username + " " + details);
 }

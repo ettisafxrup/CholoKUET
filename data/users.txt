@@ -1,6 +1,6 @@
-# username|passwordHash|role
-# The hash is FNV-1a of "username:password".
-
 admin|a4239af2c06b4307|admin
 student1|445aff2fe080879e|student
 ettisafxrup|2920300ad711415a|student
+joti|56d3a1c4a462b03d|student
+siam|dadeb20b0a30cb9e|student
+broti_the_great|3a88396048c1bf2f|student

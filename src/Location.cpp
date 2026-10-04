@@ -10,7 +10,7 @@ bool isValidCoordinate(double latitude, double longitude)
     return latitude >= -90.0 && latitude <= 90.0 && longitude >= -180.0 && longitude <= 180.0;
 }
 
-bool parseLocation(const std::string& line, Location& location, std::string& error)
+bool parseLocation(const std::string &line, Location &location, std::string &error)
 {
     std::vector<std::string> fields = split(line, '|');
     if (fields.size() < 5)
@@ -40,7 +40,6 @@ bool parseLocation(const std::string& line, Location& location, std::string& err
     parsed.name = fields[1];
     parsed.category = fields[2].empty() ? "Other" : fields[2];
 
-    // Keep any '|' that appears inside the description itself.
     for (size_t i = 5; i < fields.size(); i++)
         parsed.description += (i > 5 ? "|" : "") + fields[i];
 
@@ -48,7 +47,7 @@ bool parseLocation(const std::string& line, Location& location, std::string& err
     return true;
 }
 
-std::string formatLocation(const Location& location)
+std::string formatLocation(const Location &location)
 {
     char coordinates[64];
     std::snprintf(coordinates, sizeof(coordinates), "%.6f|%.6f", location.latitude, location.longitude);
@@ -56,14 +55,14 @@ std::string formatLocation(const Location& location)
            coordinates + "|" + location.description;
 }
 
-std::string coordinateString(const Location& location)
+std::string coordinateString(const Location &location)
 {
     char text[64];
     std::snprintf(text, sizeof(text), "%.6f, %.6f", location.latitude, location.longitude);
     return text;
 }
 
-void printLocationDetails(const Location& location)
+void printLocationDetails(const Location &location)
 {
     char latitude[32];
     char longitude[32];

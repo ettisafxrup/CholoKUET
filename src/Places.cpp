@@ -15,14 +15,14 @@
 
 namespace
 {
-    void numberedPlace(int number, const Location& place)
+    void numberedPlace(int number, const Location &place)
     {
         std::cout << "  " << style::accent << std::setw(2) << number << style::reset << "  " << std::left
                   << std::setw(36) << place.name << std::right << style::muted << place.category
                   << style::reset << "\n";
     }
 
-    void copyAndReport(const std::string& text)
+    void copyAndReport(const std::string &text)
     {
         if (copyToClipboard(text))
             printSuccess("Copied " + text + " to the clipboard.");
@@ -73,7 +73,7 @@ void Navigator::search()
         int categoryComparisons = 0;
         std::vector<int> byName = linearSearchByName(campus.locations, query, comparisons);
         std::vector<int> byCategory = linearSearchByCategory(campus.locations, query, categoryComparisons);
-        for (const std::vector<int>* group : {&byName, &byCategory})
+        for (const std::vector<int> *group : {&byName, &byCategory})
         {
             for (int index : *group)
             {
@@ -122,7 +122,7 @@ void Navigator::openPlace(int id)
 {
     while (!inputClosed())
     {
-        const Location* place = campus.find(id);
+        const Location *place = campus.find(id);
         if (!place)
             return;
 
@@ -132,14 +132,14 @@ void Navigator::openPlace(int id)
             std::cout << "  " << place->description << "\n";
 
         std::cout << "\n  " << style::muted << "Coordinates  " << style::reset << coordinateString(*place) << "\n";
-        if (const Location* here = campus.find(currentLocation))
+        if (const Location *here = campus.find(currentLocation))
         {
             if (here->id != id)
                 std::cout << "  " << style::muted << "From you     " << style::reset
                           << formatDistance(distanceMeters(*here, *place)) << " straight line\n";
         }
 
-        const std::vector<Edge>& walkways = campus.graph.neighbors(id);
+        const std::vector<Edge> &walkways = campus.graph.neighbors(id);
         std::cout << "  " << style::muted << "Walkways     " << style::reset;
         if (walkways.empty())
             std::cout << "none\n";
@@ -202,7 +202,7 @@ void Navigator::browseCategories()
 {
     while (!inputClosed())
     {
-        const TreeNode& root = campusTree.root();
+        const TreeNode &root = campusTree.root();
         int count = static_cast<int>(root.children.size());
 
         printTitle("Browse by category", "KUET → category → place, stored as a tree.");
@@ -216,7 +216,7 @@ void Navigator::browseCategories()
         std::cout << "  " << style::strong << root.name << style::reset << "\n";
         for (int i = 0; i < count; i++)
         {
-            const TreeNode& category = root.children[i];
+            const TreeNode &category = root.children[i];
             std::cout << "  " << style::muted << (i + 1 == count ? "└── " : "├── ") << style::reset
                       << style::accent << std::setw(2) << i + 1 << style::reset << "  " << std::left
                       << std::setw(18) << category.name << std::right << style::muted
@@ -234,13 +234,13 @@ void Navigator::browseCategories()
         if (choice == count + 1)
         {
             printTitle("The campus tree", std::to_string(campusTree.countNodes()) + " nodes, height " +
-                                          std::to_string(campusTree.height()));
+                                              std::to_string(campusTree.height()));
             campusTree.print();
             pause();
             continue;
         }
 
-        const TreeNode& category = root.children[choice - 1];
+        const TreeNode &category = root.children[choice - 1];
         int places = static_cast<int>(category.children.size());
         printTitle(category.name, root.name + " → " + category.name);
         for (int i = 0; i < places; i++)
@@ -278,7 +278,7 @@ void Navigator::sortPlaces()
 
     if (choice == 4)
     {
-        const Location* here = campus.find(currentLocation);
+        const Location *here = campus.find(currentLocation);
         if (!here)
         {
             printWarning("Tell us where you are first (menu 7).");
@@ -287,7 +287,7 @@ void Navigator::sortPlaces()
         }
 
         std::vector<NearbyPlace> places;
-        for (const Location& place : campus.locations)
+        for (const Location &place : campus.locations)
             places.push_back({place.id, distanceMeters(*here, place)});
         stats = bubbleSortByDistance(places);
 
@@ -326,7 +326,7 @@ void Navigator::whereAmI()
 {
     while (!inputClosed())
     {
-        const Location* here = campus.find(currentLocation);
+        const Location *here = campus.find(currentLocation);
 
         printTitle("Where am I?");
         if (here)
@@ -500,20 +500,23 @@ void Navigator::help()
 {
     printTitle(std::string("About ") + APP_NAME, std::string(APP_TAGLINE) + " · a KUET campus navigator");
 
-    std::cout <<
-        "  " << style::strong << "Getting somewhere" << style::reset << "\n"
-        "  Choose 1, say where you are and where you're going. You get the roads\n"
-        "  to take, where to turn, the places you pass, and how long it takes.\n\n"
-        "  " << style::strong << "Typing a place" << style::reset << "\n"
-        "  Anywhere we ask for a place you can type part of its name (\"lib\"),\n"
-        "  its number from the campus map, or coordinates like 22.8992, 89.5016.\n"
-        "  Press Enter on its own to go back, or to use where you are.\n\n"
-        "  " << style::strong << "How it works" << style::reset << "\n"
-        "  Places live in an array and walkways in a graph. Routes come from BFS\n"
-        "  on our own queue, exploring uses DFS on our own stack, and so does the\n"
-        "  Back button. Categories are a tree, recent searches a linked list.\n"
-        "  BFS finds the fewest stops, which isn't always the fewest meters.\n\n"
-        "  " << style::muted << "Positions come from OpenStreetMap and the KUET master plan (about 30 m).\n"
-        "  The login is a simple local one for this project, not real security." << style::reset << "\n";
+    std::cout << "  " << style::strong << "Getting somewhere" << style::reset << "\n"
+                                                                                 "  Choose 1, say where you are and where you're going. You get the roads\n"
+                                                                                 "  to take, where to turn, the places you pass, and how long it takes.\n\n"
+                                                                                 "  "
+              << style::strong << "Typing a place" << style::reset << "\n"
+                                                                      "  Anywhere we ask for a place you can type part of its name (\"lib\"),\n"
+                                                                      "  its number from the campus map, or coordinates like 22.8992, 89.5016.\n"
+                                                                      "  Press Enter on its own to go back, or to use where you are.\n\n"
+                                                                      "  "
+              << style::strong << "How it works" << style::reset << "\n"
+                                                                    "  Places live in an array and walkways in a graph. Routes come from BFS\n"
+                                                                    "  on our own queue, exploring uses DFS on our own stack, and so does the\n"
+                                                                    "  Back button. Categories are a tree, recent searches a linked list.\n"
+                                                                    "  BFS finds the fewest stops, which isn't always the fewest meters.\n\n"
+                                                                    "  "
+              << style::muted << "Positions come from OpenStreetMap and the KUET master plan (about 30 m).\n"
+                                 "  The login is a simple local one for this project, not real security."
+              << style::reset << "\n";
     pause();
 }

@@ -5,22 +5,22 @@
 bool Stack::push(int value)
 {
     if (isFull())
-        return false;   // overflow
+        return false;
 
     data[++top] = value;
     return true;
 }
 
-bool Stack::pop(int& value)
+bool Stack::pop(int &value)
 {
     if (isEmpty())
-        return false;   // underflow
+        return false;
 
     value = data[top--];
     return true;
 }
 
-bool Stack::peek(int& value) const
+bool Stack::peek(int &value) const
 {
     if (isEmpty())
         return false;
@@ -29,7 +29,7 @@ bool Stack::peek(int& value) const
     return true;
 }
 
-void Stack::print(const std::function<std::string(int)>& label) const
+void Stack::print(const std::function<std::string(int)> &label) const
 {
     if (isEmpty())
     {
@@ -44,7 +44,7 @@ void Stack::print(const std::function<std::string(int)>& label) const
     }
 }
 
-void Stack::printInline(const std::function<std::string(int)>& label) const
+void Stack::printInline(const std::function<std::string(int)> &label) const
 {
     std::cout << "     stack: [bottom] ";
     for (int i = 0; i <= top; i++)

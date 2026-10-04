@@ -5,9 +5,8 @@
 #include <fstream>
 #include <iostream>
 
-void Logger::log(const std::string& action, const std::string& details) const
+void Logger::log(const std::string &action, const std::string &details) const
 {
-    // Opening per line keeps earlier entries safe even if the app is killed.
     std::ofstream file(path, std::ios::app);
     if (!file)
         return;
@@ -38,7 +37,7 @@ void Logger::printLast(int lines) const
         total++;
     }
 
-    for (const std::string& entry : recent)
+    for (const std::string &entry : recent)
         std::cout << "  " << entry << "\n";
     std::cout << "\n  Showing the last " << recent.size() << " of " << total << " entries.\n";
 }

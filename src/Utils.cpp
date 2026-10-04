@@ -10,25 +10,25 @@
 #include <iostream>
 
 #ifdef _WIN32
-    #ifndef WIN32_LEAN_AND_MEAN
-        #define WIN32_LEAN_AND_MEAN
-    #endif
-    #ifndef NOMINMAX
-        #define NOMINMAX
-    #endif
-    #include <windows.h>
-    #include <conio.h>
-    #include <direct.h>
-    #include <io.h>
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <conio.h>
+#include <direct.h>
+#include <io.h>
 #else
-    #include <sys/stat.h>
+#include <sys/stat.h>
 #endif
 
 static bool stdinClosed = false;
 
 // ---- Strings ----
 
-std::string trim(const std::string& text)
+std::string trim(const std::string &text)
 {
     size_t start = 0;
     size_t end = text.size();
@@ -41,27 +41,27 @@ std::string trim(const std::string& text)
 
 std::string toLower(std::string text)
 {
-    for (char& c : text)
+    for (char &c : text)
         c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
     return text;
 }
 
-int compareIgnoreCase(const std::string& a, const std::string& b)
+int compareIgnoreCase(const std::string &a, const std::string &b)
 {
     return toLower(a).compare(toLower(b));
 }
 
-bool equalsIgnoreCase(const std::string& a, const std::string& b)
+bool equalsIgnoreCase(const std::string &a, const std::string &b)
 {
     return compareIgnoreCase(a, b) == 0;
 }
 
-bool containsIgnoreCase(const std::string& text, const std::string& part)
+bool containsIgnoreCase(const std::string &text, const std::string &part)
 {
     return toLower(text).find(toLower(part)) != std::string::npos;
 }
 
-std::vector<std::string> split(const std::string& line, char separator)
+std::vector<std::string> split(const std::string &line, char separator)
 {
     std::vector<std::string> fields;
     size_t start = 0;
@@ -78,13 +78,13 @@ std::vector<std::string> split(const std::string& line, char separator)
     }
 }
 
-bool parseInt(const std::string& text, int& value)
+bool parseInt(const std::string &text, int &value)
 {
     std::string s = trim(text);
     if (s.empty())
         return false;
 
-    char* end = nullptr;
+    char *end = nullptr;
     long parsed = std::strtol(s.c_str(), &end, 10);
     if (*end != '\0' || parsed < -2147483647L || parsed > 2147483647L)
         return false;
@@ -93,13 +93,13 @@ bool parseInt(const std::string& text, int& value)
     return true;
 }
 
-bool parseDouble(const std::string& text, double& value)
+bool parseDouble(const std::string &text, double &value)
 {
     std::string s = trim(text);
     if (s.empty())
         return false;
 
-    char* end = nullptr;
+    char *end = nullptr;
     double parsed = std::strtod(s.c_str(), &end);
     if (*end != '\0' || !std::isfinite(parsed))
         return false;
@@ -108,23 +108,23 @@ bool parseDouble(const std::string& text, double& value)
     return true;
 }
 
-bool parseCoordinates(const std::string& text, double& latitude, double& longitude)
+bool parseCoordinates(const std::string &text, double &latitude, double &longitude)
 {
     // Accepts "22.8992, 89.5016" or "22.8992 89.5016".
     std::string cleaned = text;
-    for (char& c : cleaned)
+    for (char &c : cleaned)
     {
         if (c == ',')
             c = ' ';
     }
 
-    char* end = nullptr;
-    const char* start = cleaned.c_str();
+    char *end = nullptr;
+    const char *start = cleaned.c_str();
     double lat = std::strtod(start, &end);
     if (end == start)
         return false;
 
-    const char* second = end;
+    const char *second = end;
     double lon = std::strtod(second, &end);
     if (end == second || !trim(end).empty() || !std::isfinite(lat) || !std::isfinite(lon))
         return false;
@@ -136,7 +136,7 @@ bool parseCoordinates(const std::string& text, double& latitude, double& longitu
 
 // ---- Console input ----
 
-std::string readLine(const std::string& prompt)
+std::string readLine(const std::string &prompt)
 {
     std::cout << prompt;
     std::string line;
@@ -167,7 +167,7 @@ int readChoice(int highest, bool enterMeansBack)
     }
 }
 
-double readDouble(const std::string& prompt)
+double readDouble(const std::string &prompt)
 {
     while (true)
     {
@@ -182,7 +182,7 @@ double readDouble(const std::string& prompt)
     }
 }
 
-bool readYesNo(const std::string& question, bool defaultAnswer)
+bool readYesNo(const std::string &question, bool defaultAnswer)
 {
     std::string prompt = question + (defaultAnswer ? " [Y/n] " : " [y/N] ");
     while (true)
@@ -200,7 +200,7 @@ bool readYesNo(const std::string& question, bool defaultAnswer)
     }
 }
 
-std::string readPassword(const std::string& prompt)
+std::string readPassword(const std::string &prompt)
 {
 #ifdef _WIN32
     // Hide what is typed on a real console. When input is piped in (tests,
@@ -216,7 +216,7 @@ std::string readPassword(const std::string& prompt)
                 break;
             if (ch == 0 || ch == 0xE0)
             {
-                _getch();   // arrow keys etc. send two codes; ignore both
+                _getch(); // arrow keys etc. send two codes; ignore both
                 continue;
             }
             if (ch == '\b')
@@ -260,7 +260,7 @@ void pause()
 void initConsole()
 {
 #ifdef _WIN32
-    SetConsoleOutputCP(CP_UTF8);   // so the box and arrow characters render
+    SetConsoleOutputCP(CP_UTF8); // so the box and arrow characters render
 #endif
     style::init();
 }
@@ -273,7 +273,7 @@ void printRule(int width)
     std::cout << style::reset << "\n";
 }
 
-void printTitle(const std::string& title, const std::string& subtitle)
+void printTitle(const std::string &title, const std::string &subtitle)
 {
     std::cout << "\n  " << style::heading << title << style::reset << "\n";
     if (!subtitle.empty())
@@ -281,29 +281,29 @@ void printTitle(const std::string& title, const std::string& subtitle)
     printRule();
 }
 
-void printOption(int number, const std::string& label)
+void printOption(int number, const std::string &label)
 {
     std::cout << "   " << style::accent << number << style::reset << "  " << label << "\n";
 }
 
-void printSuccess(const std::string& message)
+void printSuccess(const std::string &message)
 {
     std::cout << style::good << "  ✓ " << message << style::reset << "\n";
 }
 
-void printWarning(const std::string& message)
+void printWarning(const std::string &message)
 {
     std::cout << style::warn << "  ! " << message << style::reset << "\n";
 }
 
-void printError(const std::string& message)
+void printError(const std::string &message)
 {
     std::cout << style::bad << "  ✗ " << message << style::reset << "\n";
 }
 
 // ---- System ----
 
-bool copyToClipboard(const std::string& text)
+bool copyToClipboard(const std::string &text)
 {
 #ifdef _WIN32
     if (!OpenClipboard(nullptr))
@@ -316,7 +316,7 @@ bool copyToClipboard(const std::string& text)
         CloseClipboard();
         return false;
     }
-    char* buffer = static_cast<char*>(GlobalLock(memory));
+    char *buffer = static_cast<char *>(GlobalLock(memory));
     std::memcpy(buffer, text.c_str(), text.size() + 1);
     GlobalUnlock(memory);
 
@@ -331,13 +331,13 @@ bool copyToClipboard(const std::string& text)
 #endif
 }
 
-bool fileExists(const std::string& path)
+bool fileExists(const std::string &path)
 {
     std::ifstream file(path);
     return file.good();
 }
 
-void makeDirectory(const std::string& path)
+void makeDirectory(const std::string &path)
 {
 #ifdef _WIN32
     _mkdir(path.c_str());
@@ -350,7 +350,7 @@ std::string currentTimestamp()
 {
     std::time_t now = std::time(nullptr);
     char buffer[32] = "0000-00-00 00:00:00";
-    if (std::tm* local = std::localtime(&now))
+    if (std::tm *local = std::localtime(&now))
         std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", local);
     return buffer;
 }

@@ -1,8 +1,8 @@
 #include "../include/Search.h"
 #include "../include/Utils.h"
 
-std::vector<int> linearSearchByName(const std::vector<Location>& locations,
-                                    const std::string& query, int& comparisons)
+std::vector<int> linearSearchByName(const std::vector<Location> &locations,
+                                    const std::string &query, int &comparisons)
 {
     std::vector<int> matches;
     comparisons = 0;
@@ -15,8 +15,8 @@ std::vector<int> linearSearchByName(const std::vector<Location>& locations,
     return matches;
 }
 
-std::vector<int> linearSearchByCategory(const std::vector<Location>& locations,
-                                        const std::string& query, int& comparisons)
+std::vector<int> linearSearchByCategory(const std::vector<Location> &locations,
+                                        const std::string &query, int &comparisons)
 {
     std::vector<int> matches;
     comparisons = 0;
@@ -29,7 +29,7 @@ std::vector<int> linearSearchByCategory(const std::vector<Location>& locations,
     return matches;
 }
 
-int linearSearchById(const std::vector<Location>& locations, int id, int& comparisons)
+int linearSearchById(const std::vector<Location> &locations, int id, int &comparisons)
 {
     comparisons = 0;
     for (size_t i = 0; i < locations.size(); i++)
@@ -41,7 +41,7 @@ int linearSearchById(const std::vector<Location>& locations, int id, int& compar
     return -1;
 }
 
-bool isSortedByName(const std::vector<Location>& locations)
+bool isSortedByName(const std::vector<Location> &locations)
 {
     for (size_t i = 1; i < locations.size(); i++)
     {
@@ -51,8 +51,8 @@ bool isSortedByName(const std::vector<Location>& locations)
     return true;
 }
 
-int binarySearchByName(const std::vector<Location>& sorted, const std::string& name,
-                       int& comparisons)
+int binarySearchByName(const std::vector<Location> &sorted, const std::string &name,
+                       int &comparisons)
 {
     comparisons = 0;
     int low = 0;

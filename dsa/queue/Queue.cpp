@@ -5,7 +5,7 @@
 bool Queue::enqueue(int value)
 {
     if (isFull())
-        return false; // overflow
+        return false;
 
     rear = (rear + 1) % CAPACITY;
     data[rear] = value;
@@ -16,7 +16,7 @@ bool Queue::enqueue(int value)
 bool Queue::dequeue(int &value)
 {
     if (isEmpty())
-        return false; // underflow
+        return false;
 
     value = data[front];
     front = (front + 1) % CAPACITY;

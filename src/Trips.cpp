@@ -1,4 +1,3 @@
-// Getting around: planning a trip, what's nearby, and exploring with DFS.
 
 #include "../include/Navigator.h"
 #include "../include/Distance.h"
@@ -22,8 +21,7 @@ namespace
         return "about " + std::to_string(minutes) + " min";
     }
 
-    // "Head north on", "Turn left, heading east on", "Continue west onto"
-    std::string legInstruction(const TripLeg& leg)
+    std::string legInstruction(const TripLeg &leg)
     {
         if (leg.turn == "Start")
             return "Head " + leg.heading + " on";
@@ -32,7 +30,7 @@ namespace
         return leg.turn + ", heading " + leg.heading + " on";
     }
 
-    std::string joinNames(const Campus& campus, const std::vector<int>& ids)
+    std::string joinNames(const Campus &campus, const std::vector<int> &ids)
     {
         std::string text;
         for (size_t i = 0; i < ids.size(); i++)
@@ -44,12 +42,11 @@ namespace
         return text;
     }
 
-    void printTrip(const Campus& campus, const Trip& trip)
+    void printTrip(const Campus &campus, const Trip &trip)
     {
         int start = trip.stops.front().placeId;
         int goal = trip.stops.back().placeId;
 
-        // Summary
         std::cout << "\n  " << style::heading << campus.nameOf(start) << "  →  " << campus.nameOf(goal)
                   << style::reset << "\n  " << style::strong << formatDistance(trip.meters) << style::reset
                   << style::muted << " walk · " << style::reset << style::strong << minutesText(trip.minutes)
@@ -57,13 +54,12 @@ namespace
                   << trip.roads.size() << (trip.roads.size() == 1 ? " road" : " roads") << style::reset << "\n";
         printRule();
 
-        // Directions, one step per road
         std::cout << "\n  " << style::muted << "DIRECTIONS" << style::reset << "\n\n";
         std::cout << "   " << style::good << "●" << style::reset << "  Start at "
                   << style::strong << campus.nameOf(start) << style::reset << "\n";
 
         int step = 1;
-        for (const TripLeg& leg : trip.legs)
+        for (const TripLeg &leg : trip.legs)
         {
             std::cout << "   " << style::muted << "│" << style::reset << "\n"
                       << "  " << style::accent << std::setw(2) << step++ << style::reset << "  "
@@ -82,14 +78,13 @@ namespace
                   << "   " << style::good << "●" << style::reset << "  Arrive at "
                   << style::strong << campus.nameOf(goal) << style::reset << "\n";
 
-        // Every stop along the way
         std::cout << "\n  " << style::muted << "STOPS" << style::reset << "\n\n"
                   << style::muted << "   #   " << std::left << std::setw(36) << "Place" << std::setw(24)
                   << "Road" << std::right << std::setw(7) << "Leg" << std::setw(9) << "Total"
                   << style::reset << "\n";
         for (size_t i = 0; i < trip.stops.size(); i++)
         {
-            const TripStop& stop = trip.stops[i];
+            const TripStop &stop = trip.stops[i];
             bool endpoint = (i == 0 || i + 1 == trip.stops.size());
             std::cout << "  " << std::setw(2) << i + 1 << "   ";
             if (endpoint)
@@ -100,7 +95,6 @@ namespace
                       << style::reset << std::setw(9) << formatDistance(stop.metersSoFar) << "\n";
         }
 
-        // Roads in order
         std::cout << "\n  " << style::muted << "ROADS  " << style::reset;
         for (size_t i = 0; i < trip.roads.size(); i++)
         {
@@ -113,10 +107,6 @@ namespace
                   << style::reset << "\n";
     }
 }
-
-// ---------------------------------------------------------------------------
-// 1. Take me somewhere
-// ---------------------------------------------------------------------------
 
 void Navigator::takeMeSomewhere()
 {
@@ -146,7 +136,7 @@ void Navigator::showTrip(int start, int goal)
 {
     std::list<int> route = campus.graph.findRoute(start, goal);
     logAction("NAVIGATION", "start=" + std::to_string(start) + " goal=" + std::to_string(goal) +
-                            " result=" + (route.empty() ? "no_route" : "found"));
+                                " result=" + (route.empty() ? "no_route" : "found"));
 
     if (route.empty())
     {
@@ -184,10 +174,6 @@ void Navigator::showTrip(int start, int goal)
     }
 }
 
-// ---------------------------------------------------------------------------
-// 2. What's near me
-// ---------------------------------------------------------------------------
-
 void Navigator::nearMe()
 {
     printTitle("What's near me", "A place name, its number, or coordinates like 22.8992, 89.5016");
@@ -198,7 +184,7 @@ void Navigator::nearMe()
         return;
 
     std::vector<NearbyPlace> places;
-    for (const Location& place : campus.locations)
+    for (const Location &place : campus.locations)
         places.push_back({place.id, distanceMeters(latitude, longitude, place.latitude, place.longitude)});
     SortStats stats = bubbleSortByDistance(places);
 
@@ -210,7 +196,7 @@ void Navigator::nearMe()
     std::cout << "\n";
     for (int i = 0; i < shown; i++)
     {
-        const Location& place = *campus.find(places[i].locationId);
+        const Location &place = *campus.find(places[i].locationId);
         std::cout << "  " << style::accent << std::setw(2) << i + 1 << style::reset << "  " << std::left
                   << std::setw(36) << place.name << std::right << std::setw(8) << formatDistance(places[i].meters)
                   << style::muted << "  ";
@@ -231,10 +217,6 @@ void Navigator::nearMe()
     if (pick > 0)
         openPlace(places[pick - 1].locationId);
 }
-
-// ---------------------------------------------------------------------------
-// 3. Explore the campus
-// ---------------------------------------------------------------------------
 
 void Navigator::explore()
 {
@@ -304,12 +286,11 @@ void Navigator::explore()
         }
         else
         {
-            // Group walkways by road so the list reads like a street index.
-            std::map<std::string, std::vector<const Edge*>> byRoad;
-            std::map<const Edge*, int> fromOf;
+            std::map<std::string, std::vector<const Edge *>> byRoad;
+            std::map<const Edge *, int> fromOf;
             for (int from : campus.graph.vertices())
             {
-                for (const Edge& edge : campus.graph.neighbors(from))
+                for (const Edge &edge : campus.graph.neighbors(from))
                 {
                     if (from < edge.to)
                     {
@@ -320,15 +301,15 @@ void Navigator::explore()
             }
 
             printTitle("Roads and walkways", std::to_string(campus.graph.edgeCount()) + " walkways on " +
-                                             std::to_string(byRoad.size()) + " roads");
-            for (const auto& road : byRoad)
+                                                 std::to_string(byRoad.size()) + " roads");
+            for (const auto &road : byRoad)
             {
                 int total = 0;
-                for (const Edge* edge : road.second)
+                for (const Edge *edge : road.second)
                     total += edge->meters;
                 std::cout << "\n  " << style::accent << road.first << style::reset << style::muted
                           << "  ·  " << formatDistance(total) << style::reset << "\n";
-                for (const Edge* edge : road.second)
+                for (const Edge *edge : road.second)
                     std::cout << "     " << campus.nameOf(fromOf[edge]) << style::muted << "  ↔  "
                               << style::reset << campus.nameOf(edge->to) << style::muted << "  "
                               << edge->meters << " m" << style::reset << "\n";

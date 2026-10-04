@@ -6,13 +6,13 @@
 #include <cstdio>
 #include <fstream>
 
-std::string Authentication::hashPassword(const std::string& username, const std::string& password)
+std::string Authentication::hashPassword(const std::string &username, const std::string &password)
 {
-    unsigned long long hash = 14695981039346656037ULL;   // FNV-1a 64-bit offset basis
+    unsigned long long hash = 14695981039346656037ULL;
     for (char c : toLower(username) + ":" + password)
     {
         hash ^= static_cast<unsigned char>(c);
-        hash *= 1099511628211ULL;                          // FNV prime
+        hash *= 1099511628211ULL;
     }
 
     char hex[17];
@@ -20,7 +20,7 @@ std::string Authentication::hashPassword(const std::string& username, const std:
     return hex;
 }
 
-bool Authentication::validUsername(const std::string& username, std::string& error)
+bool Authentication::validUsername(const std::string &username, std::string &error)
 {
     if (username.size() < 3 || username.size() > 30)
     {
@@ -38,7 +38,7 @@ bool Authentication::validUsername(const std::string& username, std::string& err
     return true;
 }
 
-bool Authentication::validPassword(const std::string& password, std::string& error)
+bool Authentication::validPassword(const std::string &password, std::string &error)
 {
     if (password.size() < 4)
     {
@@ -53,7 +53,7 @@ bool Authentication::validPassword(const std::string& password, std::string& err
     return true;
 }
 
-int Authentication::findUser(const std::string& username) const
+int Authentication::findUser(const std::string &username) const
 {
     for (size_t i = 0; i < users.size(); i++)
     {
@@ -63,7 +63,7 @@ int Authentication::findUser(const std::string& username) const
     return -1;
 }
 
-bool Authentication::load(const std::string& path)
+bool Authentication::load(const std::string &path)
 {
     std::ifstream file(path);
     if (!file)
@@ -88,7 +88,7 @@ bool Authentication::load(const std::string& path)
     return true;
 }
 
-bool Authentication::save(const std::string& path) const
+bool Authentication::save(const std::string &path) const
 {
     std::ofstream file(path);
     if (!file)
@@ -97,7 +97,7 @@ bool Authentication::save(const std::string& path) const
     file << "# username|passwordHash|role\n"
          << "# The hash is FNV-1a of \"username:password\". Fine for a lab demo,\n"
          << "# not secure for real use (that needs Argon2, bcrypt or scrypt).\n";
-    for (const User& user : users)
+    for (const User &user : users)
         file << user.username << "|" << user.passwordHash << "|" << user.role << "\n";
     return static_cast<bool>(file);
 }
@@ -109,8 +109,8 @@ void Authentication::addDefaultUsers()
     registerUser("student1", "student123", "student", error);
 }
 
-bool Authentication::registerUser(const std::string& username, const std::string& password,
-                                  const std::string& role, std::string& error)
+bool Authentication::registerUser(const std::string &username, const std::string &password,
+                                  const std::string &role, std::string &error)
 {
     if (!validUsername(username, error) || !validPassword(password, error))
         return false;
@@ -130,7 +130,7 @@ bool Authentication::registerUser(const std::string& username, const std::string
     return true;
 }
 
-bool Authentication::login(const std::string& username, const std::string& password)
+bool Authentication::login(const std::string &username, const std::string &password)
 {
     int index = findUser(username);
     if (index == -1 || users[index].passwordHash != hashPassword(users[index].username, password))

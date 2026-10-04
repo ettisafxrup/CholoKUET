@@ -1,4 +1,3 @@
-// Admin-only menus: editing places and walkways, users, and the activity log.
 
 #include "../include/Navigator.h"
 #include "../include/Config.h"
@@ -9,16 +8,12 @@
 #include <iostream>
 #include <set>
 
-// ---------------------------------------------------------------------------
-// 12. Places
-// ---------------------------------------------------------------------------
-
 void Navigator::managePlaces()
 {
     while (!inputClosed())
     {
         printTitle("Manage places", std::to_string(campus.locations.size()) + " of " +
-                                    std::to_string(MAX_LOCATIONS) + " slots used");
+                                        std::to_string(MAX_LOCATIONS) + " slots used");
         printOption(1, "List all");
         printOption(2, "Add a place");
         printOption(3, "Edit a place");
@@ -34,7 +29,7 @@ void Navigator::managePlaces()
             printTitle("All places", "In the order they're stored in the array");
             for (size_t i = 0; i < campus.locations.size(); i++)
             {
-                const Location& place = campus.locations[i];
+                const Location &place = campus.locations[i];
                 std::cout << "  " << style::muted << "[" << std::setw(2) << i << "]" << style::reset << "  "
                           << style::accent << std::setw(2) << place.id << style::reset << "  " << std::left
                           << std::setw(36) << place.name << std::right << style::muted << place.category
@@ -151,7 +146,7 @@ void Navigator::editPlace()
 
     campus.buildTree(campusTree);
     saveLocations();
-    savePaths();   // walkway lengths change if the place moved
+    savePaths(); // walkway lengths change if the place moved
     logAction("EDIT_LOCATION", "id=" + std::to_string(id));
     printSuccess("Saved.");
     pause();
@@ -237,10 +232,10 @@ void Navigator::listWalkways()
     int count = 0;
     for (int from : campus.graph.vertices())
     {
-        for (const Edge& edge : campus.graph.neighbors(from))
+        for (const Edge &edge : campus.graph.neighbors(from))
         {
             if (from > edge.to)
-                continue;   // each walkway is stored both ways; show it once
+                continue; // each walkway is stored both ways; show it once
             std::cout << "  " << style::muted << std::setw(3) << ++count << style::reset << "  "
                       << campus.nameOf(from) << style::muted << "  ↔  " << style::reset
                       << campus.nameOf(edge.to) << style::muted << "  " << edge.meters << " m"
@@ -266,7 +261,7 @@ void Navigator::addWalkway()
         pause();
         return;
     }
-    if (const Edge* existing = campus.graph.findEdge(from, to))
+    if (const Edge *existing = campus.graph.findEdge(from, to))
     {
         printWarning("They're already connected (" + std::to_string(existing->meters) + " m).");
         pause();
@@ -284,11 +279,11 @@ void Navigator::addWalkway()
 
     std::set<std::string> roads;
     for (int id : campus.graph.vertices())
-        for (const Edge& edge : campus.graph.neighbors(id))
+        for (const Edge &edge : campus.graph.neighbors(id))
             if (!edge.road.empty())
                 roads.insert(edge.road);
     std::cout << "  " << style::muted << "Roads so far:";
-    for (const std::string& road : roads)
+    for (const std::string &road : roads)
         std::cout << " " << road << ";";
     std::cout << style::reset << "\n";
     std::string road = readLine("  Road name (Enter to leave blank): ");
@@ -339,7 +334,7 @@ void Navigator::removeWalkway()
 void Navigator::viewUsers()
 {
     printTitle("Users", std::to_string(auth.allUsers().size()) + " accounts · passwords are never shown");
-    for (const User& user : auth.allUsers())
+    for (const User &user : auth.allUsers())
     {
         std::cout << "  " << std::left << std::setw(30) << user.username << std::right
                   << (user.role == "admin" ? style::accent : style::muted) << user.role << style::reset << "\n";

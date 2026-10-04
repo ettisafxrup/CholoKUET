@@ -8,12 +8,13 @@
 
 Campus::Campus()
 {
-    graph.setLabeler([this](int id) { return nameOf(id); });
+    graph.setLabeler([this](int id)
+                     { return nameOf(id); });
 }
 
-Location* Campus::find(int id)
+Location *Campus::find(int id)
 {
-    for (Location& location : locations)
+    for (Location &location : locations)
     {
         if (location.id == id)
             return &location;
@@ -21,9 +22,9 @@ Location* Campus::find(int id)
     return nullptr;
 }
 
-const Location* Campus::find(int id) const
+const Location *Campus::find(int id) const
 {
-    for (const Location& location : locations)
+    for (const Location &location : locations)
     {
         if (location.id == id)
             return &location;
@@ -33,7 +34,7 @@ const Location* Campus::find(int id) const
 
 std::string Campus::nameOf(int id) const
 {
-    const Location* location = find(id);
+    const Location *location = find(id);
     return location ? location->name : "(unknown #" + std::to_string(id) + ")";
 }
 
@@ -45,7 +46,7 @@ int Campus::nextFreeId() const
     return id;
 }
 
-bool Campus::validate(const Location& location, std::string& error) const
+bool Campus::validate(const Location &location, std::string &error) const
 {
     if (location.id <= 0)
         error = "ID must be a positive number.";
@@ -60,9 +61,9 @@ bool Campus::validate(const Location& location, std::string& error) const
     return false;
 }
 
-void Campus::addCategory(const std::string& category)
+void Campus::addCategory(const std::string &category)
 {
-    for (const std::string& existing : categories)
+    for (const std::string &existing : categories)
     {
         if (equalsIgnoreCase(existing, category))
             return;
@@ -70,7 +71,7 @@ void Campus::addCategory(const std::string& category)
     categories.push_back(category);
 }
 
-bool Campus::addLocation(const Location& location, std::string& error)
+bool Campus::addLocation(const Location &location, std::string &error)
 {
     if (!validate(location, error))
         return false;
@@ -91,12 +92,12 @@ bool Campus::addLocation(const Location& location, std::string& error)
     return true;
 }
 
-bool Campus::updateLocation(const Location& location, std::string& error)
+bool Campus::updateLocation(const Location &location, std::string &error)
 {
     if (!validate(location, error))
         return false;
 
-    Location* existing = find(location.id);
+    Location *existing = find(location.id);
     if (!existing)
     {
         error = "No location has that ID.";
@@ -107,10 +108,9 @@ bool Campus::updateLocation(const Location& location, std::string& error)
     *existing = location;
     addCategory(location.category);
 
-    // Moving a place changes how long its paths are.
     if (moved)
     {
-        for (const Edge& edge : std::vector<Edge>(graph.neighbors(location.id)))
+        for (const Edge &edge : std::vector<Edge>(graph.neighbors(location.id)))
             graph.addEdge(location.id, edge.to, pathLength(location.id, edge.to), edge.road);
     }
     return true;
@@ -131,8 +131,8 @@ void Campus::removeLocation(int id)
 
 int Campus::pathLength(int a, int b) const
 {
-    const Location* from = find(a);
-    const Location* to = find(b);
+    const Location *from = find(a);
+    const Location *to = find(b);
     if (!from || !to)
         return 1;
 
@@ -140,14 +140,12 @@ int Campus::pathLength(int a, int b) const
     return meters < 1 ? 1 : meters;
 }
 
-void Campus::buildTree(CampusTree& tree) const
+void Campus::buildTree(CampusTree &tree) const
 {
     tree.build(categories, locations);
 }
 
-// ---- Loading and saving ----
-
-LoadResult Campus::loadCategories(const std::string& path)
+LoadResult Campus::loadCategories(const std::string &path)
 {
     LoadResult result;
     std::ifstream file(path);
@@ -169,7 +167,7 @@ LoadResult Campus::loadCategories(const std::string& path)
     return result;
 }
 
-LoadResult Campus::loadLocations(const std::string& path)
+LoadResult Campus::loadLocations(const std::string &path)
 {
     LoadResult result;
     std::ifstream file(path);
@@ -194,12 +192,12 @@ LoadResult Campus::loadLocations(const std::string& path)
         if (parseLocation(line, location, error) && addLocation(location, error))
             result.loaded++;
         else
-            result.skipped++;   // bad line, duplicate ID, or too many locations
+            result.skipped++;
     }
     return result;
 }
 
-LoadResult Campus::loadPaths(const std::string& path)
+LoadResult Campus::loadPaths(const std::string &path)
 {
     LoadResult result;
     std::ifstream file(path);
@@ -226,7 +224,6 @@ LoadResult Campus::loadPaths(const std::string& path)
             continue;
         }
 
-        // The length is optional; without one we use the straight-line distance.
         int meters = 0;
         if (fields.size() < 3 || !parseInt(fields[2], meters) || meters < 1)
             meters = pathLength(from, to);
@@ -235,12 +232,12 @@ LoadResult Campus::loadPaths(const std::string& path)
         if (graph.addEdge(from, to, meters, road))
             result.loaded++;
         else
-            result.skipped++;   // unknown location or a path to itself
+            result.skipped++;
     }
     return result;
 }
 
-bool Campus::saveLocations(const std::string& path) const
+bool Campus::saveLocations(const std::string &path) const
 {
     std::ofstream file(path);
     if (!file)
@@ -254,12 +251,12 @@ bool Campus::saveLocations(const std::string& path) const
          << "#    the KUET master plan, which we lined up with OSM using 18 buildings that\n"
          << "#    appear in both (average difference about 27 m).\n"
          << "# See docs/campus-map.md for the details.\n";
-    for (const Location& location : locations)
+    for (const Location &location : locations)
         file << formatLocation(location) << "\n";
     return static_cast<bool>(file);
 }
 
-bool Campus::savePaths(const std::string& path) const
+bool Campus::savePaths(const std::string &path) const
 {
     std::ofstream file(path);
     if (!file)
@@ -270,16 +267,16 @@ bool Campus::savePaths(const std::string& path) const
          << "# Khanjahan Ali Hall Road, which are the names used in OpenStreetMap.\n";
     for (int from : graph.vertices())
     {
-        for (const Edge& edge : graph.neighbors(from))
+        for (const Edge &edge : graph.neighbors(from))
         {
-            if (from < edge.to)   // write each walkway once
+            if (from < edge.to) // write each walkway once
                 file << from << "|" << edge.to << "|" << edge.meters << "|" << edge.road << "\n";
         }
     }
     return static_cast<bool>(file);
 }
 
-std::list<int> Campus::loadFavorites(const std::string& path, const std::string& username) const
+std::list<int> Campus::loadFavorites(const std::string &path, const std::string &username) const
 {
     std::list<int> favorites;
     std::ifstream file(path);
@@ -300,8 +297,8 @@ std::list<int> Campus::loadFavorites(const std::string& path, const std::string&
     return favorites;
 }
 
-bool Campus::saveFavorites(const std::string& path, const std::string& username,
-                           const std::list<int>& favorites) const
+bool Campus::saveFavorites(const std::string &path, const std::string &username,
+                           const std::list<int> &favorites) const
 {
     // Keep everyone else's favorites, replace this user's.
     std::vector<std::string> otherLines;
@@ -321,7 +318,7 @@ bool Campus::saveFavorites(const std::string& path, const std::string& username,
         return false;
 
     out << "# username|locationId\n";
-    for (const std::string& line : otherLines)
+    for (const std::string &line : otherLines)
         out << line << "\n";
     for (int id : favorites)
         out << username << "|" << id << "\n";

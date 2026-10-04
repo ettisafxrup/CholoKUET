@@ -2,10 +2,7 @@
 #include "../include/Graph.h"
 #include "check.h"
 
-//  1 Gate - 2 Admin - 3 CSE - 4 Library - 5 EEE
-//                                |
-//                           6 Auditorium        7 (on its own)
-static void build(Graph& graph)
+static void build(Graph &graph)
 {
     graph.clear();
     for (int id = 1; id <= 7; id++)

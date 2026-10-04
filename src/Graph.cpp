@@ -29,7 +29,7 @@ void Graph::removeVertex(int id)
     if (it == adjacency.end())
         return;
 
-    for (const Edge& edge : it->second)
+    for (const Edge &edge : it->second)
         eraseOneWay(edge.to, id);
     adjacency.erase(it);
 }
@@ -39,7 +39,7 @@ bool Graph::hasVertex(int id) const
     return adjacency.count(id) > 0;
 }
 
-bool Graph::addEdge(int a, int b, int meters, const std::string& road)
+bool Graph::addEdge(int a, int b, int meters, const std::string &road)
 {
     if (a == b || !hasVertex(a) || !hasVertex(b))
         return false;
@@ -62,7 +62,7 @@ bool Graph::removeEdge(int a, int b)
 
 void Graph::eraseOneWay(int from, int to)
 {
-    std::vector<Edge>& edges = adjacency[from];
+    std::vector<Edge> &edges = adjacency[from];
     for (auto it = edges.begin(); it != edges.end(); ++it)
     {
         if (it->to == to)
@@ -73,9 +73,9 @@ void Graph::eraseOneWay(int from, int to)
     }
 }
 
-const Edge* Graph::findEdge(int a, int b) const
+const Edge *Graph::findEdge(int a, int b) const
 {
-    for (const Edge& edge : neighbors(a))
+    for (const Edge &edge : neighbors(a))
     {
         if (edge.to == b)
             return &edge;
@@ -83,7 +83,7 @@ const Edge* Graph::findEdge(int a, int b) const
     return nullptr;
 }
 
-const std::vector<Edge>& Graph::neighbors(int id) const
+const std::vector<Edge> &Graph::neighbors(int id) const
 {
     static const std::vector<Edge> none;
     auto it = adjacency.find(id);
@@ -93,7 +93,7 @@ const std::vector<Edge>& Graph::neighbors(int id) const
 std::vector<int> Graph::vertices() const
 {
     std::vector<int> ids;
-    for (const auto& entry : adjacency)
+    for (const auto &entry : adjacency)
         ids.push_back(entry.first);
     return ids;
 }
@@ -101,20 +101,22 @@ std::vector<int> Graph::vertices() const
 int Graph::edgeCount() const
 {
     int total = 0;
-    for (const auto& entry : adjacency)
+    for (const auto &entry : adjacency)
         total += static_cast<int>(entry.second.size());
-    return total / 2;   // every walkway is stored once in each direction
+    return total / 2; // every walkway is stored once in each direction
 }
 
+// Implemented BFS
 std::list<int> Graph::findRoute(int start, int goal, bool verbose) const
 {
     if (!hasVertex(start) || !hasVertex(goal))
         return {};
 
-    auto nameLabel = [this](int id) { return nameOf(id); };
+    auto nameLabel = [this](int id)
+    { return nameOf(id); };
 
     std::set<int> visited;
-    std::map<int, int> parent;   // parent[x] = the place we reached x from
+    std::map<int, int> parent;
     Queue queue;
 
     queue.enqueue(start);
@@ -134,15 +136,14 @@ std::list<int> Graph::findRoute(int start, int goal, bool verbose) const
         queue.dequeue(current);
 
         if (verbose)
-            std::cout << "\n" << style::accent << "  Step " << ++step << style::reset
+            std::cout << "\n"
+                      << style::accent << "  Step " << ++step << style::reset
                       << ": dequeue " << nameOf(current) << "\n";
 
         if (current == goal)
             break;
 
-        // Mark a neighbour visited when we enqueue it, not when we dequeue
-        // it, otherwise the same place could be queued twice.
-        for (const Edge& edge : neighbors(current))
+        for (const Edge &edge : neighbors(current))
         {
             if (visited.count(edge.to))
                 continue;
@@ -170,7 +171,7 @@ std::list<int> Graph::findRoute(int start, int goal, bool verbose) const
     return rebuildRoute(parent, start, goal, verbose);
 }
 
-std::list<int> Graph::rebuildRoute(const std::map<int, int>& parent, int start, int goal,
+std::list<int> Graph::rebuildRoute(const std::map<int, int> &parent, int start, int goal,
                                    bool verbose) const
 {
     // Following parent[] from the goal gives the route backwards. Pushing
@@ -183,7 +184,8 @@ std::list<int> Graph::rebuildRoute(const std::map<int, int>& parent, int start, 
     {
         std::cout << "\n  Walking back through parent[] from " << nameOf(goal)
                   << " to " << nameOf(start) << ", pushing each stop:\n";
-        stack.print([this](int id) { return nameOf(id); });
+        stack.print([this](int id)
+                    { return nameOf(id); });
         std::cout << "  Popping the stack gives the route from the start.\n";
     }
 
@@ -194,18 +196,16 @@ std::list<int> Graph::rebuildRoute(const std::map<int, int>& parent, int start, 
     return route;
 }
 
+// Implemented DFS
 std::vector<int> Graph::depthFirstOrder(int start, bool verbose) const
 {
     std::vector<int> order;
     if (!hasVertex(start))
         return order;
 
-    auto nameLabel = [this](int id) { return nameOf(id); };
+    auto nameLabel = [this](int id)
+    { return nameOf(id); };
 
-    // The stack plays the part of recursion: its top is the place we are
-    // exploring right now. nextEdge remembers how far we got through each
-    // place's neighbours, so after backtracking we carry on from there.
-    // Every place is pushed only once, so the stack never exceeds V items.
     std::set<int> visited;
     std::map<int, size_t> nextEdge;
     Stack stack;
@@ -225,7 +225,7 @@ std::vector<int> Graph::depthFirstOrder(int start, bool verbose) const
         int current;
         stack.peek(current);
 
-        const std::vector<Edge>& edges = neighbors(current);
+        const std::vector<Edge> &edges = neighbors(current);
         int next = -1;
         while (nextEdge[current] < edges.size())
         {

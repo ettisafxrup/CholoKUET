@@ -49,4 +49,4 @@
 41|Teachers and Staff Quarters|Residential|22.902740|89.501267|Residential area for teachers and staff
 42|Residential Area Playground|Sports|22.902763|89.500829|Playground in the residential area
 43|Garage|Transportation|22.900427|89.501038|University vehicle garage (plan)
-44|Kodom Tola|Facility|22.897973|89.503409|Teacher-Student Centre (plan)
+44|Bot Tola|Facility|22.897973|89.503409|Teacher-Student Centre (plan)
