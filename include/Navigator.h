@@ -22,8 +22,8 @@ private:
     CampusTree campusTree;
     Logger logger;
 
-    Stack history;                 // places you've been, newest on top
-    std::list<int> recentSearches; // newest first
+    Stack history;
+    std::list<int> recentSearches;
     std::list<int> favorites;
     int currentLocation = -1;
 

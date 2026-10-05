@@ -22,6 +22,8 @@ Location *Campus::find(int id)
     return nullptr;
 }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  6c25cf86-bdc8-4220-9dbb-c01dd4739e6a  *******/
 const Location *Campus::find(int id) const
 {
     for (const Location &location : locations)

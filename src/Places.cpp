@@ -114,10 +114,6 @@ void Navigator::search()
     openPlace(chosen);
 }
 
-// ---------------------------------------------------------------------------
-// A place's page
-// ---------------------------------------------------------------------------
-
 void Navigator::openPlace(int id)
 {
     while (!inputClosed())
@@ -127,7 +123,9 @@ void Navigator::openPlace(int id)
             return;
 
         bool favorite = isFavorite(id);
+
         printTitle((favorite ? "★ " : "") + place->name, place->category + " · number " + std::to_string(id));
+
         if (!place->description.empty())
             std::cout << "  " << place->description << "\n";
 

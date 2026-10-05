@@ -17,12 +17,12 @@ Stack and Queue are written from scratch because those are the structures the la
 
 ## Why each one fits
 
-- **Array** – places are looked up by position all the time, and the list rarely changes.
-- **Linked list** – recent searches keep moving an item to the front and dropping the oldest from the back. A route's length isn't known until BFS finishes.
-- **Stack** – "Back" means going to the last place you visited (last in, first out). DFS needs the most recent unfinished place, which is also a stack.
-- **Queue** – BFS has to finish every place one step away before any place two steps away (first in, first out).
-- **Tree** – KUET → Academic → CSE is a natural hierarchy. Each category can hold any number of places, so we use a general tree rather than a binary one.
-- **Graph** – walkways connect places in loops and crossings, which a tree can't represent.
+- **Array**: places are looked up by position all the time, and the list rarely changes.
+- **Linked list**: recent searches keep moving an item to the front and dropping the oldest from the back. A route's length isn't known until BFS finishes.
+- **Stack**: "Back" means going to the last place you visited (last in, first out). DFS needs the most recent unfinished place, which is also a stack.
+- **Queue**: BFS has to finish every place one step away before any place two steps away (first in, first out).
+- **Tree**: KUET → Academic → CSE is a natural hierarchy. Each category can hold any number of places, so we use a general tree rather than a binary one.
+- **Graph**: walkways connect places in loops and crossings, which a tree can't represent.
 
 ## Complexity
 

@@ -10,10 +10,6 @@
 #include <iomanip>
 #include <iostream>
 
-// ---------------------------------------------------------------------------
-// Setup and saving
-// ---------------------------------------------------------------------------
-
 std::string Navigator::dataPath(const std::string &relative) const
 {
     return baseDir + relative;
@@ -23,8 +19,6 @@ void Navigator::initialize()
 {
     initConsole();
 
-    // The exe may be started from the project folder, from build/ (CMake)
-    // or from build/Debug (Visual Studio), so look upwards for the data.
     for (const char *candidate : {"", "../", "../../", "../../../"})
     {
         if (fileExists(std::string(candidate) + LOCATIONS_FILE))
